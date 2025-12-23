@@ -77,7 +77,7 @@ class AuthService
         ];
 
         session()->set($session_data);
-
+        session()->regenerate(); // <--- ID session di tabel ci_sessions akan berubah
         return true;
     }
 }
