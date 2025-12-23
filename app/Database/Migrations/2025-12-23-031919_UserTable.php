@@ -30,6 +30,13 @@ class UserTable extends Migration
                 'charset' => 'utf8',
                 'collation' => 'utf8mb4_uca1400_ai_ci'
             ],
+            'user_password' => [
+                'type' => "VARCHAR",
+                'constraint' => 255,
+                'null' => false,
+                'charset' => 'utf8',
+                'collation' => 'utf8mb4_uca1400_ai_ci'
+            ],
             'user_email' => [
                 'type' => "VARCHAR",
                 'constraint' => 255,
@@ -93,6 +100,7 @@ class UserTable extends Migration
             'last_login' => [
                 'type' => "DATETIME",
                 'null' => true,
+                'default' => null,
                 'charset' => 'utf8',
                 'collation' => 'utf8mb4_uca1400_ai_ci'
             ],
@@ -100,12 +108,14 @@ class UserTable extends Migration
                 'type' => "VARCHAR",
                 'constraint' => 50,
                 'null' => true,
+                'default' => null,
                 'charset' => 'utf8',
                 'collation' => 'utf8mb4_uca1400_ai_ci'
             ],
             'created_at' => [
                 'type' => "DATETIME",
                 'null' => true,
+                'default' => null,
                 'charset' => 'utf8',
                 'collation' => 'utf8mb4_uca1400_ai_ci'
             ],
@@ -113,12 +123,14 @@ class UserTable extends Migration
                 'type' => "VARCHAR",
                 'constraint' => 50,
                 'null' => true,
+                'default' => null,
                 'charset' => 'utf8',
                 'collation' => 'utf8mb4_uca1400_ai_ci'
             ],
             'updated_at' => [
                 'type' => "DATETIME",
                 'null' => true,
+                'default' => null,
                 'charset' => 'utf8',
                 'collation' => 'utf8mb4_uca1400_ai_ci'
             ],
@@ -126,12 +138,14 @@ class UserTable extends Migration
                 'type' => "VARCHAR",
                 'constraint' => 50,
                 'null' => true,
+                'default' => null,
                 'charset' => 'utf8',
                 'collation' => 'utf8mb4_uca1400_ai_ci'
             ],
             'deleted_at' => [
                 'type' => "DATETIME",
                 'null' => true,
+                'default' => null,
                 'charset' => 'utf8',
                 'collation' => 'utf8mb4_uca1400_ai_ci'
             ]

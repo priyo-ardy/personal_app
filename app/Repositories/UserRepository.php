@@ -3,10 +3,10 @@
 namespace App\Repositories;
 
 use App\Interfaces\UserRepositoryInterface;
-use App\Repositories\BaseRepository;
+use App\Repositories\CrudRepository;
 use App\Models\UserModel;
 
-class UserRepository extends BaseRepository implements UserRepositoryInterface
+class UserRepository extends CrudRepository implements UserRepositoryInterface
 {
     protected $model;
 

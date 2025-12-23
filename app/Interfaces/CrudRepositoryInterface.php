@@ -4,7 +4,7 @@ namespace App\Interfaces;
 
 interface CrudRepositoryInterface
 {
-    public function all();
+    public function all($orderColumn = null, $orderDirection = null);
     public function find(string $id);
     public function create(array $data);
     public function update(string $id, array $data);

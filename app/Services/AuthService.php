@@ -1,12 +1,11 @@
 <?php
 
-namespace app\Services;
+namespace App\Services;
 
 use App\Repositories\UserRepository;
 use App\Validation\AuthValidation;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Services;
-use Config\Validation;
 
 class AuthService
 {
@@ -22,22 +21,28 @@ class AuthService
      */
     public function __construct(UserRepository $userRepo)
     {
-        $this->userRepo = $userRepo ?? new UserRepository();
+        $this->userRepo = $userRepo;
         $this->validasi = Services::validation();
     }
 
     public function prosesLogin(array $data)
     {
-        $this->validasi->setRules(AuthValidation::$authRules); //Lakukan validasi input user
-
-        if ($this->validasi->run($data) === false) { // Jika validasi tidak memenuhi kriteria
-            $error_to_string = implode("<br>", $this->validasi->getErrors()); // Buat pesan error menjadi string biasa
-            log_message('error', "Validasi login gagal : {err}", ['err' => $error_to_string]); // simpan log
-            throw new \Exception($error_to_string); // kembalikan error
+        if (!isset($data['user_password'])) {
+            log_message('error', "Key user_password hilang. Data yang diterima: " . json_encode($data));
+            throw new \Exception("Password field is missing from request", 400);
         }
 
-        $cek_user = $this->userRepo->findByUsername($data['username']); // Cek data user berdasarkan username ke repository UserRepository
+        $this->validasi->setRules(AuthValidation::$authRules);
+
+        if ($this->validasi->run($data) === false) {
+            $error_to_string = implode("<br>", $this->validasi->getErrors());
+            log_message('error', "Validasi login gagal : {err}", ['err' => $error_to_string]);
+            throw new \Exception($error_to_string, ResponseInterface::HTTP_BAD_REQUEST);
+        }
+
+        $cek_user = $this->userRepo->findByUsername($data['user_name']); // Cek data user berdasarkan username ke repository UserRepository
         if (!$cek_user) {
+            log_message('error', "User not found : {user}", ['user' => $data['user_name']]);
             throw new \Exception("Invalid username or password", ResponseInterface::HTTP_UNAUTHORIZED); // Jika user tidak ditemukan kembalikan error
         }
 
@@ -49,7 +54,7 @@ class AuthService
             throw new \Exception("Your account is inactive", ResponseInterface::HTTP_FORBIDDEN);
         }
 
-        $verify = password_verify($data['password'], $cek_user->user_password); //Verify password
+        $verify = password_verify($data['user_password'], $cek_user->user_password); //Verify password
         if (!$verify) { //Jika password yang dimasukkan salah
             $this->userRepo->update($cek_user->user_id, ['login_attempts' => $cek_user->login_attempts + 1]); //Update login_attempts
             throw new \Exception("Invalid username or password", ResponseInterface::HTTP_UNAUTHORIZED); //Tampilkan pesan error
@@ -62,7 +67,7 @@ class AuthService
             'login_from' => Services::request()->getIPAddress(),
         ]);
 
-        log_message('info', "User {user} successfully login from {ip}", ['user' => $data['username'], 'ip' => $_SERVER['REMOTE_ADDR']]); // simpan log
+        log_message('info', "User {user} successfully login from {ip}", ['user' => $data['user_name'], 'ip' => $_SERVER['REMOTE_ADDR']]); // simpan log
 
         $session_data = [
             'logged' => true,

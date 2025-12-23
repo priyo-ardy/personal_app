@@ -17,11 +17,12 @@ class AuthController extends BaseController
     }
     public function index()
     {
+        // echo generate_uuid();
         $data = [
             'title' => "User Authorization",
         ];
 
-        return view('Auth/index', $data);
+        return view('Auth/index');
     }
 
     public function prosesLogin()
@@ -34,12 +35,25 @@ class AuthController extends BaseController
 
         try {
             // Lempar proses login ke services AuthService
-            $this->authService->prosesLogin($this->request->getPost());
+            $data = $this->request->getPost();
+            if ($this->authService->prosesLogin($data)) {
+                return pesan(ResponseInterface::HTTP_OK, 'Authorization success');
+            }
         } catch (\Exception $e) {
             // Tampikan error
             $code = $e->getCode() ?? ResponseInterface::HTTP_INTERNAL_SERVER_ERROR; // jika tidak ada kode error di exception, kembalikan error 500
-            log_message('error', "Unexpected error occured : {err}", ['err' => $e->getMessage()]); // simpan log
-            return $this->errorResponse($e->getMessage(), $code, 'error_500'); // tampilkan error
+            log_message('error', "Unexpected error occured : {err} from {ip}", ['err' => $e->getMessage(), 'ip' => $this->request->getIPAddress()]); // simpan log
+            // return $this->errorResponse($e->getMessage(), $code, 'error_500'); // tampilkan error
+            return pesan($code, $e->getMessage());
         }
+    }
+
+    public function forgotPassword()
+    {
+        $data = [
+            'title' => 'Forgot Password'
+        ];
+
+        return view('Auth/forgot-password', $data);
     }
 }

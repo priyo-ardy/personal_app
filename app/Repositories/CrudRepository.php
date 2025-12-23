@@ -2,10 +2,11 @@
 
 namespace App\Repositories;
 
-use app\Interfaces\CrudRepositoryInterface;
+use App\Interfaces\CrudRepositoryInterface;;
+
 use CodeIgniter\Model;
 
-abstract class BaseRepository implements CrudRepositoryInterface
+abstract class CrudRepository implements CrudRepositoryInterface
 {
     protected $model;
 

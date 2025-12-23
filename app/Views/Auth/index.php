@@ -4,178 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Ardy Priyo Sudiyantoko">
+    <meta name="company" content="PT. Informasi Anonim Indonesia">
+
     <title>Form Autorisasi User</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-    <style>
-        :root {
-            --primary-color: #4361ee;
-            --primary-hover: #3a56d4;
-            --secondary-color: #6c757d;
-            --light-bg: #f8f9fa;
-            --border-radius: 10px;
-            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-        }
-
-        body {
-            background-color: #f5f7fb;
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .auth-container {
-            max-width: 450px;
-            width: 100%;
-            margin: 0 auto;
-        }
-
-        .auth-card {
-            background-color: white;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            padding: 40px;
-            border: none;
-        }
-
-        .company-logo {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .logo-icon {
-            background-color: var(--primary-color);
-            color: white;
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 15px;
-            font-size: 32px;
-        }
-
-        .company-name {
-            font-size: 24px;
-            font-weight: 600;
-            color: #333;
-            letter-spacing: 0.5px;
-        }
-
-        .company-tagline {
-            color: var(--secondary-color);
-            font-size: 14px;
-            margin-top: 5px;
-        }
-
-        .form-label {
-            font-weight: 500;
-            margin-bottom: 8px;
-            color: #555;
-        }
-
-        .form-control {
-            padding: 12px 15px;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-            transition: all 0.3s;
-        }
-
-        .form-control:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 0.25rem rgba(67, 97, 238, 0.25);
-        }
-
-        .input-group-text {
-            background-color: #f8f9fa;
-            border: 1px solid #ddd;
-            border-right: none;
-            border-radius: 8px 0 0 8px;
-        }
-
-        .password-toggle {
-            cursor: pointer;
-            background-color: #f8f9fa;
-            border: 1px solid #ddd;
-            border-left: none;
-            border-radius: 0 8px 8px 0;
-        }
-
-        .btn-primary {
-            background-color: var(--primary-color);
-            border-color: var(--primary-color);
-            padding: 12px;
-            border-radius: 8px;
-            font-weight: 500;
-            transition: all 0.3s;
-        }
-
-        .btn-primary:hover {
-            background-color: var(--primary-hover);
-            border-color: var(--primary-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .divider {
-            display: flex;
-            align-items: center;
-            text-align: center;
-            margin: 25px 0;
-            color: #aaa;
-            font-size: 14px;
-        }
-
-        .divider::before,
-        .divider::after {
-            content: '';
-            flex: 1;
-            border-bottom: 1px solid #eee;
-        }
-
-        .divider span {
-            padding: 0 15px;
-        }
-
-        .form-footer {
-            text-align: center;
-            margin-top: 25px;
-            color: var(--secondary-color);
-            font-size: 14px;
-        }
-
-        .form-footer a {
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .form-footer a:hover {
-            text-decoration: underline;
-        }
-
-        .alert {
-            border-radius: 8px;
-            padding: 12px 15px;
-            font-size: 14px;
-        }
-
-        /* Responsiveness */
-        @media (max-width: 576px) {
-            .auth-card {
-                padding: 30px 25px;
-            }
-
-            body {
-                padding: 15px;
-            }
-        }
-    </style>
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.26.17/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="<?= base_url('css/auth.css') ?>">
 </head>
 
 <body>
@@ -186,18 +25,24 @@
                 <div class="logo-icon">
                     <i class="bi bi-shield-lock"></i>
                 </div>
-                <h1 class="company-name">SecureTech</h1>
-                <p class="company-tagline">Sistem Autorisasi Terpercaya</p>
+                <h1 class="company-name">PT. Informasi Anonim Indonesia</h1>
+                <p class="company-tagline">Data anda adalah asset kami</p>
             </div>
 
+            <!-- Judul Form -->
+            <div class="divider"></div>
+
             <!-- Pesan Informasi -->
-            <div class="alert alert-info d-flex align-items-center" role="alert">
-                <i class="bi bi-info-circle-fill me-2"></i>
-                <div>Silakan masuk dengan kredensial Anda untuk mengakses sistem</div>
+            <div class="alert alert-warning align-items-center" id="errorAlert" role="alert" hidden>
+                <div id="errorMessage"></div>
+            </div>
+
+            <div class="alert alert-success align-items-center" id="successAlert" role="alert" hidden>
+                <div id="successMessage"></div>
             </div>
 
             <!-- Form Autorisasi -->
-            <form method="post" action="#">
+            <form id="formAuth">
                 <!-- Username Field -->
                 <div class="mb-4">
                     <label for="username" class="form-label">
@@ -207,9 +52,9 @@
                         <span class="input-group-text">
                             <i class="bi bi-person"></i>
                         </span>
-                        <input type="text" class="form-control" id="username" name="username" placeholder="Masukkan username" required>
+                        <input type="text" class="form-control" id="username" name="user_name" placeholder="Enter username" required autocomplete="off">
+                        <div class="invalid-feedback"></div>
                     </div>
-                    <div class="form-text">Gunakan username yang terdaftar di sistem</div>
                 </div>
 
                 <!-- Password Field -->
@@ -221,28 +66,18 @@
                         <span class="input-group-text">
                             <i class="bi bi-lock"></i>
                         </span>
-                        <input type="password" class="form-control" id="password" name="password" placeholder="Masukkan password" required>
+                        <input type="password" class="form-control" id="password" name="user_password" placeholder="Enter password" required>
                         <span class="input-group-text password-toggle" id="togglePassword">
                             <i class="bi bi-eye"></i>
                         </span>
-                    </div>
-                    <div class="form-text">Password bersifat case-sensitive</div>
-                </div>
-
-                <!-- Opsi Ingat Saya -->
-                <div class="mb-4">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="rememberMe">
-                        <label class="form-check-label" for="rememberMe">
-                            Ingat saya
-                        </label>
+                        <div class="invalid-feedback"></div>
                     </div>
                 </div>
 
                 <!-- Tombol Submit -->
                 <div class="d-grid gap-2 mb-4">
-                    <button type="submit" class="btn btn-primary">
-                        <i class="bi bi-box-arrow-in-right me-2"></i> Masuk ke Sistem
+                    <button type="button" id="btnAuth" class="btn btn-primary">
+                        <i class="bi bi-box-arrow-in-right me-2"></i> Sign In
                     </button>
                 </div>
             </form>
@@ -250,9 +85,9 @@
             <!-- Footer Form -->
             <div class="form-footer">
                 <p>
-                    Lupa password? <a href="#">Reset di sini</a><br>
-                    Tidak memiliki akun? <a href="#">Hubungi administrator</a><br>
-                    <small class="text-muted">© 2023 SecureTech. Hak cipta dilindungi undang-undang.</small>
+                    Forgot password? <a href="#">Reset here</a><br>
+                    Don't have an account? <a href="#">Contact our administrator</a><br>
+                    <small class="text-muted">© 2023 Ardy Priyo Sudiyantoko, All rights reserved.</small>
                 </p>
             </div>
         </div>
@@ -260,6 +95,11 @@
 
     <!-- Bootstrap Bundle with Popper (untuk tooltip) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.26.17/dist/sweetalert2.all.min.js"></script>
+    <!-- Custom JS -->
+    <script src="<?= base_url() . 'js/App/fetching.js' ?>"></script>
+    <script src="<?= base_url() . 'js/Auth/auth.js' ?>"></script>
 </body>
 
 </html>

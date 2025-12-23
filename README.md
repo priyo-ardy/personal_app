@@ -31,10 +31,11 @@ Untuk menggunakan proyek ini, Anda dapat mengikuti langkah-langkah berikut:
 2. Buka terminal atau command prompt, lalu arahkan ke direktori proyek.
 3. Jalankan perintah `composer install` untuk menginstal dependensi proyek.
 4. Konfigurasi database pada file `.env` sesuai dengan konfigurasi database Anda.
-5. Jalankan perintah `php spark migrate` untuk menjalankan migrasi database.
-6. Jalankan perintah `php spark serve` untuk menjalankan server development.
-7. Buka browser dan akses `http://localhost:8080` untuk melihat aplikasi.
-8. Pada file `.env` tambahkan baris phone_salt dan email_salt untuk hashing email dan nomor telepon
+5. Pada file `.env` tambahkan baris `phone_salt` dan `email_salt` untuk `hashing email dan nomor telepon user`
+6. Jalankan perintah `php spark migrate` untuk menjalankan migrasi database.
+7. Jalankan perintah `php spark db:seed RestoreData` untuk mengisi data awal seperti data login dan master data lainnya
+8. Jalankan perintah `php spark serve` untuk menjalankan server development.
+9. Buka browser dan akses `http://localhost:8080` untuk melihat aplikasi.
 
 ## Kontribusi
 
