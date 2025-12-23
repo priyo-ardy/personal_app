@@ -1,4 +1,4 @@
-# Project Inj
+# Codeigniter 4 Personal Project
 
 Project Inj adalah sebuah aplikasi web yang menggunakan framework CodeIgniter 4. Aplikasi ini dirancang untuk membantu programmer dalam mengelola struktur folder pada proyek mereka.
 
