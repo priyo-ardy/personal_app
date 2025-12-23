@@ -56,4 +56,12 @@ class AuthController extends BaseController
 
         return view('Auth/forgot-password', $data);
     }
+
+    public function logout()
+    {
+        session()->destroy();
+        helper('cookie');
+        delete_cookie('is_user_logged_in'); // Hapus flag cookie
+        return redirect()->to('/login');
+    }
 }
