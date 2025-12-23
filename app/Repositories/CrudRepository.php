@@ -1,0 +1,45 @@
+<?php
+
+namespace App\Repositories;
+
+use app\Interfaces\CrudRepositoryInterface;
+use CodeIgniter\Model;
+
+abstract class BaseRepository implements CrudRepositoryInterface
+{
+    protected $model;
+
+    public function __construct(Model $model)
+    {
+        $this->model = $model;
+    }
+
+    public function all($orderColumn = null, $orderDirection = null)
+    {
+        if ($orderColumn && $orderDirection) {
+            return $this->model->orderBy($orderColumn, $orderDirection)->findAll();
+        }
+
+        return $this->model->findAll();
+    }
+
+    public function find(string $id)
+    {
+        return $this->model->find($id);
+    }
+
+    public function create(array $data)
+    {
+        return $this->model->insert($data);
+    }
+
+    public function update(string $id, array $data)
+    {
+        return $this->model->update($id, $data);
+    }
+
+    public function delete(string $id)
+    {
+        return $this->model->delete($id);
+    }
+}
