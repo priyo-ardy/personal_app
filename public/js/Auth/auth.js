@@ -112,11 +112,8 @@ function prosesLogin() {
           if (!errorAlert.hasAttribute("hidden")) {
             errorAlert.setAttribute("hidden", true);
           }
-
-          successAlert.removeAttribute("hidden");
           successMessage.innerHTML = result.message;
-          bukaForm();
-          clearForm();
+          window.location.replace(baseurl + '/dashboard');
         })
         .catch((error) => {
           if (!successAlert.hasAttribute("hidden")) {

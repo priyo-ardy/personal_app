@@ -85,7 +85,7 @@
             <!-- Footer Form -->
             <div class="form-footer">
                 <p>
-                    Forgot password? <a href="#">Reset here</a><br>
+                    Forgot password? <a href="<?= base_url() . 'forgot-password' ?>">Reset here</a><br>
                     Don't have an account? <a href="#">Contact our administrator</a><br>
                     <small class="text-muted">© 2023 Ardy Priyo Sudiyantoko, All rights reserved.</small>
                 </p>
@@ -99,7 +99,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.26.17/dist/sweetalert2.all.min.js"></script>
     <!-- Custom JS -->
     <script src="<?= base_url() . 'js/App/fetching.js' ?>"></script>
-    <script src="<?= base_url() . 'js/Auth/auth.js' ?>"></script>
+    <script src="<?= base_url() . 'js/Auth/reset.js' ?>"></script>
 </body>
 
 </html>

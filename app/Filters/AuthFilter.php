@@ -16,8 +16,5 @@ class AuthFilter implements FilterInterface
         }
     }
 
-    public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
-    {
-        throw new \Exception('Not implemented');
-    }
+    public function after(RequestInterface $request, ResponseInterface $response, $arguments = null) {}
 }

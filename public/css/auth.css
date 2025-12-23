@@ -2,6 +2,7 @@
      --primary-color: #4361ee;
      --primary-hover: #3a56d4;
      --secondary-color: #6c757d;
+     --secondary-hover: #6c757d;
      --light-bg: #f8f9fa;
      --border-radius: 10px;
      --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
@@ -106,6 +107,22 @@
  .btn-primary:hover {
      background-color: var(--primary-hover);
      border-color: var(--primary-hover);
+     transform: translateY(-2px);
+     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+ }
+
+ .btn-secondary {
+     background-color: var(--secondary-color);
+     border-color: var(--secondary-color);
+     padding: 12px;
+     border-radius: 8px;
+     font-weight: 500;
+     transition: all 0.3s;
+ }
+
+ .btn-secondary:hover {
+     background-color: var(--secondary-hover);
+     border-color: var(--secondary-hover);
      transform: translateY(-2px);
      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
  }
