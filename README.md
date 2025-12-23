@@ -1,6 +1,6 @@
 # Codeigniter 4 Personal Project
 
-Project Inj adalah sebuah aplikasi web yang menggunakan framework CodeIgniter 4. Aplikasi ini dirancang untuk membantu programmer dalam mengelola struktur folder pada proyek mereka.
+Project ini adalah sebuah aplikasi web yang menggunakan framework CodeIgniter 4, bootstrap 5, vanilla.js. Aplikasi ini dirancang untuk menjadi personal portofolio dalam pengembangan aplikasi berbasis web.
 
 ## Struktur Folder
 
