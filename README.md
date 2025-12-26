@@ -41,13 +41,13 @@ Untuk menggunakan proyek ini, Anda dapat mengikuti langkah-langkah berikut:
 
 Untuk melakukan konfigurasi akun email, kamu harus menambahkan data berikut ini kedalam file `.env` (Jangan melakukan hard code pada file `app/config/Email.php`)
 
-`email.fromEmail` diisi dengan alamat pengirim email
-`email.fromName` diisi dengan nama pengirim email
-`email.SMTPHost` diisi dengan host pengirim email
-`email.SMTPUser` diisi dengan username akun pengirim email
-`email.SMTPPass` diisi dengan password akun pengirim email
-`email.SMTPPort` diisi dengan port akun pengirim email
-`email.SMTPCrypto` diisi dengan tipe enkripsi
+- **`email.fromEmail`** diisi dengan alamat pengirim email
+- **`email.fromName`** diisi dengan nama pengirim email
+- **`email.SMTPHost`** diisi dengan host pengirim email
+- **`email.SMTPUser`** diisi dengan username akun pengirim email
+- **`email.SMTPPass`** diisi dengan password akun pengirim email
+- **`email.SMTPPort`** diisi dengan port akun pengirim email
+- **`email.SMTPCrypto`** diisi dengan tipe enkripsi
 
 ## Pengiriman Email
 
