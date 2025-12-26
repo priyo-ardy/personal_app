@@ -47,4 +47,9 @@ class EmailRepository implements EmailInterface
     {
         return $this->model->update($jobId, ['status' => $status]);
     }
+
+    public function update(string $id, array $data)
+    {
+        return $this->model->update($id, $data);
+    }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-
+use App\Repositories\EmailRepository;
 use App\Repositories\UserRepository;
 use CodeIgniter\HTTP\ResponsableInterface;
 use App\Validation\AuthValidation;
@@ -13,6 +13,7 @@ use Config\Database;
 
 class ResetPasswordServices
 {
+    protected $emailRepo;
     protected $userRepo;
     protected $validasi;
     protected $db;
@@ -20,7 +21,8 @@ class ResetPasswordServices
 
     public function __construct(UserRepository $userRepo)
     {
-        $this->userRepo =  $userRepo;
+        $this->emailRepo =  new EmailRepository();
+        $this->userRepo = $userRepo;
         $this->validasi = Services::validation();
         $this->email = new EmailServices();
         $this->db = Database::connect();
@@ -74,7 +76,10 @@ class ResetPasswordServices
 
             log_message('error', "Failed to update new user password data {user}, " . $this->db->error(), ['user' => $get_user_by_email->user_name]);
             throw new \Exception("Request failed", ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
+            return;
         }
+
+        log_message("info", "Berhasil merubah user password {user} " . $this->db->getLastQuery(), ['user' => $get_user_by_email->user_name]);
 
         $data = [
             'full_name' => $get_user_by_email->full_name,

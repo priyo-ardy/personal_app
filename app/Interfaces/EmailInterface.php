@@ -10,4 +10,5 @@ interface EmailInterface
     public function getPendingJobs();
     public function updateQueue(string $jobId, array $data);
     public function updateJobStatus(string $jobId, string $status);
+    public function update(string $id, array $data);
 }

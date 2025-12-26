@@ -39,4 +39,9 @@ class UserRepository extends CrudRepository implements UserRepositoryInterface
     {
         return $this->model->insert($data);
     }
+
+    public function update(string $id, array $data)
+    {
+        return $this->model->update($id, $data);
+    }
 }
