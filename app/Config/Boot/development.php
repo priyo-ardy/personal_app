@@ -23,6 +23,9 @@ ini_set('display_errors', '1');
  */
 defined('SHOW_DEBUG_BACKTRACE') || define('SHOW_DEBUG_BACKTRACE', true);
 
+$env = new \CodeIgniter\Config\DotEnv(FCPATH . '.env');
+$env->load();
+
 /*
  |--------------------------------------------------------------------------
  | DEBUG MODE

@@ -6,8 +6,21 @@ use CodeIgniter\Config\BaseConfig;
 
 class Email extends BaseConfig
 {
-    public string $fromEmail  = 'no-reply@schlemmer.co.id';
-    public string $fromName   = 'System Administrator';
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->fromEmail  = $_ENV['email.fromEmail'] ?? 'noreply@example.com';
+        $this->fromName   = $_ENV['email.fromName'] ?? 'Your Name';
+        $this->SMTPHost   = $_ENV['email.SMTPHost'] ?? '';
+        $this->SMTPUser   = $_ENV['email.SMTPUser'] ?? '';
+        $this->SMTPPass   = $_ENV['email.SMTPPass'] ?? '';
+        $this->SMTPPort   = (int)($_ENV['email.SMTPPort'] ?? 587);
+        $this->SMTPCrypto = $_ENV['email.SMTPCrypto'] ?? 'tls';
+    }
+
+    public string $fromEmail  = '';
+    public string $fromName   = '';
     public string $recipients = '';
 
     /**
@@ -29,26 +42,23 @@ class Email extends BaseConfig
     /**
      * SMTP Server Hostname
      */
-    // public string $SMTPHost = '';
-    public string $SMTPHost = 'smtp.gmail.com';
+    public string $SMTPHost = '';
 
     /**
      * SMTP Username
      */
-    // public string $SMTPUser = '';
-    public string $SMTPUser = 'schlemmerid.dev@gmail.com';
+    public string $SMTPUser = '';
+
 
     /**
      * SMTP Password
      */
-    // public string $SMTPPass = '';
-    public string $SMTPPass = 'qbzwvghjeqycxkxy';
+    public string $SMTPPass = '';
 
     /**
      * SMTP Port
      */
-    // public int $SMTPPort = 25;
-    public int $SMTPPort = 587;
+    public int $SMTPPort = 25;
 
     /**
      * SMTP Timeout (in seconds)
