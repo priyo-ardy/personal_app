@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Interfaces\CrudRepositoryInterface;;
+use App\Interfaces\CrudRepositoryInterface;
 
 use CodeIgniter\Model;
 

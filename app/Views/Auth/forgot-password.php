@@ -41,6 +41,9 @@
             <div class="alert alert-success align-items-center" id="successAlert" role="alert" hidden>
                 <div id="successMessage"></div>
             </div>
+            <div class="alert alert-danger align-items-center" id="errorAlert" role="alert" hidden>
+                <div id="errorMessage"></div>
+            </div>
 
             <!-- Form Autorisasi -->
             <form id="formForgot">
@@ -100,7 +103,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.26.17/dist/sweetalert2.all.min.js"></script>
     <!-- Custom JS -->
     <script src="<?= base_url() . 'js/App/fetching.js' ?>"></script>
-    <script src="<?= base_url() . 'js/Auth/auth.js' ?>"></script>
+    <script src="<?= base_url() . 'js/Auth/reset.js' ?>"></script>
 </body>
 
 </html>

@@ -99,7 +99,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.26.17/dist/sweetalert2.all.min.js"></script>
     <!-- Custom JS -->
     <script src="<?= base_url() . 'js/App/fetching.js' ?>"></script>
-    <script src="<?= base_url() . 'js/Auth/reset.js' ?>"></script>
+    <script src="<?= base_url() . 'js/Auth/auth.js' ?>"></script>
 </body>
 
 </html>

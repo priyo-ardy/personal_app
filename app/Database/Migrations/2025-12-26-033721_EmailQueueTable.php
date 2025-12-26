@@ -1,0 +1,76 @@
+<?php
+
+namespace App\Database\Migrations;
+
+use CodeIgniter\Database\Migration;
+
+class EmailQueueTable extends Migration
+{
+    public function up()
+    {
+        $this->forge->addField([
+            'id' => [
+                'type' => 'VARCHAR',
+                'constraint' => 50,
+                'null' => false,
+                'charset' => 'utf8mb4',
+                'collation' => 'utf8mb4_unicode_ci',
+            ],
+            'to_email' => [
+                'type' => 'VARCHAR',
+                'constraint' => 255,
+                'null' => false,
+                'charset' => 'utf8mb4',
+                'collation' => 'utf8mb4_unicode_ci',
+            ],
+            'subject' => [
+                'type' => 'VARCHAR',
+                'constraint' => 255,
+                'null' => false,
+                'charset' => 'utf8mb4',
+                'collation' => 'utf8mb4_unicode_ci',
+            ],
+            'body' => [
+                'type' => 'TEXT',
+                'null' => false,
+                'charset' => 'utf8mb4',
+                'collation' => 'utf8mb4_unicode_ci',
+            ],
+            'status' => [
+                'type' => 'ENUM',
+                'constraint' => ['pending', 'sent', 'failed'],
+                'default' => 'pending',
+                'charset' => 'utf8mb4',
+                'collation' => 'utf8mb4_unicode_ci',
+            ],
+            'reason' => [
+                'type' => 'TEXT',
+                'null' => true,
+                'charset' => 'utf8mb4',
+                'collation' => 'utf8mb4_unicode_ci',
+            ],
+            'created_at' => [
+                'type' => 'DATETIME',
+                'null' => true,
+                'charset' => 'utf8mb4',
+                'collation' => 'utf8mb4_unicode_ci',
+            ],
+            'updated_at' => [
+                'type' => 'DATETIME',
+                'null' => true,
+                'charset' => 'utf8mb4',
+                'collation' => 'utf8mb4_unicode_ci',
+            ]
+        ]);
+
+        $this->forge->addKey('id', true);
+        $this->forge->addKey('status');
+
+        $this->forge->createTable('q_email_queue', true);
+    }
+
+    public function down()
+    {
+        $this->forge->dropTable('q_email_queue', true);
+    }
+}
