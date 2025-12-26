@@ -1,0 +1,6 @@
+podman run -d \
+  --name my-app-container \
+  --network host \
+  -e DB_HOST=192.168.10.69 \
+  -v /home/appserver/ci4-app/spk:/var/www/html:Z \
+  my-app:latest

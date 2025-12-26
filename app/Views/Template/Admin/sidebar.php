@@ -182,25 +182,25 @@
                         </li>
                     </ul>
                 </li>
-                <!-- <li class="nav-item">
+                <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon bi bi-building"></i>
+                        <i class="nav-icon bi bi-gear"></i>
                         <p>
-                            Master Data Seeder
+                            ApplicationSetup
                             <i class="nav-arrow bi bi-chevron-right"></i>
                         </p>
                     </a>
-                    <ul class="nav nav-treeview">
+                    <ul class="nav-treeview">
                         <li class="nav-item">
-                            <a href="<?= base_url() . 'seeder' ?>" class="nav-link" onlick="loading()">
-                                <i class="bi bi-arrow-right-circle"></i>
+                            <a href="" class="nav-link">
+                                <i class="nav-icon bi bi-arrow-right-circle"></i>
                                 <p>
-                                    Master Data Seeder
+                                    Site Setting
                                 </p>
                             </a>
                         </li>
                     </ul>
-                </li> -->
+                </li>
                 <li class="nav-item">
                     <a href="<?= base_url() . 'logout' ?>" class="nav-link">
                         <i class="nav-icon bi bi-box-arrow-left"></i>

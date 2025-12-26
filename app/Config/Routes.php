@@ -12,5 +12,6 @@ $routes->post('reset-password', 'AuthController::resetPassword', ['filter' => 'r
 $routes->get('/logout', 'AuthController::logout');
 
 $routes->group('', ['filter' => 'auth'], static function ($routes) {
+    // Routes ke halaman dashboard
     $routes->get('/dashboard', 'Dashboard\DashboardController::index');
 });

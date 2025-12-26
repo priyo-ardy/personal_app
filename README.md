@@ -37,6 +37,22 @@ Untuk menggunakan proyek ini, Anda dapat mengikuti langkah-langkah berikut:
 8. Jalankan perintah `php spark serve` untuk menjalankan server development.
 9. Buka browser dan akses `http://localhost:8080` untuk melihat aplikasi.
 
+## Konfigurasi Email
+
+Untuk melakukan konfigurasi akun email, kamu harus menambahkan data berikut ini kedalam file `.env` (Jangan melakukan hard code pada file `app/config/Email.php`)
+
+`email.fromEmail` diisi dengan alamat pengirim email
+`email.fromName` diisi dengan nama pengirim email
+`email.SMTPHost` diisi dengan host pengirim email
+`email.SMTPUser` diisi dengan username akun pengirim email
+`email.SMTPPass` diisi dengan password akun pengirim email
+`email.SMTPPort` diisi dengan port akun pengirim email
+`email.SMTPCrypto` diisi dengan tipe enkripsi
+
+## Pengiriman Email
+
+Untuk mengirim email (yang terdapat pada antrian) silahkan eksekusi `php spark email:pending` perintah ini akan mengeksekusi semua email yang statusnya pending maupun failed
+
 ## Kontribusi
 
 Jika Anda ingin berkontribusi pada proyek ini, silakan ikuti langkah-langkah berikut:
