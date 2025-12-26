@@ -74,6 +74,7 @@ class AuthService
             'user_name' => $cek_user->user_name,
             'full_name' => $cek_user->full_name,
             'user_level' => $cek_user->user_level,
+            'user_image' => $cek_user->user_image
         ];
 
         session()->set($session_data);
