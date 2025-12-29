@@ -14,4 +14,7 @@ $routes->get('/logout', 'AuthController::logout');
 $routes->group('', ['filter' => 'auth'], static function ($routes) {
     // Routes ke halaman dashboard
     $routes->get('/dashboard', 'Dashboard\DashboardController::index');
+
+    // Site Setting
+    $routes->get('/site-setting', 'SiteSetting\SiteSettingController::index');
 });

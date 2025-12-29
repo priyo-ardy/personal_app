@@ -67,3 +67,55 @@ if (!function_exists('phone_hash')) {
         return hash('sha256', $secret_key . $phone_number);
     }
 }
+
+if (!function_exists('updateEnv')) {
+    /**
+     * Update file .env
+     *
+     * @param array $data Array Key => Value yang ingin diupdate
+     * @return bool
+     */
+    function updateEnv(array $data)
+    {
+        $path = ROOTPATH . '.env';
+
+        if (!file_exists($path)) {
+            // Jika tidak ada .env, coba cek .env.example atau buat baru
+            return false;
+        }
+
+        // Baca semua isi file .env sebagai string
+        $content = file_get_contents($path);
+
+        foreach ($data as $key => $value) {
+            // Sanitasi input: Hapus spasi berlebih
+            $value = trim($value);
+
+            // Jika value mengandung spasi, apit dengan tanda kutip
+            if (strpos($value, ' ') !== false) {
+                $value = '"' . $value . '"';
+            }
+
+            // Regex untuk mencari baris: KEY=lama
+            // Penjelasan Regex:
+            // ^        : Awal baris
+            // \s* : Spasi opsional
+            // $key     : Nama variable (misal email.SMTPHost)
+            // \s* : Spasi opsional
+            // =        : Tanda sama dengan
+            // .* : Apapun isinya sampai akhir baris
+            $pattern = "/^" . preg_quote($key, '/') . "\s*=.*$/m";
+
+            if (preg_match($pattern, $content)) {
+                // Jika Key ditemukan, GANTI baris tersebut
+                $content = preg_replace($pattern, "{$key}={$value}", $content);
+            } else {
+                // Jika Key TIDAK ditemukan, TAMBAHKAN di baris paling bawah
+                $content .= PHP_EOL . "{$key}={$value}";
+            }
+        }
+
+        // Tulis kembali ke file
+        return file_put_contents($path, $content) !== false;
+    }
+}

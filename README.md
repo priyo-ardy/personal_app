@@ -1,6 +1,6 @@
 # Codeigniter 4 Personal Project
 
-Project ini adalah sebuah aplikasi web yang menggunakan framework CodeIgniter 4, bootstrap 5, vanilla.js. Aplikasi ini dirancang untuk menjadi personal portofolio dalam pengembangan aplikasi berbasis web.
+Project ini adalah sebuah aplikasi web yang menggunakan framework CodeIgniter 4, bootstrap 5, vanilla.js. Aplikasi ini dirancang untuk menjadi personal portofolio dalam pengembangan aplikasi berbasis web. Gunanakn php versi 8.3 keatas untuk hasil yang lebih stabil.
 
 ## Struktur Folder
 

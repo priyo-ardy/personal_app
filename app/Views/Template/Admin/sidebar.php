@@ -186,13 +186,13 @@
                     <a href="#" class="nav-link">
                         <i class="nav-icon bi bi-gear"></i>
                         <p>
-                            ApplicationSetup
+                            Application Setup
                             <i class="nav-arrow bi bi-chevron-right"></i>
                         </p>
                     </a>
                     <ul class="nav-treeview">
                         <li class="nav-item">
-                            <a href="" class="nav-link">
+                            <a href="<?= base_url('site-setting') ?>" class="nav-link">
                                 <i class="nav-icon bi bi-arrow-right-circle"></i>
                                 <p>
                                     Site Setting
