@@ -9,12 +9,13 @@
 
     <title>Form Autorisasi User</title>
     <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?= base_url() ?>bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="<?= base_url() ?>/bootstrap-icons/font/bootstrap-icons.css">
     <!-- SweetAlert2 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.26.17/dist/sweetalert2.min.css">
-    <link rel="stylesheet" href="<?= base_url('css/auth.css') ?>">
+    <link rel="stylesheet" href="<?= base_url() ?>/sweetalert2/dist/sweetalert2.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="<?= base_url() ?>/css/auth.css">
 </head>
 
 <body>
@@ -94,9 +95,9 @@
     </div>
 
     <!-- Bootstrap Bundle with Popper (untuk tooltip) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="<?= base_url() ?>/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- SweetAlert2 -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.26.17/dist/sweetalert2.all.min.js"></script>
+    <script src="<?= base_url() ?>/sweetalert2/dist/sweetalert2.all.min.js"></script>
     <!-- Custom JS -->
     <script src="<?= base_url() . 'js/App/fetching.js' ?>"></script>
     <script src="<?= base_url() . 'js/Auth/auth.js' ?>"></script>

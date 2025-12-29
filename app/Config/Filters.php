@@ -14,6 +14,7 @@ use CodeIgniter\Filters\PerformanceMetrics;
 use CodeIgniter\Filters\SecureHeaders;
 use App\Filters\RateLimiterFilter;
 use App\Filters\AuthFilter;
+use App\Filters\RoleFilter;
 
 class Filters extends BaseFilters
 {
@@ -37,7 +38,8 @@ class Filters extends BaseFilters
         'pagecache'     => PageCache::class,
         'performance'   => PerformanceMetrics::class,
         'ratelimit'     => RateLimiterFilter::class,
-        'auth'          => AuthFilter::class
+        'auth'          => AuthFilter::class,
+        'role'          => RoleFilter::class
     ];
 
     /**

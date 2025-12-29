@@ -24,6 +24,7 @@ class UserModel extends Model
         'user_image',
         'user_status',
         'user_level',
+        'remark',
         'login_attempts',
         'last_login',
         'login_from',

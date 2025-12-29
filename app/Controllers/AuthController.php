@@ -86,6 +86,6 @@ class AuthController extends BaseController
         session()->destroy();
         helper('cookie');
         delete_cookie('is_user_logged_in'); // Hapus flag cookie
-        return redirect()->to('/login');
+        return redirect()->to(base_url());
     }
 }
