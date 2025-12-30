@@ -82,7 +82,7 @@ class UsersService
 
         if ($this->db->transStatus() === false) {
             $this->db->transRollback();
-            log_message('error', "Failed to create new user : {user}, with error {err}", ['user' => $data['user_name'], 'err' => $this->db->getLastQuery()]);
+            log_message('error', "Failed to create new user : {user}", ['user' => $data['user_name']]);
             throw new \Exception('Failed to create new user', ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
         }
 

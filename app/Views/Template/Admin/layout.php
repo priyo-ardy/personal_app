@@ -153,7 +153,7 @@
     <!-- SweetAlert Plugins -->
     <script src="<?= base_url() ?>sweetalert2/dist/sweetalert2.all.min.js"></script>
     <!-- Datatable -->
-    <!-- <script src="<?= base_url() ?>DataTables/datatables.min.js"></script> -->
+    <script src="<?= base_url() ?>DataTables/datatables.min.js"></script>
     <!-- AdminLTE JS -->
     <script src="<?= base_url() . 'admin-lte/dist/js/adminlte.min.js'; ?>"></script>
     <!-- Summernote -->

@@ -6,8 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Ardy Priyo Sudiyantoko">
     <meta name="company" content="PT. Informasi Anonim Indonesia">
+    <link preload href="<?php echo base_url() . 'img/favicon.png'; ?>" rel="icon">
+    <link preload href="<?php echo base_url() . 'img/favicon.png'; ?>" rel="apple-touch-icon">
 
-    <title>Form Autorisasi User</title>
+    <title>User Authentication</title>
     <!-- Bootstrap 5 CSS -->
     <link href="<?= base_url() ?>bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
