@@ -71,7 +71,7 @@
                                     </div>
                                     <div class="form-group col-xl-3 col-lg-3 col-md-6 col-sm-12 clearfix mb-3">
                                         <label class="form-label" for="data_level">User Level <strong class="text-danger">*</strong></label>
-                                        <select name="data_level" id="data_level" class="form-select rounded-0" required>
+                                        <select name="data_level" id="data_level" class="form-select select2 select2bs5 rounded-0" required>
                                             <option value="">-- Choose User Level --</option>
                                             <option value="superadmin">Super Administrator</option>
                                             <option value="administrator">Administrator</option>
@@ -85,7 +85,7 @@
                                     </div>
                                     <div class="form-group col-12 mb-3 clearfix">
                                         <label class="form-label" for="data_remark">Remark</label>
-                                        <textarea name="data_remark" id="data_remark" class="form-control rounded-0" rows="3" placeholder="Remark"></textarea>
+                                        <textarea name="data_remark" id="data_remark" class="form-control summernote rounded-0" rows="3" placeholder="Remark"></textarea>
                                     </div>
                                 </div>
                             </div>

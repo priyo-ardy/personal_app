@@ -1,3 +1,7 @@
+document.addEventListener("DOMContentLoaded", () => {
+
+})
+
 const formData = document.getElementById("formData");
 
 const buttons = {
@@ -40,6 +44,7 @@ function resetForm() {
   formData.reset();
   $(inputForm.level).trigger("change");
   inputForm.user_name.focus();
+  $('.summernote').summernote('code', '');
 }
 
 buttons.save.addEventListener("click", () => {
@@ -62,3 +67,13 @@ buttons.save.addEventListener("click", () => {
     }
   }
 });
+
+buttons.back.addEventListener('click', (e) => {
+  loading();
+  window.location.replace(baseurl + '/users');
+});
+
+buttons.cancel.addEventListener('click', (e) => {
+  resetForm();
+  hideLoading();
+})

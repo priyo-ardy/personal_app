@@ -58,4 +58,32 @@ class UsersController extends BaseController
             return pesan($code, $e->getMessage());
         }
     }
+
+    function loadTable()
+    {
+        if ($this->request->isAJAX()) {
+            $requestData = $this->request->getPost();
+
+            $output = $this->userService->loadTable($requestData);
+
+            return $this->response->setJSON($output);
+        }
+
+        return $this->response->setStatusCode(ResponseInterface::HTTP_BAD_REQUEST);
+    }
+
+    function exportData()
+    {
+        try {
+            return $this->userService->exportData();
+        } catch (\Exception $e) {
+            $code = $e->getCode() ?? ResponseInterface::HTTP_INTERNAL_SERVER_ERROR; // jika tidak ada kode error di exception, kembalikan error 500
+            log_message('error', "Unexpected error occured : {err} from {ip}", ['err' => $e->getMessage(), 'ip' => $this->request->getIPAddress()]); // simpan log
+            return pesan($code, $e->getMessage());
+        }
+    }
+    function getUser($token)
+    {
+        echo $token;
+    }
 }

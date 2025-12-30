@@ -44,4 +44,13 @@ class UserRepository extends CrudRepository implements UserRepositoryInterface
     {
         return $this->model->update($id, $data);
     }
+
+    public function getChunkedData($offset, $limit, $order, $column)
+    {
+        return $this->model->select($column)
+            ->orderBy($order, 'ASC')
+            ->limit($limit, $offset)
+            ->get()
+            ->getResultObject();
+    }
 }

@@ -25,7 +25,7 @@ if (!function_exists('enkripsi')) {
     {
         $encrypter = service('encrypter');
 
-        return base64_encode($encrypter->encrypt($value));
+        return bin2hex(base64_encode($encrypter->encrypt($value)));
     }
 }
 
@@ -34,7 +34,7 @@ if (!function_exists('dekripsi')) {
     {
         $decrypter = service('encrypter');
 
-        return $decrypter->decrypt(base64_decode($value));
+        return $decrypter->decrypt(base64_decode(hex2bin($value)));
     }
 }
 

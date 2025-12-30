@@ -112,6 +112,13 @@ class UserTable extends Migration
                 'charset' => 'utf8',
                 'collation' => 'utf8mb4_uca1400_ai_ci'
             ],
+            'remark' => [
+                'type' => "TEXT",
+                'null' => true,
+                'default' => null,
+                'charset' => 'utf-8',
+                'collation' => 'utf8mb4_uca1400_ai_ci'
+            ],
             'created_at' => [
                 'type' => "DATETIME",
                 'null' => true,

@@ -47,7 +47,10 @@ Untuk melakukan konfigurasi akun email, kamu harus menambahkan data berikut ini 
 - **`email.SMTPUser`** diisi dengan username akun pengirim email
 - **`email.SMTPPass`** diisi dengan password akun pengirim email
 - **`email.SMTPPort`** diisi dengan port akun pengirim email
-- **`email.SMTPCrypto`** diisi dengan tipe enkripsi
+- **`email.SMTPCrypto`** diisi dengan tipe enkripsi (ssl/tls/dll)
+- **`email.mailType`** diisi dengan tipe ebody email (Text/html)
+- **`email.charset`** diisi dengan default charset (utf-8)
+- **`email.newline`** diisi dengan tanda pemisah baris/garis baru (\r\n)
 
 ## Pengiriman Email
 

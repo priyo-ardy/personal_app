@@ -10,13 +10,16 @@ class Email extends BaseConfig
     {
         parent::__construct();
 
-        $this->fromEmail  = $_ENV['email.fromEmail'] ?? 'noreply@example.com';
-        $this->fromName   = $_ENV['email.fromName'] ?? 'Your Name';
-        $this->SMTPHost   = $_ENV['email.SMTPHost'] ?? '';
-        $this->SMTPUser   = $_ENV['email.SMTPUser'] ?? '';
-        $this->SMTPPass   = $_ENV['email.SMTPPass'] ?? '';
-        $this->SMTPPort   = (int)($_ENV['email.SMTPPort'] ?? 587);
-        $this->SMTPCrypto = $_ENV['email.SMTPCrypto'] ?? 'tls';
+        $this->fromEmail    = $_ENV['email.fromEmail'] ?? 'noreply@example.com';
+        $this->fromName     = $_ENV['email.fromName'] ?? 'Your Name';
+        $this->SMTPHost     = $_ENV['email.SMTPHost'] ?? '';
+        $this->SMTPUser     = $_ENV['email.SMTPUser'] ?? '';
+        $this->SMTPPass     = $_ENV['email.SMTPPass'] ?? '';
+        $this->SMTPPort     = (int)($_ENV['email.SMTPPort'] ?? 587);
+        $this->SMTPCrypto   = $_ENV['email.SMTPCrypto'] ?? 'tls';
+        $this->mailType     = $_ENV['email.mailType'] ?? 'html';
+        $this->charset      = $_ENV['email.charset'] ?? 'utf-8';
+        $this->newline      = $_ENV['email.newline'] ?? "\r\n";
     }
 
     public string $fromEmail  = '';
