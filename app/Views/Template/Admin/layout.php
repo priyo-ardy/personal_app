@@ -141,7 +141,7 @@
     </div>
 
     <!-- JQuery -->
-    <script src="<?= base_url() ?>js/JQuery/jquery-3.7.1.js"></script>
+    <script src="<?= base_url() ?>js/JQuery/jquery-3.7.1.min.js"></script>
     <!-- Popper -->
     <script src="<?= base_url() ?>@popperjs/core/dist/umd/popper.min.js"></script>
     <!-- Bootstrap -->

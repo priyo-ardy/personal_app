@@ -13,57 +13,43 @@ class EmailQueueTable extends Migration
                 'type' => 'VARCHAR',
                 'constraint' => 50,
                 'null' => false,
-                'charset' => 'utf8mb4',
-                'collation' => 'utf8mb4_unicode_ci',
             ],
             'to_email' => [
                 'type' => 'VARCHAR',
                 'constraint' => 255,
                 'null' => false,
-                'charset' => 'utf8mb4',
-                'collation' => 'utf8mb4_unicode_ci',
             ],
             'subject' => [
                 'type' => 'VARCHAR',
                 'constraint' => 255,
                 'null' => false,
-                'charset' => 'utf8mb4',
-                'collation' => 'utf8mb4_unicode_ci',
             ],
             'body' => [
                 'type' => 'TEXT',
                 'null' => false,
-                'charset' => 'utf8mb4',
-                'collation' => 'utf8mb4_unicode_ci',
             ],
             'status' => [
-                'type' => 'ENUM',
-                'constraint' => ['pending', 'sent', 'failed'],
+                // 'type' => 'ENUM',
+                // 'constraint' => ['pending', 'sent', 'failed'],
+                'type' => 'VARCHAR',
+                'constraint' => 50,
                 'default' => 'pending',
-                'charset' => 'utf8mb4',
-                'collation' => 'utf8mb4_unicode_ci',
             ],
             'reason' => [
                 'type' => 'TEXT',
                 'null' => true,
-                'charset' => 'utf8mb4',
-                'collation' => 'utf8mb4_unicode_ci',
             ],
             'created_at' => [
-                'type' => 'DATETIME',
+                'type' => 'TIMESTAMP',
                 'null' => true,
-                'charset' => 'utf8mb4',
-                'collation' => 'utf8mb4_unicode_ci',
             ],
             'updated_at' => [
-                'type' => 'DATETIME',
+                'type' => 'TIMESTAMP',
                 'null' => true,
-                'charset' => 'utf8mb4',
-                'collation' => 'utf8mb4_unicode_ci',
             ]
         ]);
 
-        $this->forge->addKey('id', true);
+        $this->forge->addKey('id', true, true);
         $this->forge->addKey('status');
 
         $this->forge->createTable('q_email_queue', true);

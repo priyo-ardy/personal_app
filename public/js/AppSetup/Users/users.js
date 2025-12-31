@@ -1,6 +1,6 @@
 window.onload = () => {
   loadTable();
-}
+};
 
 const buttons = {
   add: document.getElementById("btnAdd"),
@@ -15,7 +15,7 @@ buttons.add.addEventListener("click", () => {
 });
 
 function loadTable() {
-  $('#dataTable').DataTable({
+  $("#dataTable").DataTable({
     processing: true,
     serverSide: true,
     responsive: true,
@@ -44,34 +44,36 @@ function refreshTable() {
   $("#dataTable").DataTable().ajax.reload(null, false);
 }
 
-buttons.refresh.addEventListener('click', () => {
+buttons.refresh.addEventListener("click", () => {
   refreshTable();
-})
+});
 
 function editData(token) {
   try {
     loading();
-    fetchData(baseurl + '/users/get/' + token, 'GET')
-      .then(result => { })
-      .catch(err => {
+    fetchData(baseurl + "/users/get/" + token, "GET")
+      .then((result) => {
+        window.location.replace(baseurl + "/users/show/" + result.data);
+      })
+      .catch((err) => {
         pesanError(err.message);
         hideLoading();
-      })
+      });
   } catch (e) {
     pesanError(e.message);
     hideLoading();
   }
 }
 
-buttons.export.addEventListener('click', async () => {
+buttons.export.addEventListener("click", async () => {
   try {
     loading();
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 300000);
 
-    const response = await fetch(baseurl + '/users/export', {
-      method: 'GET',
-      signal: controller.signal
+    const response = await fetch(baseurl + "/users/export", {
+      method: "GET",
+      signal: controller.signal,
     });
 
     clearTimeout(timeoutId);
@@ -107,4 +109,4 @@ buttons.export.addEventListener('click', async () => {
     pesanError(e.message);
     hideLoading();
   }
-})
+});

@@ -13,27 +13,19 @@ class SessionTable extends Migration
                 'type' => "VARCHAR",
                 'constraint' => 128,
                 'null' => false,
-                'charset' => 'utf8',
-                'collation' => 'utf8mb4_uca1400_ai_ci',
             ],
             'ip_address' => [
                 'type' => "VARCHAR",
                 'constraint' => 45,
                 'null' => false,
-                'charset' => 'utf8',
-                'collation' => 'utf8mb4_uca1400_ai_ci',
             ],
             'timestamp' => [
                 'type' => "TIMESTAMP",
                 'null' => false,
-                'charset' => 'utf8',
-                'collation' => 'utf8mb4_uca1400_ai_ci',
             ],
             'data' => [
                 'type' => "BLOB",
                 'null' => false,
-                'charset' => 'utf8',
-                'collation' => 'utf8mb4_uca1400_ai_ci',
             ],
         ]);
 

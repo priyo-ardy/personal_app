@@ -13,152 +13,118 @@ class UserTable extends Migration
                 'type' => "VARCHAR",
                 'constraint' => 50,
                 'null' => false,
-                'charset' => 'utf8',
-                'collation' => 'utf8mb4_uca1400_ai_ci'
             ],
             'user_name' => [
                 'type' => "VARCHAR",
                 'constraint' => 50,
                 'null' => false,
-                'charset' => 'utf8',
-                'collation' => 'utf8mb4_uca1400_ai_ci'
             ],
             'full_name' => [
                 'type' => "VARCHAR",
                 'constraint' => 150,
                 'null' => false,
-                'charset' => 'utf8',
-                'collation' => 'utf8mb4_uca1400_ai_ci'
             ],
             'user_password' => [
                 'type' => "VARCHAR",
                 'constraint' => 255,
                 'null' => false,
-                'charset' => 'utf8',
-                'collation' => 'utf8mb4_uca1400_ai_ci'
             ],
             'user_email' => [
-                'type' => "VARCHAR",
-                'constraint' => 255,
+                'type' => "TEXT",
                 'null' => true,
-                'charset' => 'utf8',
-                'collation' => 'utf8mb4_uca1400_ai_ci'
             ],
             'user_phone' => [
-                'type' => "VARCHAR",
-                'constraint' => 255,
+                'type' => "TEXT",
                 'null' => true,
-                'charset' => 'utf8',
-                'collation' => 'utf8mb4_uca1400_ai_ci'
             ],
             'email_hash' => [
                 'type' => "VARCHAR",
                 'constraint' => 100,
                 'null' => true,
-                'charset' => 'utf8',
-                'collation' => 'utf8mb4_uca1400_ai_ci'
             ],
             'phone_hash' => [
                 'type' => "VARCHAR",
                 'constraint' => 150,
                 'null' => true,
-                'charset' => 'utf8',
-                'collation' => 'utf8mb4_uca1400_ai_ci'
             ],
             'user_image' => [
                 'type' => "VARCHAR",
                 'constraint' => 255,
                 'null' => false,
                 'default' => 'default.png',
-                'charset' => 'utf8',
-                'collation' => 'utf8mb4_uca1400_ai_ci'
             ],
             'user_status' => [
-                'type' => "ENUM",
-                'constraint' => "'active', 'inactive'",
+                // 'type' => "ENUM",
+                // 'constraint' => "'active', 'inactive'",
+                'type' => "VARCHAR",
+                'constraint' => 20,
                 'null' => false,
                 'default' => 'active',
-                'charset' => 'utf8',
-                'collation' => 'utf8mb4_uca1400_ai_ci'
             ],
             'user_level' => [
-                'type' => "ENUM",
-                'constraint' => "'superadmin', 'manager', 'supervisor', 'leader', 'admin', 'user'",
+                // 'type' => "ENUM", 
+                // 'constraint' => "'superadmin', 'manager', 'supervisor', 'leader', 'admin', 'user'",
+                'type' => "VARCHAR",
+                'constraint' => 20,
                 'null' => false,
                 'default' => 'user',
-                'charset' => 'utf8',
-                'collation' => 'utf8mb4_uca1400_ai_ci'
             ],
             'login_attempts' => [
                 'type' => "INT",
-                'constraint' => 11,
+                // 'constraint' => 11,
                 'null' => false,
                 'default' => 0,
-                'charset' => 'utf8',
-                'collation' => 'utf8mb4_uca1400_ai_ci'
             ],
             'last_login' => [
-                'type' => "DATETIME",
+                'type' => "TIMESTAMP",
                 'null' => true,
                 'default' => null,
-                'charset' => 'utf8',
-                'collation' => 'utf8mb4_uca1400_ai_ci'
             ],
             'login_from' => [
                 'type' => "VARCHAR",
                 'constraint' => 50,
                 'null' => true,
                 'default' => null,
-                'charset' => 'utf8',
-                'collation' => 'utf8mb4_uca1400_ai_ci'
             ],
             'remark' => [
                 'type' => "TEXT",
                 'null' => true,
                 'default' => null,
-                'charset' => 'utf-8',
-                'collation' => 'utf8mb4_uca1400_ai_ci'
             ],
             'created_at' => [
-                'type' => "DATETIME",
+                'type' => "TIMESTAMP",
                 'null' => true,
                 'default' => null,
-                'charset' => 'utf8',
-                'collation' => 'utf8mb4_uca1400_ai_ci'
             ],
             'created_by' => [
                 'type' => "VARCHAR",
                 'constraint' => 50,
                 'null' => true,
                 'default' => null,
-                'charset' => 'utf8',
-                'collation' => 'utf8mb4_uca1400_ai_ci'
             ],
             'updated_at' => [
-                'type' => "DATETIME",
+                'type' => "TIMESTAMP",
                 'null' => true,
                 'default' => null,
-                'charset' => 'utf8',
-                'collation' => 'utf8mb4_uca1400_ai_ci'
             ],
             'updated_by' => [
                 'type' => "VARCHAR",
                 'constraint' => 50,
                 'null' => true,
                 'default' => null,
-                'charset' => 'utf8',
-                'collation' => 'utf8mb4_uca1400_ai_ci'
             ],
             'deleted_at' => [
-                'type' => "DATETIME",
+                'type' => "TIMESTAMP",
                 'null' => true,
                 'default' => null,
-                'charset' => 'utf8',
-                'collation' => 'utf8mb4_uca1400_ai_ci'
             ]
         ]);
 
-        $this->forge->addKey(['user_id', 'user_name', 'email_hash', 'phone_hash'], true, true);
+        $this->forge->addKey('user_id', true, true);
+        $this->forge->addKey('user_name', false, true);
+        $this->forge->addKey('email_hash', false, true);
+        $this->forge->addKey('phone_hash', false, true);
+
         $this->forge->createTable('m_users', true);
     }
 

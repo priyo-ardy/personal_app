@@ -29,7 +29,8 @@ class RateLimiterFilter implements FilterInterface
         $key = md5('rate_limit_' . $rawKey);
 
         if ($throttler->check($key, $limit, $seconds) === false) {
-            throw new \Exception(lang('Errors.tooManyRequests'), ResponseInterface::HTTP_TOO_MANY_REQUESTS);
+            // return service('response')->setStatusCode(ResponseInterface::HTTP_TOO_MANY_REQUESTS);
+            return service('response')->setStatusCode(ResponseInterface::HTTP_TOO_MANY_REQUESTS)->setJSON(['status' => 'error', 'message' => 'Too many requests.']);
         }
     }
 

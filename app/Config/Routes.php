@@ -23,6 +23,7 @@ $routes->group('', ['filter' => ['auth', 'ratelimit:100,60']], static function (
         $routes->post('save', 'AppSetup\Users\UsersController::saveUser');
         $routes->post('table', 'AppSetup\Users\UsersController::loadTable');
         $routes->get('get/(:any)', 'AppSetup\Users\UsersController::getUser/$1');
+        $routes->get('show/(:any)', 'AppSetup\Users\UsersController::showUser/$1');
         $routes->get('export', 'AppSetup\Users\UsersController::exportData');
     });
 

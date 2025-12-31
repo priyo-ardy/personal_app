@@ -99,6 +99,7 @@ class Exceptions extends BaseConfig
      *          return new \App\Libraries\MyExceptionHandler();
      *      }
      */
+
     public function handler(int $statusCode, Throwable $exception): ExceptionHandlerInterface
     {
         return new ExceptionHandler($this);

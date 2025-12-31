@@ -51,6 +51,6 @@ class UserRepository extends CrudRepository implements UserRepositoryInterface
             ->orderBy($order, 'ASC')
             ->limit($limit, $offset)
             ->get()
-            ->getResultObject();
+            ->getResultArray();
     }
 }

@@ -97,7 +97,17 @@ class UsersService
         $builder = $model->builder();
 
         $column_search = ['user_name', 'full_name', 'email_hash', 'phone_hash', 'user_level', 'last_login', 'login_from', 'remark'];
-        $column_order = ['user_name', 'full_name', 'email_hash', 'phone_hash', 'user_level', 'last_login', 'login_from', 'remark'];
+        $column_order = [
+            '0' => 'user_name',
+            '1' => 'full_name',
+            '2' => 'email_hash',
+            '3' => 'phone_hash',
+            '4' => 'user_level',
+            '5' => 'last_login',
+            '6' => 'login_from',
+            '7' => 'remark'
+        ];
+
         $defaultOrder = array('user_name' => 'asc');
         $customSearch = [
             'email_hash' => function ($builder, $searchValue) {
@@ -156,5 +166,27 @@ class UsersService
         };
 
         return export_decrypted_data($fileName, $headers, ['user_email', 'user_phone'], $dataCallback);
+    }
+
+    function getUserData($user_token)
+    {
+        $user_id = dekripsi($user_token);
+
+        $get_user_by_id = $this->userRepo->findById($user_id);
+        if (!$get_user_by_id) {
+            throw new \Exception("User not found", ResponseInterface::HTTP_NOT_FOUND);
+        }
+
+        $data = [
+            'token' => enkripsi($get_user_by_id->user_id),
+            'user_name' => $get_user_by_id->user_name,
+            'full_name' => $get_user_by_id->full_name,
+            'user_email' => dekripsi($get_user_by_id->user_email),
+            'user_phone' => dekripsi($get_user_by_id->user_phone),
+            'user_level' => $get_user_by_id->user_level,
+            'remark' => $get_user_by_id->remark
+        ];
+
+        return $data;
     }
 }

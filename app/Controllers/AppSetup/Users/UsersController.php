@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 use App\Services\UsersService;
 use App\Repositories\UserRepository;
+use CodeIgniter\HTTP\Response;
 
 class UsersController extends BaseController
 {
@@ -84,6 +85,50 @@ class UsersController extends BaseController
     }
     function getUser($token)
     {
-        echo $token;
+        if ($this->request->getMethod() !== 'GET') {
+            log_message('error', 'request method not allowed for save new user process : {method} from {ip} by {NIK}', ['method' => $this->request->getMethod(), 'ip' => $this->request->getIPAddress(), 'NIK' => session()->get('user_name')]); // simpan log
+            throw new \Exception('request method not allowed', ResponseInterface::HTTP_METHOD_NOT_ALLOWED);
+        }
+
+        try {
+            $getData = $this->userService->getUserData($token);
+
+            if ($getData) {
+                return pesan(ResponseInterface::HTTP_OK, 'User data found', $getData['token']);
+            }
+        } catch (\Exception $e) {
+            $code = $e->getCode() ?? ResponseInterface::HTTP_INTERNAL_SERVER_ERROR; // jika tidak ada kode error di exception, kembalikan error 500
+            log_message('error', "Unexpected error occured : {err} from {ip}", ['err' => $e->getMessage(), 'ip' => $this->request->getIPAddress()]); // simpan log
+            return pesan($code, $e->getMessage());
+        }
+    }
+
+    function showUser($token)
+    {
+        if ($this->request->getMethod() !== 'GET') {
+            log_message('error', 'request method not allowed for save new user process : {method} from {ip} by {NIK}', ['method' => $this->request->getMethod(), 'ip' => $this->request->getIPAddress(), 'NIK' => session()->get('user_name')]); // simpan log
+            throw new \Exception('request method not allowed', ResponseInterface::HTTP_METHOD_NOT_ALLOWED);
+        }
+
+        try {
+            $getData = $this->userService->getUserData($token);
+            if (!$getData) {
+                throw new \Exception('User not found', ResponseInterface::HTTP_NOT_FOUND);
+            }
+
+            $data = [
+                'title' => "Show user " . $getData['full_name'],
+                'data' => $getData,
+                'footer' => [
+                    '<script src="' . base_url('js/AppSetup/Users/show.js') . '"></script>'
+                ]
+            ];
+
+            return view('AppSetup/Users/show', $data);
+        } catch (\Exception $e) {
+            $code = $e->getCode() ?? ResponseInterface::HTTP_INTERNAL_SERVER_ERROR; // jika tidak ada kode error di exception, kembalikan error 500
+            log_message('error', "Unexpected error occured : {err} from {ip}", ['err' => $e->getMessage(), 'ip' => $this->request->getIPAddress()]); // simpan log
+            return pesan($code, $e->getMessage());
+        }
     }
 }
