@@ -8,17 +8,21 @@ class DataTableRepository
 {
     protected $builder;
     protected $column_search;
-    protected $column_order; // Perhatikan nama properti ini
+    protected $column_order;
     protected $defaultOrder;
     protected $customSearch;
 
-    public function __construct(BaseBuilder $builder, array $column_search, array $column_order, array $defaultOrder = [], array $customSearch = [])
+    public function __construct(BaseBuilder $builder, array $column_search, array $column_order, array $defaultOrder = [], array $customSearch = [], string $deletedAtColumn)
     {
         $this->builder = $builder;
         $this->column_search = $column_search;
         $this->column_order = $column_order;
         $this->defaultOrder = $defaultOrder;
         $this->customSearch = $customSearch;
+
+        if (!empty($deletedAtColumn)) {
+            $this->builder->where($deletedAtColumn, null);
+        }
     }
 
     public function proses(array $requestData)
@@ -28,20 +32,19 @@ class DataTableRepository
         $start          = $requestData['start'] ?? 0;
         $searchValue    = $requestData['search']['value'] ?? null;
 
-        // FIX 1: Typo 'columns' menjadi 'column'
         $orderIndex     = $requestData['order'][0]['column'] ?? 0;
         $orderDir       = $requestData['order'][0]['dir'] ?? 'asc';
 
+        // Hitung total record (Kondisi deleted_at sudah otomatis terbawa dari construct)
         $totalRecord = (clone $this->builder)->countAllResults();
 
         if ($searchValue) {
             $this->applySearch($searchValue);
         }
 
-        // Hitung filtered sebelum applyOrder/limit
+        // Hitung filtered record setelah pencarian
         $filteredRecords = (clone $this->builder)->countAllResults(false);
 
-        // Kirim requestData agar applyOrder bisa membaca index dan dir
         $this->applyOrder($requestData);
 
         if ($length != -1) {
@@ -62,13 +65,22 @@ class DataTableRepository
     {
         $this->builder->groupStart();
 
-        foreach ($this->column_search as $column) {
-            if (array_key_exists($column, $this->customSearch)) {
-                // Custom Search (Hash)
-                $this->customSearch[$column]($this->builder, $searchValue);
+        foreach ($this->column_search as $key => $column) {
+            // Perbaikan logika OR agar tidak menimpa WHERE deleted_at
+            if ($key === 0) {
+                // Kolom pertama pakai LIKE biasa agar terbungkus dalam groupStart
+                if (array_key_exists($column, $this->customSearch)) {
+                    $this->customSearch[$column]($this->builder, $searchValue);
+                } else {
+                    $this->builder->like($column, $searchValue);
+                }
             } else {
-                // Logic Standar (Text)
-                $this->builder->orLike($column, $searchValue);
+                // Kolom selanjutnya pakai OR LIKE
+                if (array_key_exists($column, $this->customSearch)) {
+                    $this->customSearch[$column]($this->builder, $searchValue);
+                } else {
+                    $this->builder->orLike($column, $searchValue);
+                }
             }
         }
 
@@ -77,13 +89,11 @@ class DataTableRepository
 
     private function applyOrder(array $requestData)
     {
-        // FIX 1: Typo 'columns' menjadi 'column'
         $orderColumnIndex = $requestData['order'][0]['column'] ?? null;
         $orderDir         = $requestData['order'][0]['dir'] ?? null;
 
         $hasOrdered = false;
 
-        // FIX 2: Ganti '$this->orderableColumns' menjadi '$this->column_order'
         if (!is_null($orderColumnIndex) && isset($this->column_order[$orderColumnIndex])) {
             $columnName = $this->column_order[$orderColumnIndex];
 
@@ -93,7 +103,6 @@ class DataTableRepository
             }
         }
 
-        // Fallback ke default order
         if (!$hasOrdered && !empty($this->defaultOrder)) {
             foreach ($this->defaultOrder as $key => $value) {
                 $this->builder->orderBy($key, $value);

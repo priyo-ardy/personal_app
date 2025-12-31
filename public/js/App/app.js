@@ -169,6 +169,53 @@ function hapusData(url, token) {
     });
 }
 
+function disableData(url, token, urlRedirect = null) {
+  const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+      confirmButton: "btn btn-primary rounded-0",
+      cancelButton: "btn btn-secondary rounded-0",
+    },
+  });
+
+  swalWithBootstrapButtons
+    .fire({
+      title: "Warning !",
+      text: "Are you sure disable this data ?",
+      icon: "warning",
+      showCancelButton: true,
+      cancelButtonColor: "#d33",
+      confirmButtonText: '<i class="bi bi-check"></i>&ensp;Yes',
+      cancelButtonText: '<i class="bi bi-x"></i>&ensp;Cancel',
+      reverseButtons: true,
+    })
+    .then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Please wait...",
+          timerProgressBar: true,
+          allowEscapeKey: false,
+          allowOutsideClick: false,
+          didOpen: () => {
+            swal.showLoading();
+          },
+        }).then(
+          fetchData(baseurl + url, "POST", JSON.stringify({ token: token }))
+            .then((result) => {
+              pesanSukses(result.message);
+              if (urlRedirect !== null) {
+                window.location.replace(baseurl + urlRedirect);
+              } else {
+                refreshTable();
+              }
+            })
+            .catch((err) => {
+              pesanError(err.message);
+            })
+        );
+      }
+    });
+}
+
 function formatPhone(phone) {
   const regex = /^[0-9]+$/;
   return regex.test(phone);

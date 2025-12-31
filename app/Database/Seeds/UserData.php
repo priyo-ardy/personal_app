@@ -22,9 +22,9 @@ class UserData extends Seeder
                 'user_status' => 'active',
                 'user_level' => 'superadmin',
                 'login_attempts' => 0,
-                'created_at' => date('Y-m-d H:i:s'),
+                'created_at' => date('Y-m-d H:i:sP'),
                 'created_by' => 'system',
-                'updated_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:sP'),
                 'updated_by' => null,
                 'deleted_at' => null
 

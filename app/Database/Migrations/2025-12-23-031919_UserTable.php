@@ -76,7 +76,7 @@ class UserTable extends Migration
                 'default' => 0,
             ],
             'last_login' => [
-                'type' => "TIMESTAMP",
+                'type' => "TIMESTAMPTZ",
                 'null' => true,
                 'default' => null,
             ],
@@ -92,7 +92,7 @@ class UserTable extends Migration
                 'default' => null,
             ],
             'created_at' => [
-                'type' => "TIMESTAMP",
+                'type' => "TIMESTAMPTZ",
                 'null' => true,
                 'default' => null,
             ],
@@ -103,7 +103,7 @@ class UserTable extends Migration
                 'default' => null,
             ],
             'updated_at' => [
-                'type' => "TIMESTAMP",
+                'type' => "TIMESTAMPTZ",
                 'null' => true,
                 'default' => null,
             ],
@@ -114,7 +114,7 @@ class UserTable extends Migration
                 'default' => null,
             ],
             'deleted_at' => [
-                'type' => "TIMESTAMP",
+                'type' => "TIMESTAMPTZ",
                 'null' => true,
                 'default' => null,
             ]

@@ -38,19 +38,37 @@ class UserRepository extends CrudRepository implements UserRepositoryInterface
     public function create(array $data)
     {
         return $this->model->insert($data);
+        // return $this->create($data);
     }
 
     public function update(string $id, array $data)
     {
         return $this->model->update($id, $data);
+        // return $this->update($id, $data);
     }
 
     public function getChunkedData($offset, $limit, $order, $column)
     {
         return $this->model->select($column)
+            ->where('deleted_at', null)
             ->orderBy($order, 'ASC')
             ->limit($limit, $offset)
             ->get()
             ->getResultArray();
+    }
+
+    function nextUser($code)
+    {
+        return $this->nextData('user_name', $code);
+    }
+
+    function prevUser($code)
+    {
+        return $this->prevData('user_name', $code);
+    }
+
+    function massDelete($user_data)
+    {
+        return $this->model->update($user_data, ['user_status' => 'inactive', 'deleted_at' => date('Y-m-d H:i:sP')]);
     }
 }

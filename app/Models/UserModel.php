@@ -56,12 +56,28 @@ class UserModel extends Model
 
     // Callbacks
     protected $allowCallbacks = true;
-    protected $beforeInsert   = [];
+    protected $beforeInsert   = ['setTimestamptzInsert'];
     protected $afterInsert    = [];
-    protected $beforeUpdate   = [];
+    protected $beforeUpdate   = ['setTimestamptzUpdate'];
     protected $afterUpdate    = [];
     protected $beforeFind     = [];
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    protected function setTimestamptzInsert(array $data)
+    {
+        $now = date('Y-m-d H:i:sP'); // Output: 2025-12-31 20:00:00+07:00
+
+        $data['data'][$this->createdField] = $now;
+        $data['data'][$this->updatedField] = $now;
+
+        return $data;
+    }
+
+    protected function setTimestamptzUpdate(array $data)
+    {
+        $data['data'][$this->updatedField] = date('Y-m-d H:i:sP');
+        return $data;
+    }
 }

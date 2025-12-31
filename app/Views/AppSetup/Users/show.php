@@ -14,7 +14,8 @@
                         <li class="breadcrumb-item"><a href="<?= base_url() . 'dashboard' ?>" onclick="loading()">Dashboard</a></li>
                         <li class="breadcrumb-item">Application Setup</li>
                         <li class="breadcrumb-item">User Management</li>
-                        <li class="breadcrumb-item active">List of Users</li>
+                        <li class="breadcrumb-item">Show</li>
+                        <li class="breadcrumb-item active"><?= $data['full_name'] ?></li>
                     </ol>
                 </div>
             </div>
@@ -38,9 +39,21 @@
                         <button type="button" id="btnCancel" hidden class="btn shadow-none rounded-0 btn-light border-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Cancel">
                             <i class="bi bi-arrow-counterclockwise"></i>&ensp;Cancel
                         </button>
-                        <button type="button" id="btnDelete" class="btn shadow-none rounded-0 btn-light border-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
-                            <i class="bi bi-trash3"></i>&ensp;Delete
-                        </button>
+                        <?php
+                        if ($data['user_status'] == 'active') {
+                        ?>
+                            <button type="button" id="btnDisable" class="btn shadow-none rounded-0 btn-light border-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Disable">
+                                <i class="bi bi-ban"></i>&ensp;Disable
+                            </button>
+                        <?php
+                        } else {
+                        ?>
+                            <button type="button" id="btnEnable" class="btn shadow-none rounded-0 btn-light border-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Enable">
+                                <i class="bi bi-check"></i>&ensp;Enable
+                            </button>
+                        <?php
+                        }
+                        ?>
                         <button type="button" id="btnPrev" class="btn shadow-none rounded-0 btn-light-order-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Previous">
                             <i class="bi bi-chevron-double-left"></i>&ensp;Prev
                         </button>

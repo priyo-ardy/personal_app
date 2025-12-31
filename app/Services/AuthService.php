@@ -62,7 +62,7 @@ class AuthService
 
         // Update user login data
         $this->userRepo->update($cek_user->user_id, [
-            'last_login' => date('Y-m-d H:i:s'),
+            'last_login' => date('Y-m-d H:i:sP'),
             'login_attempts' => 0,
             'login_from' => Services::request()->getIPAddress(),
         ]);

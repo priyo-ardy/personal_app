@@ -43,4 +43,14 @@ abstract class CrudRepository implements CrudRepositoryInterface
     {
         return $this->model->delete($id);
     }
+
+    public function prevData(string $column_name, string $code)
+    {
+        return $this->model->where($column_name . '<', $code)->orderBy($column_name, 'DESC')->first();
+    }
+
+    public function nextData(string $column_name, string $code)
+    {
+        return $this->model->where($column_name . '>', $code)->orderBy($column_name, 'ASC')->first();
+    }
 }

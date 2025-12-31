@@ -9,7 +9,8 @@ const buttons = {
   save: document.getElementById("btnSave"),
   edit: document.getElementById("btnEdit"),
   cancel: document.getElementById("btnCancel"),
-  delete: document.getElementById("btnDelete"),
+  disable: document.getElementById("btnDisable"),
+  enable: document.getElementById("btnEnable"),
   prev: document.getElementById("btnPrev"),
   next: document.getElementById("btnNext"),
 };
@@ -48,11 +49,13 @@ function bukaForm() {
   inputForm.full_name.classList.remove("bg-secondary-subtle");
   inputForm.email.classList.remove("bg-secondary-subtle");
   inputForm.phone.classList.remove("bg-secondary-subtle");
+  inputForm.password.classList.remove("bg-secondary-subtle");
   inputForm.level.removeAttribute("disabled");
   inputForm.user_name.removeAttribute("readonly");
   inputForm.full_name.removeAttribute("readonly");
   inputForm.email.removeAttribute("readonly");
   inputForm.phone.removeAttribute("readonly");
+  inputForm.password.removeAttribute("readonly");
 
   $(".summernote").summernote("enable");
 
@@ -76,3 +79,75 @@ function validasi() {
   }
   return isValid;
 }
+
+buttons.save.addEventListener("click", (e) => {
+  if (validasi()) {
+    try {
+      loading();
+      fetchData(baseurl + "/users/update", "POST", new FormData(formData))
+        .then((result) => {
+          pesanSukses(result.message);
+          setTimeout(() => {
+            window.location.reload();
+          }, 1500);
+        })
+        .catch((err) => {
+          pesanError(err.message);
+          hideLoading();
+        });
+    } catch (e) {
+      pesanError(e.message);
+      hideLoading();
+    }
+  }
+});
+
+buttons.disable.addEventListener("click", (e) => {
+  try {
+    disableData("/users/disable", inputForm.token.value, "/users");
+  } catch (e) {
+    pesanError(e.message);
+  }
+});
+
+buttons.prev.addEventListener("click", (e) => {
+  try {
+    loading();
+    fetchData(
+      baseurl + "/users/prev/",
+      "POST",
+      JSON.stringify({ token: inputForm.user_name.value })
+    )
+      .then((result) => {
+        window.location.replace(baseurl + "/users/show/" + result.data.token);
+      })
+      .catch((err) => {
+        pesanError(err.message);
+        hideLoading();
+      });
+  } catch (e) {
+    pesanError(e.message);
+    hideLoading();
+  }
+});
+
+buttons.next.addEventListener("click", (e) => {
+  try {
+    loading();
+    fetchData(
+      baseurl + "/users/next/",
+      "POST",
+      JSON.stringify({ token: inputForm.user_name.value })
+    )
+      .then((result) => {
+        window.location.replace(baseurl + "/users/show/" + result.data.token);
+      })
+      .catch((err) => {
+        pesanError(err.message);
+        hideLoading();
+      });
+  } catch (e) {
+    pesanError(e.message);
+    hideLoading();
+  }
+});

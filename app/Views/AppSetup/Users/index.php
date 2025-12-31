@@ -32,8 +32,11 @@
                         <button type="button" id="btnFilter" class="btn shadow-none rounded-0 btn-light border-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Filter">
                             <i class="bi bi-funnel"></i>&ensp;Filter
                         </button>
-                        <button type="button" id="btnRefresh" class="btn shadow-none rounded-0 btn-light-order-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Refresh">
+                        <button type="button" id="btnRefresh" class="btn shadow-none rounded-0 btn-light border-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Refresh">
                             <i class="bi bi-arrow-repeat"></i>&ensp;Refresh
+                        </button>
+                        <button type="button" id="btnDelete" class="btn shadow-none rounded-0 btn-light border-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
+                            <i class="bi bi-trash3"></i>&ensp;Delete
                         </button>
                         <button type="button" id="btnExport" class="btn shadow-none rounded-0 btn-light border-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Export">
                             <i class="bi bi-download"></i>&ensp;Export
@@ -46,18 +49,23 @@
                     <div class="card rounded-0 card-primary card-outline">
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-striped table-hover table-primary" id="dataTable" width="100%" cellspacing="0">
+                                <table class="table table-striped table-hover" id="dataTable">
                                     <thead>
-                                        <th class="align-middle text-center bg-secondary-subtle">User Name</th>
-                                        <th class="align-middle text-center bg-secondary-subtle">Full Name</th>
-                                        <th class="align-middle text-center bg-secondary-subtle">Email Address</th>
-                                        <th class="align-middle text-center bg-secondary-subtle">Phone Number</th>
-                                        <th class="align-middle text-center bg-secondary-subtle">User Level</th>
-                                        <th class="align-middle text-center bg-secondary-subtle">Last Login</th>
-                                        <th class="align-middle text-center bg-secondary-subtle">Login From</th>
-                                        <th class="align-middle text-center bg-secondary-subtle">Remark</th>
-                                        <th class="align-middle text-center bg-secondary-subtle">#</th>
+                                        <tr>
+                                            <th class="align-middle text-center bg-secondary-subtle">
+                                                <input type="checkbox" id="select-all" class="form-check-input rounded-0 border-1 border-primary">
+                                            </th>
+                                            <th class="align-middle text-center bg-secondary-subtle">User Name</th>
+                                            <th class="align-middle text-center bg-secondary-subtle">Full Name</th>
+                                            <th class="align-middle text-center bg-secondary-subtle">Email Address</th>
+                                            <th class="align-middle text-center bg-secondary-subtle">Phone Number</th>
+                                            <th class="align-middle text-center bg-secondary-subtle">User Level</th>
+                                            <th class="align-middle text-center bg-secondary-subtle">Last Login</th>
+                                            <th class="align-middle text-center bg-secondary-subtle">Login From</th>
+                                            <th class="align-middle text-center bg-secondary-subtle">Remark</th>
+                                        </tr>
                                     </thead>
+                                    <tbody></tbody>
                                 </table>
                             </div>
                         </div>

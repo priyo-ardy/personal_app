@@ -20,10 +20,15 @@ $routes->group('', ['filter' => ['auth', 'ratelimit:100,60']], static function (
     $routes->group('/users', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
         $routes->get('', 'AppSetup\Users\UsersController::index');
         $routes->get('add', 'AppSetup\Users\UsersController::addUser');
-        $routes->post('save', 'AppSetup\Users\UsersController::saveUser');
+        $routes->post('save', 'AppSetup\Users\UsersController::saveUser', ['filter' => 'ratelimit:3,60']);
         $routes->post('table', 'AppSetup\Users\UsersController::loadTable');
         $routes->get('get/(:any)', 'AppSetup\Users\UsersController::getUser/$1');
         $routes->get('show/(:any)', 'AppSetup\Users\UsersController::showUser/$1');
+        $routes->post('update', 'AppSetup\Users\UsersController::updateData', ['filter' => 'ratelimit:3,60']);
+        $routes->post('disable', 'AppSetup\Users\UsersController::disableData', ['filter' => 'ratelimit:3,60']);
+        $routes->post('prev', 'AppSetup\Users\UsersController::prevData');
+        $routes->post('next', 'AppSetup\Users\UsersController::nextData');
+        $routes->post('mass-delete', 'AppSetup\Users\UsersController::massDelete');
         $routes->get('export', 'AppSetup\Users\UsersController::exportData');
     });
 

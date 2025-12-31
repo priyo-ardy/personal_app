@@ -1,11 +1,28 @@
 window.onload = () => {
   loadTable();
+
+  $("#select-all").on("click", function () {
+    var isChecked = this.checked;
+    $(".row-checkbox").prop("checked", isChecked);
+  });
+
+  $("#dataTable tbody").on("click", ".row-checkbox", function () {
+    var totalCheckbox = $(".row-checkbox").length;
+    var totalChecked = $(".row-checkbox:checked").length;
+
+    if (totalCheckbox == totalChecked) {
+      $("#select-all").prop("checked", true);
+    } else {
+      $("#select-all").prop("checked", false);
+    }
+  });
 };
 
 const buttons = {
   add: document.getElementById("btnAdd"),
   filter: document.getElementById("btnFilter"),
   refresh: document.getElementById("btnRefresh"),
+  delete: document.getElementById("btnDelete"),
   export: document.getElementById("btnExport"),
 };
 
@@ -15,28 +32,46 @@ buttons.add.addEventListener("click", () => {
 });
 
 function loadTable() {
-  $("#dataTable").DataTable({
+  table = $("#dataTable").DataTable({
     processing: true,
     serverSide: true,
     responsive: true,
     bDestroy: true,
+    autoWidth: false,
     search: {
-      return: true,
+      return: false,
     },
     order: [],
     ajax: {
       url: baseurl + "/users/table",
       type: "POST",
-      data: "raw",
-      action: "calls",
+      data: function (d) {},
+    },
+    error: function (xhr, error, thrown) {
+      if (typeof pesanError === "function") {
+        pesanError(xhr.responseJSON ? xhr.responseJSON.message : error);
+      } else {
+        console.error("Error:", error);
+      }
     },
     deferRender: true,
     columnDefs: [
       {
         targets: 0,
         orderable: false,
+        className: "text-center align-middle",
+        render: function (data, type, row) {
+          return (
+            '<input type="checkbox" class="row-checkbox form-check-input border-1 rounded-0 border-primary" name="token[]" value="' +
+            data +
+            '">'
+          );
+        },
       },
     ],
+    drawCallback: function (settings) {
+      $("#select-all").prop("checked", false);
+    },
   });
 }
 
@@ -110,3 +145,33 @@ buttons.export.addEventListener("click", async () => {
     hideLoading();
   }
 });
+
+buttons.delete.addEventListener("click", (e) => {
+  var checkedBoxes = $(".row-checkbox:checked");
+  var isAnyCheckboxChecked = checkedBoxes.length > 0;
+
+  if (!isAnyCheckboxChecked) {
+    pesanWarning("Failed to delete data. No data selected.");
+    return;
+  } else {
+    var selectedData = checkedBoxes
+      .map(function () {
+        return $(this).val();
+      })
+      .get();
+
+    try {
+      deleteData(selectedData);
+    } catch (e) {
+      pesanError(e.message);
+    }
+  }
+});
+
+function deleteData(selectedData) {
+  try {
+    disableData("/users/mass-delete", selectedData);
+  } catch (e) {
+    pesanError(e.message);
+  }
+}
