@@ -17,6 +17,7 @@ class UsersService
     protected $db;
     protected $userRepo;
     protected $validasi;
+    
     public function __construct(UserRepository $userRepo)
     {
         $this->db = Database::connect();

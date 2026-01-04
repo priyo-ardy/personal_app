@@ -69,7 +69,7 @@
                         <form id="formData">
                             <div class="card-body">
                                 <div class="row g-2">
-                                    <div class="form-group col-12 mb-3 clearfix">
+                                    <div class="form-group col-12 mb-3 clearfix" style="display: none;">
                                         <input type="text" name="data_token" id="data_token" class="form-control rounded-0 bg-secondary-subtle" readonly value="<?= $data['token'] ?>">
                                     </div>
                                     <div class="form-group col-xl-3 col-lg-3 col-md-6 col-sm-12 clearfix mb-3">

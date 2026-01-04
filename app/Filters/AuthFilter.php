@@ -11,7 +11,8 @@ class AuthFilter implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
-        if (!session()->get('logged')) {
+        $session = \Config\Services::session();
+        if (!$session->get('logged')) {
             return redirect()->to(base_url())->with('error', 'Please login first');
         }
     }

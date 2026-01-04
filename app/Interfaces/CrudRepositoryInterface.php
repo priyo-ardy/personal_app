@@ -11,4 +11,6 @@ interface CrudRepositoryInterface
     public function delete(string $id);
     public function prevData(string $column_name, string $code);
     public function nextData(string $column_name, string $code);
+    public function generateCode(string $prefix, string $column = 'code', int $padding = 4);
+    public function getChunkedData($offset, $limit, $order, $column);
 }

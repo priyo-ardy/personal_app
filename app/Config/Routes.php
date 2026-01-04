@@ -32,6 +32,28 @@ $routes->group('', ['filter' => ['auth', 'ratelimit:100,60']], static function (
         $routes->get('export', 'AppSetup\Users\UsersController::exportData');
     });
 
+    // Routes untuk module department
+    $routes->group('/department', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+        $routes->get('', 'AppSetup\Department\DepartmentController::index');
+        $routes->post('save', 'AppSetup\Department\DepartmentController::saveData', ['filter' => 'ratelimit:3,60']);
+        $routes->post('table', 'AppSetup\Department\DepartmentController::loadTable');
+        $routes->get('get/(:any)', 'AppSetup\Department\DepartmentController::getData/$1');
+        $routes->post('update', 'AppSetup\Department\DepartmentController::updateData', ['filter' => 'ratelimit:3,60']);
+        $routes->post('mass-delete', 'AppSetup\Department\DepartmentController::massDelete', ['filter' => 'ratelimit:3,60']);
+        $routes->get('export', 'AppSetup\Department\DepartmentController::exportData', ['filter' => 'ratelimit:3,60']);
+    });
+
+    // Routes untuk module section
+    $routes->group('/section', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+        $routes->get('', 'AppSetup\Section\SectionController::index');
+        $routes->post('save', 'AppSetup\Section\SectionController::save', ['filter' => 'ratelimit:3,60']);
+        $routes->post('table', 'AppSetup\Section\SectionController::loadTable');
+        $routes->get('get/(:any)', 'AppSetup\Section\SectionController::get/$1');
+        $routes->post('update', 'AppSetup\Section\SectionController::update', ['filter' => 'ratelimit:3,60']);
+        $routes->post('delete', 'AppSetup\Section\SectionController::delete', ['filter' => 'ratelimit:3,60']);
+        $routes->get('export', 'AppSetup\Section\SectionController::export', ['filter' => 'ratelimit:3,60']);
+    });
+
     // Site Setting
     $routes->get('/site-setting', 'SiteSetting\SiteSettingController::index', ['filter' => ['role:superadmin,admin', 'ratelimit:100,60']]);
 });

@@ -11,13 +11,14 @@ class RateLimiterFilter implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
+        $session = \Config\Services::session();
         $throttler = Services::throttler();
 
 
         $limit = $arguments[0] ?? 60;
         $seconds = $arguments[1] ?? 60;
 
-        $session = session();
+
         if ($session->has('user_name')) {
             $identifier = 'user_' . $session->get('user_name');
         } else {

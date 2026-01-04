@@ -6,21 +6,24 @@ use App\Services\ExportExcelService;
 if (!function_exists('export_to_excel')) {
     function export_to_excel(string $filename, array $headers, $data, ?int $chunkSize = null)
     {
-        $excelService = new ExportExcelService();
+        try {
+            $excelService = new ExportExcelService();
 
-        if (is_callable($data)) {
-            if ($chunkSize === null) {
-                $chunkSize = 5000;
+            if (is_callable($data)) {
+                if ($chunkSize === null) {
+                    $chunkSize = 5000;
+                }
+
+                return $excelService->exportLargeData($filename, $headers, $data, $chunkSize);
             }
 
-            return $excelService->exportLargeData($filename, $headers, $data, $chunkSize);
+            if (is_array($data)) {
+                return $excelService->quickExport($filename, $headers, $data);
+            }
+        } catch (\Exception $e) {
+            log_message('error', '[export_to_excel] Unexpexted error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            return $e;
         }
-
-        if (is_array($data)) {
-            return $excelService->quickExport($filename, $headers, $data);
-        }
-
-        throw new InvalidArgumentException('Data must be either callabel or array');
     }
 
     function export_decrypted_data(string $filename, array $headers,  array $decyptedColumns = [], $data, ?int $chunkSize = null,)

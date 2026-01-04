@@ -180,6 +180,41 @@
                                 </p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="<?= base_url('user_role') ?>" class="nav-link" onclick="loading()">
+                                <i class="nav-icon bi bi-arrow-right-circle"></i>
+                                <p>
+                                    User Role
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="bi bi-diagram-3 nav-icon"></i>
+                        <p>
+                            Organization
+                            <i class="nav-arrow bi bi-chevron-right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav-treeview">
+                        <li class="nav-item">
+                            <a href="<?= base_url() . 'department' ?>" class="nav-link">
+                                <i class="bi bi-arrow-right-circle nav-icon"></i>
+                                <p>
+                                    Department
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="<?= base_url() . 'section' ?>" class="nav-link">
+                                <i class="bi bi-arrow-right-circle nav-icon"></i>
+                                <p>
+                                    Section
+                                </p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 <li class="nav-item">
