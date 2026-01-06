@@ -54,6 +54,28 @@ $routes->group('', ['filter' => ['auth', 'ratelimit:100,60']], static function (
         $routes->get('export', 'AppSetup\Section\SectionController::export', ['filter' => 'ratelimit:3,60']);
     });
 
+    // Routes untuk employee grade
+    $routes->group('/employee_grade', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+        $routes->get('', 'AppSetup\EmployeeGrade\EmployeeGradeController::index');
+        $routes->post('save', 'AppSetup\EmployeeGrade\EmployeeGradeController::saveData', ['filter' => 'ratelimit:3,60']);
+        $routes->post('table', 'AppSetup\EmployeeGrade\EmployeeGradeController::loadTable');
+        $routes->get('get/(:any)', 'AppSetup\EmployeeGrade\EmployeeGradeController::getData/$1');
+        $routes->post('update', 'AppSetup\EmployeeGrade\EmployeeGradeController::updateData', ['filter' => 'ratelimit:3,60']);
+        $routes->post('delete', 'AppSetup\EmployeeGrade\EmployeeGradeController::deleteData', ['filter' => 'ratelimit:3,60']);
+        $routes->get('export', 'AppSetup\EmployeeGrade\EmployeeGradeController::exportData', ['filter' => 'ratelimit:3,60']);
+    });
+
+    // Routes untuk employee category
+    $routes->group('/employee_category', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+        $routes->get('', 'AppSetup\EmployeeCategory\EmployeeCategoryController::index');
+        $routes->post('save', 'AppSetup\EmployeeCategory\EmployeeCategoryController::saveData', ['filter' => 'ratelimit:3,60']);
+        $routes->post('table', 'AppSetup\EmployeeCategory\EmployeeCategoryController::loadTable');
+        $routes->get('get/(:any)', 'AppSetup\EmployeeCategory\EmployeeCategoryController::getData/$1');
+        $routes->post('update', 'AppSetup\EmployeeCategory\EmployeeCategoryController::updateData', ['filter' => 'ratelimit:3,60']);
+        $routes->post('delete', 'AppSetup\EmployeeCategory\EmployeeCategoryController::deleteData', ['filter' => 'ratelimit:3,60']);
+        $routes->get('export', 'AppSetup\EmployeeCategory\EmployeeCategoryController::exportData', ['filter' => 'ratelimit:3,60']);
+    });
+
     // Site Setting
     $routes->get('/site-setting', 'SiteSetting\SiteSettingController::index', ['filter' => ['role:superadmin,admin', 'ratelimit:100,60']]);
 });

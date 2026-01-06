@@ -28,7 +28,7 @@ trait ResponseTrait
             ];
         }
 
-        log_message('error', '[{exception}] {message} in {file} : {line}', [
+        log_message('error', '{message} in {file} : {line}', [
             'exception' => get_class($e),
             'message' => $e->getMessage(),
             'file' => $e->getFile(),
@@ -40,7 +40,7 @@ trait ResponseTrait
         return $response->setStatusCode($httpCode)->setJSON($response);
     }
 
-    protected function success($data = null, string $message = 'Success', int $code = 200)
+    protected function success(int $code = 200, string $message = 'Success', $data = null)
     {
         $response = [
             'status' => 'success',
@@ -50,5 +50,21 @@ trait ResponseTrait
         ];
 
         return $this->response->setStatusCode($code)->setJSON($response);
+    }
+
+    protected function setTimestamptzInsert(array $data)
+    {
+        $now = date('Y-m-d H:i:sP'); // Output: 2025-12-31 20:00:00+07:00
+
+        $data['data'][$this->createdField] = $now;
+        $data['data'][$this->updatedField] = $now;
+
+        return $data;
+    }
+
+    protected function setTimestamptzUpdate(array $data)
+    {
+        $data['data'][$this->updatedField] = date('Y-m-d H:i:sP');
+        return $data;
     }
 }

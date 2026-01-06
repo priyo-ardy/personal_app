@@ -200,6 +200,14 @@
                     </a>
                     <ul class="nav-treeview">
                         <li class="nav-item">
+                            <a href="<?= base_url() . 'position' ?>" class="nav-link">
+                                <i class="bi bi-arrow-right-circle nav-icon"></i>
+                                <p>
+                                    Position
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="<?= base_url() . 'department' ?>" class="nav-link">
                                 <i class="bi bi-arrow-right-circle nav-icon"></i>
                                 <p>
@@ -212,6 +220,65 @@
                                 <i class="bi bi-arrow-right-circle nav-icon"></i>
                                 <p>
                                     Section
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="bi bi-person-gear nav-icon"></i>
+                        <p>
+                            Employee Setup
+                            <i class="nav-arrow bi bi-chevron-right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav-treeview">
+                        <li class="nav-item">
+                            <a href="<?= base_url() . 'employee_grade' ?>" class="nav-link">
+                                <i class="bi bi-arrow-right-circle nav-icon"></i>
+                                <p>
+                                    Employee Grade
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="<?= base_url() . 'employee_category' ?>" class="nav-link">
+                                <i class="bi bi-arrow-right-circle nav-icon"></i>
+                                <p>
+                                    Employee Category
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="<?= base_url() . 'employee_rank' ?>" class="nav-link">
+                                <i class="bi bi-arrow-right-circle nav-icon"></i>
+                                <p>
+                                    Employee Rank
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="<?= base_url() . 'employee_class_nbhx' ?>" class="nav-link">
+                                <i class="bi bi-arrow-right-circle nav-icon"></i>
+                                <p>
+                                    NBHX Employee Class
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="<?= base_url() . 'nbhx_position' ?>" class="nav-link">
+                                <i class="bi bi-arrow-right-circle nav-icon"></i>
+                                <p>
+                                    NBHX Position
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="<?= base_url() . 'salary_rank' ?>" class="nav-link">
+                                <i class="bi bi-arrow-right-circle nav-icon"></i>
+                                <p>
+                                    Salary Rank
                                 </p>
                             </a>
                         </li>
