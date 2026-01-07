@@ -76,6 +76,50 @@ $routes->group('', ['filter' => ['auth', 'ratelimit:100,60']], static function (
         $routes->get('export', 'AppSetup\EmployeeCategory\EmployeeCategoryController::exportData', ['filter' => 'ratelimit:3,60']);
     });
 
+    // Routes untuk employee rank
+    $routes->group('/employee_rank', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+        $routes->get('', 'AppSetup\EmployeeRank\EmployeeRankController::index');
+        $routes->post('save', 'AppSetup\EmployeeRank\EmployeeRankController::save');
+        $routes->post('table', 'AppSetup\EmployeeRank\EmployeeRankController::loadTable');
+        $routes->get('get/(:any)', 'AppSetup\EmployeeRank\EmployeeRankController::get/$1');
+        $routes->post('update', 'AppSetup\EmployeeRank\EmployeeRankController::update');
+        $routes->post('delete', 'AppSetup\EmployeeRank\EmployeeRankController::delete');
+        $routes->get('export', 'AppSetup\EmployeeRank\EmployeeRankController::export');
+    });
+
+    // Routes untuk employee classs NBHX
+    $routes->group('/employee_class_nbhx', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+        $routes->get('', 'AppSetup\ClassNbhx\ClassNbhxController::index');
+        $routes->post('save', 'AppSetup\ClassNbhx\ClassNbhxController::save');
+        $routes->post('table', 'AppSetup\ClassNbhx\ClassNbhxController::loadTable');
+        $routes->get('get/(:any)', 'AppSetup\ClassNbhx\ClassNbhxController::get/$1');
+        $routes->post('update', 'AppSetup\ClassNbhx\ClassNbhxController::update');
+        $routes->post('delete', 'AppSetup\ClassNbhx\ClassNbhxController::delete');
+        $routes->get('export', 'AppSetup\ClassNbhx\ClassNbhxController::export');
+    });
+
+    // Routes untuk nbhx position category
+    $routes->group('/nbhx_position', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+        $routes->get('', 'AppSetup\NbhxPosition\NbhxPositionController::index');
+        $routes->post('save', 'AppSetup\NbhxPosition\NbhxPositionController::save');
+        $routes->post('table', 'AppSetup\NbhxPosition\NbhxPositionController::loadTable');
+        $routes->get('get/(:any)', 'AppSetup\NbhxPosition\NbhxPositionController::get/$1');
+        $routes->post('update', 'AppSetup\NbhxPosition\NbhxPositionController::update');
+        $routes->post('delete', 'AppSetup\NbhxPosition\NbhxPositionController::delete');
+        $routes->get('export', 'AppSetup\NbhxPosition\NbhxPositionController::export');
+    });
+
+    // Routes untuk salary rank
+    $routes->group('/salary_rank', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+        $routes->get('', 'AppSetup\SalaryRank\SalaryRankController::index');
+        $routes->post('save', 'AppSetup\SalaryRank\SalaryRankController::save');
+        $routes->post('table', 'AppSetup\SalaryRank\SalaryRankController::loadTable');
+        $routes->get('get/(:any)', 'AppSetup\SalaryRank\SalaryRankController::get/$1');
+        $routes->post('update', 'AppSetup\SalaryRank\SalaryRankController::update');
+        $routes->post('delete', 'AppSetup\SalaryRank\SalaryRankController::delete');
+        $routes->get('export', 'AppSetup\SalaryRank\SalaryRankController::export');
+    });
+
     // Site Setting
     $routes->get('/site-setting', 'SiteSetting\SiteSettingController::index', ['filter' => ['role:superadmin,admin', 'ratelimit:100,60']]);
 });
