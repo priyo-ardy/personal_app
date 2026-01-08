@@ -29,7 +29,7 @@ class EmployeeRankController extends BaseController
             ]
         ];
 
-        return view('AppSetup\EmployeeRank\index', $data);
+        return view('AppSetup/EmployeeRank/index', $data);
     }
 
     public function loadTable()
@@ -162,5 +162,10 @@ class EmployeeRankController extends BaseController
         } catch (\Exception $e) {
             return $this->exceptionResponse($e);
         }
+    }
+
+    public function seedData()
+    {
+        return $this->response->setJSON($this->rankService->loadData(), JSON_PRETTY_PRINT);
     }
 }

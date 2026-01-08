@@ -26,6 +26,11 @@ class EmployeeGradeService
         $this->employeeGradeRepo = $employeeGradeRepo;
     }
 
+    public function loadData()
+    {
+        return $this->employeeGradeRepo->all('code', 'asc');
+    }
+
     function save(array $data)
     {
         try {
@@ -158,7 +163,7 @@ class EmployeeGradeService
                 '2' => 'effective_date',
                 '3' => 'description'
             ];
-            $order = ['id' => 'asc'];
+            $order = ['code' => 'asc'];
 
             $dataTable = new DataTableRepository($builder, $column_search, $column_order, $order, [], 'deleted_at');
             $result = $dataTable->proses($requestedData);

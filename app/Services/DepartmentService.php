@@ -203,4 +203,9 @@ class DepartmentService
             return $e;
         }
     }
+
+    function loadData()
+    {
+        return $this->deptRepo->all('code', 'asc');
+    }
 }

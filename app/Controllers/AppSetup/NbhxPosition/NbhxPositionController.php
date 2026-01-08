@@ -29,7 +29,7 @@ class NbhxPositionController extends BaseController
             ]
         ];
 
-        return view('AppSetup\NbhxPosition\index', $data);
+        return view('AppSetup/NbhxPosition/index', $data);
     }
 
     public function loadTable()
@@ -162,5 +162,10 @@ class NbhxPositionController extends BaseController
         } catch (\Exception $e) {
             return $this->exceptionResponse($e);
         }
+    }
+
+    public function seedData()
+    {
+        return $this->response->setJSON($this->positionService->loadData(), JSON_PRETTY_PRINT);
     }
 }

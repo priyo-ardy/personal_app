@@ -176,4 +176,9 @@ class EmployeeCategoryController extends BaseController
             return pesan($code, $e->getMessage());
         }
     }
+
+    public function seedData()
+    {
+        return $this->response->setJSON($this->categoryService->loadData(), JSON_PRETTY_PRINT);
+    }
 }

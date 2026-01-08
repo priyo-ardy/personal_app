@@ -29,6 +29,11 @@ class EmployeeRankService
         $this->model = new EmployeeRankModel();
     }
 
+    public function loadData()
+    {
+        return $this->rankRepo->all('code', 'asc');
+    }
+
     public function save(array $data)
     {
         try {

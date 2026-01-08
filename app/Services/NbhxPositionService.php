@@ -27,6 +27,11 @@ class NbhxPositionService
         $this->positionRepo = $nbhxPosition;
     }
 
+    public function loadData()
+    {
+        return $this->positionRepo->all('code', 'asc');
+    }
+
     public function save(array $data)
     {
         try {

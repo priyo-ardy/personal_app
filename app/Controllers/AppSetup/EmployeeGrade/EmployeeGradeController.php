@@ -156,4 +156,9 @@ class EmployeeGradeController extends BaseController
             return $this->exceptionResponse($e);
         }
     }
+
+    function seedData()
+    {
+        return $this->response->setJSON($this->gradeService->loadData(), JSON_PRETTY_PRINT);
+    }
 }

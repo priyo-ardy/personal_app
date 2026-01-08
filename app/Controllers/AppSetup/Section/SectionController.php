@@ -171,4 +171,11 @@ class SectionController extends BaseController
             return pesan($code, $e->getMessage());
         }
     }
+
+    function seedData()
+    {
+        $data = $this->sectionService->loadData();
+
+        return $this->response->setJSON($data, JSON_PRETTY_PRINT);
+    }
 }

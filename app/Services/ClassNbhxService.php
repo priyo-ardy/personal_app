@@ -29,6 +29,11 @@ class ClassNbhxService
         $this->classRepo = $classRepo;
     }
 
+    public function loadData()
+    {
+        return $this->classRepo->all('code', 'asc');
+    }
+
     public function save(array $data)
     {
         try {

@@ -25,6 +25,11 @@ class EmployeeCategoryService
         $this->categoryRepo = $employeeCategoryRepo;
     }
 
+    function loadData()
+    {
+        return $this->categoryRepo->all('code', 'asc');
+    }
+
     function loadTable($requestedData)
     {
         $model = new EmployeeCategoryModel();

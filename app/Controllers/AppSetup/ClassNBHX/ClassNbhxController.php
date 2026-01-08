@@ -29,7 +29,7 @@ class ClassNbhxController extends BaseController
             ]
         ];
 
-        return view('AppSetup\ClassNbhx\index', $data);
+        return view('AppSetup/ClassNbhx/index', $data);
     }
 
     public function loadTable()
@@ -162,5 +162,10 @@ class ClassNbhxController extends BaseController
         } catch (\Exception $e) {
             return $this->exceptionResponse($e);
         }
+    }
+
+    public function  seedData()
+    {
+        return $this->response->setJSON($this->classService->loadData(), JSON_PRETTY_PRINT);
     }
 }

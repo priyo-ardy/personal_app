@@ -28,6 +28,11 @@ class SectionService
         $this->sectionRepo = $sectionRepo;
     }
 
+    function loadData()
+    {
+        return $this->sectionRepo->all('code', 'asc');
+    }
+
     function save(array $data)
     {
         try {

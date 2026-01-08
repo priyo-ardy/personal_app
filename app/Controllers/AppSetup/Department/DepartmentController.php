@@ -7,6 +7,7 @@ use CodeIgniter\HTTP\ResponseInterface;
 use App\Services\DepartmentService;
 use App\Repositories\DepartmentRepository;
 use CodeIgniter\HTTP\Response;
+use SebastianBergmann\CodeCoverage\Test\TestStatus\Success;
 
 class DepartmentController extends BaseController
 {
@@ -160,5 +161,12 @@ class DepartmentController extends BaseController
             log_message('error', '[DepartmentController::exportData], Unexpected error occurred NIK : {NIK}, from IP {ip} : {err}', ['NIK' => session()->get('user_name'), 'ip' => $_SERVER['REMOTE_ADDR'], 'err' => $e->getMessage()]);
             return pesan($code, $e->getMessage());
         }
+    }
+
+    public function seedData()
+    {
+        $data = $this->deptService->loadData();
+
+        return $this->response->setJSON($data, JSON_PRETTY_PRINT);
     }
 }
