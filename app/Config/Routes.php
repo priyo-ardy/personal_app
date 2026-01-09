@@ -32,6 +32,20 @@
             $routes->get('export', 'AppSetup\Users\UsersController::exportData');
         });
 
+        // Routes untuk position
+        $routes->group('/position', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+            $routes->get('', 'AppSetup\Position\PositionController::index');
+            $routes->get('add', 'AppSetup\Position\PositionController::add');
+            $routes->post('save', 'AppSetup\Position\PositionController::saveData', ['filter' => 'ratelimit:3,60']);
+            $routes->post('table', 'AppSetup\Position\PositionController::loadTable');
+            $routes->get('get/(:any)', 'AppSetup\Position\PositionController::getData/$1');
+            $routes->post('update', 'AppSetup\Position\PositionController::updateData', ['filter' => 'ratelimit:3,60']);
+            $routes->post('mass-delete', 'AppSetup\Position\PositionController::massDelete', ['filter' => 'ratelimit:3,60']);
+            $routes->get('export', 'AppSetup\Position\PositionController::exportData', ['filter' => 'ratelimit:3,60']);
+            $routes->get('list', 'AppSetup\Position\PositionController::dataList');
+            $routes->get('seed', 'AppSetup\Position\PositionController::seedData');
+        });
+
         // Routes untuk module department
         $routes->group('/department', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
             $routes->get('', 'AppSetup\Department\DepartmentController::index');
@@ -53,6 +67,7 @@
             $routes->post('update', 'AppSetup\Section\SectionController::update', ['filter' => 'ratelimit:3,60']);
             $routes->post('delete', 'AppSetup\Section\SectionController::delete', ['filter' => 'ratelimit:3,60']);
             $routes->get('export', 'AppSetup\Section\SectionController::export', ['filter' => 'ratelimit:3,60']);
+            $routes->get('get_by_dept/(:any)', 'AppSetup\Section\SectionController::get_by_dept/$1');
             $routes->get('seed', 'AppSetup\Section\SectionController::seedData');
         });
 
@@ -119,12 +134,13 @@
         // Routes untuk salary rank
         $routes->group('/salary_rank', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
             $routes->get('', 'AppSetup\SalaryRank\SalaryRankController::index');
-            $routes->post('save', 'AppSetup\SalaryRank\SalaryRankController::save');
+            $routes->post('save', 'AppSetup\SalaryRank\SalaryRankController::save', ['filter' => 'ratelimit:3,60']);
             $routes->post('table', 'AppSetup\SalaryRank\SalaryRankController::loadTable');
             $routes->get('get/(:any)', 'AppSetup\SalaryRank\SalaryRankController::get/$1');
-            $routes->post('update', 'AppSetup\SalaryRank\SalaryRankController::update');
-            $routes->post('delete', 'AppSetup\SalaryRank\SalaryRankController::delete');
-            $routes->get('export', 'AppSetup\SalaryRank\SalaryRankController::export');
+            $routes->post('update', 'AppSetup\SalaryRank\SalaryRankController::update', ['filter' => 'ratelimit:3,60']);
+            $routes->post('delete', 'AppSetup\SalaryRank\SalaryRankController::delete', ['filter' => 'ratelimit:3,60']);
+            $routes->get('export', 'AppSetup\SalaryRank\SalaryRankController::export', ['filter' => 'ratelimit:3,60']);
+            $routes->get('seed', 'AppSetup\SalaryRank\SalaryRankController::seedData');
         });
 
         // Site Setting

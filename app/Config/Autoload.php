@@ -89,6 +89,7 @@ class Autoload extends AutoloadConfig
      * @var list<string>
      */
     public $helpers = [
+        'number',
         'app_helper',
         'excel_helper'
     ];

@@ -79,7 +79,7 @@
                 <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12 clearfix">
                     <div class="card rounded-0">
                         <div class="card-header rounded-0">
-                            <h3 class="card-title"><i class="bi bi-list-ul me-2"></i>Employee Class NBHX List</h3>
+                            <h3 class="card-title"><i class="bi bi-list-ul me-2"></i>Employee Salary Rank List</h3>
                             <div class="card-tools">
                                 <button type="button" id="btnDelete" class="btn btn-tool text-black fw-bolder" title="Delete"><i class="bi bi-trash3"></i></button>
                                 <button type="button" id="btnExport" class="btn btn-tool text-black fw-bolder" title="Export to excel"><i class="bi bi-download"></i></button>
@@ -88,7 +88,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-striped table-hover" id="dataTable">
+                                <table class="table table-striped table-hover table-bordered" id="dataTable">
                                     <thead>
                                         <tr>
                                             <th class="align-middle text-center bg-secondary-subtle">
@@ -97,6 +97,7 @@
                                             <th class="align-middle text-center bg-secondary-subtle">Code</th>
                                             <th class="align-middle text-center bg-secondary-subtle">Name</th>
                                             <th class="align-middle text-center bg-secondary-subtle">Effective Date</th>
+                                            <th class="align-middle text-center bg-secondary-subtle">Salary Rank</th>
                                             <th class="align-middle text-center bg-secondary-subtle">Description</th>
                                         </tr>
                                     </thead>

@@ -233,4 +233,30 @@ class SectionService
             return $e;
         }
     }
+
+    public function getListByDept(string $dept)
+    {
+        try {
+            $get_data = $this->sectionRepo->getSectionDataByDept($dept);
+
+            if (!$get_data) {
+                throw new \Exception('Data not found', ResponseInterface::HTTP_NOT_FOUND);
+            }
+
+            $data = [];
+
+            foreach ($get_data as $row) {
+                $data[] = [
+                    'token' => $row->id,
+                    'code' => $row->code,
+                    'name' => $row->name,
+                ];
+            }
+
+            return $data;
+        } catch (\Exception $e) {
+            log_message('error', '[SectionService::getListByDept] Unexpected error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            return $e;
+        }
+    }
 }

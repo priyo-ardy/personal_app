@@ -15,7 +15,7 @@ class SalaryRankRepository extends CrudRepository
 
     public function getNewCode()
     {
-        return $this->generateCode('PNBHX-', 'code', 4);
+        return $this->generateCode('SLR-', 'code', 4);
     }
 
     public function saveData(array $data)
@@ -35,7 +35,7 @@ class SalaryRankRepository extends CrudRepository
 
     public function findData(string $id)
     {
-        return $this->find($id);
+        return $this->model->where('id', $id)->first();
     }
 
     public function getAll($orderColumn = 'code', $orderDirection = 'ASC')
@@ -46,5 +46,6 @@ class SalaryRankRepository extends CrudRepository
     public function chunkedData($offset, $limit, $order, $column)
     {
         return $this->getChunkedData($offset, $limit, $order, $column);
+        // return $this->model->select($column)->where('deleted_at', null)->orderBy($order, 'ASC')->limit($limit, $offset)->get()->getResultArray();
     }
 }

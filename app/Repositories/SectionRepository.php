@@ -56,4 +56,13 @@ class SectionRepository extends CrudRepository implements SectionInterface
             ->get()
             ->getResultArray();
     }
+
+
+    function getSectionDataByDept($dept)
+    {
+        return $this->model->where('dept', $dept)
+            ->where('effective_date <=', date("Y-m-d"))
+            ->orderBy('code', 'ASC')
+            ->findAll();
+    }
 }

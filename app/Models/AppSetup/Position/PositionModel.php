@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Models\AppSetup\SalaryRank;
+namespace App\Models\AppSetup\Position;
 
 use CodeIgniter\Model;
 
-class SalaryRankModel extends Model
+class PositionModel extends Model
 {
-    protected $table            = 'm_salary_rank';
+    protected $table            = 'm_position';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = false;
     protected $returnType       = 'object';
@@ -16,10 +16,19 @@ class SalaryRankModel extends Model
         'id',
         'code',
         'name',
-        'effective_date',
-        'from_salary',
-        'to_salary',
         'description',
+        'nbhx_position',
+        'dept',
+        'section',
+        'report_to',
+        'grade',
+        'rank',
+        'emp_status',
+        'category',
+        'nbhx_category',
+        'effective_date',
+        'hitung_absen',
+        'hitung_lembur',
         'created_at',
         'created_by',
         'updated_at',

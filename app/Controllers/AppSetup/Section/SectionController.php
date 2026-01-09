@@ -7,6 +7,7 @@ use App\Models\AppSetup\Section\SectionModel;
 use App\Repositories\DepartmentRepository;
 use App\Repositories\SectionRepository;
 use App\Services\SectionService;
+use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
 
 class SectionController extends BaseController
@@ -177,5 +178,28 @@ class SectionController extends BaseController
         $data = $this->sectionService->loadData();
 
         return $this->response->setJSON($data, JSON_PRETTY_PRINT);
+    }
+
+    function get_by_dept($token)
+    {
+        if ($this->request->getMethod() !== 'GET') {
+            log_message('error', '[SectionController::get_by_dept] Request method not allowed for user {NIK} from {ip}', ['NIK' => session()->get('user_name'), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            throw new \Exception("Request not allowed", ResponseInterface::HTTP_METHOD_NOT_ALLOWED);
+        }
+
+        try {
+            $id_dept = $token;
+
+            $result = $this->sectionService->getListByDept($id_dept);
+            if (empty($result)) {
+                throw new \Exception('Data not found', ResponseInterface::HTTP_NOT_FOUND);
+            }
+
+            return pesan(ResponseInterface::HTTP_OK, 'Section data found', $result);
+        } catch (\Exception $e) {
+            $code = $e->getCode() ?? ResponseInterface::HTTP_INTERNAL_SERVER_ERROR;
+            log_message('errr', '[SectionController::get_by_dept] Unexpected error occured for user {NIK} from {ip} : {err}', ['NIK' => session()->get('user_name'), 'ip' => $_SERVER['REMOTE_ADDR'], 'err' => $e->getMessage()]);
+            return pesan($code, $e->getMessage());
+        }
     }
 }

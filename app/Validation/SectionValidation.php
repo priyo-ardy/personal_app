@@ -14,7 +14,7 @@ class SectionValidation
         ],
         'data_name' => [
             'label' => 'Section name',
-            'rules' => 'required|min_length[3]|max_length[150]',
+            'rules' => 'required|min_length[2]|max_length[150]',
             'errors' => [
                 'required' => 'The {field} is required',
                 'min_length' => 'The {field} must be at least {param} characters',
@@ -48,7 +48,7 @@ class SectionValidation
         ],
         'data_name' => [
             'label' => 'Section name',
-            'rules' => 'required|min_length[3]|max_length[150]',
+            'rules' => 'required|min_length[2]|max_length[150]',
             'errors' => [
                 'required' => 'The {field} is required',
                 'min_length' => 'The {field} must be at least {param} characters',
