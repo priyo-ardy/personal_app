@@ -65,7 +65,7 @@ class ExportExcelService
             return $this->response->setBody($output);
         } catch (\Exception $e) {
             log_message('error', '[ExportExcelService::exportLargeData] Unexpected error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
-            return $e;
+            throw $e;
         }
     }
 
@@ -92,7 +92,7 @@ class ExportExcelService
                 ->setBody($output);
         } catch (\Exception $e) {
             log_message('error', '[ExportExcelService::quickExport] Unexpected error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
-            return $e;
+            throw $e;
         }
     }
 

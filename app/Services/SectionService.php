@@ -72,7 +72,7 @@ class SectionService
             return true;
         } catch (\Exception $e) {
             log_message('error', "[SectionService::save] Failed to save new section data by {NIK} from {ip} : {err}", ['NIK' => session()->get('user_name'), 'ip' => $_SERVER['REMOTE_ADDR'], 'err' => $e->getMessage()]);
-            return $e;
+            throw $e;
         }
     }
 
@@ -96,7 +96,7 @@ class SectionService
             ];
         } catch (\Exception $e) {
             log_message('error', "[SectionService::get] Failed to get section data by {NIK} from {ip} : {err}", ['NIK' => session()->get('user_name'), 'ip' => $_SERVER['REMOTE_ADDR'], 'err' => $e->getMessage()]);
-            return $e;
+            throw $e;
         }
     }
 
@@ -137,7 +137,7 @@ class SectionService
             return true;
         } catch (\Exception $e) {
             log_message('error', "[SectionService::update] Failed to update section data by {NIK} from {ip} : {err}", ['NIK' => session()->get('user_name'), 'ip' => $_SERVER['REMOTE_ADDR'], 'err' => $e->getMessage()]);
-            return $e;
+            throw $e;
         }
     }
 
@@ -160,7 +160,7 @@ class SectionService
             return true;
         } catch (\Exception $e) {
             log_message('error', "[SectionService::delete] Failed to delete section data by {NIK} from {ip} : {err}", ['NIK' => session()->get('user_name'), 'ip' => $_SERVER['REMOTE_ADDR'], 'err' => $e->getMessage()]);
-            return $e;
+            throw $e;
         }
     }
 
@@ -205,7 +205,7 @@ class SectionService
             return $result;
         } catch (\Exception $e) {
             log_message('error', "[SectionService::loadTable] Failed to load section data by {NIK} from {ip} : {err}", ['NIK' => session()->get('user_name'), 'ip' => $_SERVER['REMOTE_ADDR'], 'err' => $e->getMessage()]);
-            return $e;
+            throw $e;
         }
     }
 
@@ -230,7 +230,7 @@ class SectionService
             return export_to_excel($fileName, $headers, $dataCallback);
         } catch (\Exception $e) {
             log_message('error', '[SectionService::exportData] Unexpexted error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
-            return $e;
+            throw $e;
         }
     }
 
@@ -256,7 +256,7 @@ class SectionService
             return $data;
         } catch (\Exception $e) {
             log_message('error', '[SectionService::getListByDept] Unexpected error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
-            return $e;
+            throw $e;
         }
     }
 }

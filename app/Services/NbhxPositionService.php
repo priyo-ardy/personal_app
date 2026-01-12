@@ -92,7 +92,7 @@ class NbhxPositionService
                 ]
             );
 
-            return $e;
+            throw $e;
         }
     }
 
@@ -133,7 +133,7 @@ class NbhxPositionService
                 ]
             );
 
-            return $e;
+            throw $e;
         }
     }
 
@@ -197,7 +197,7 @@ class NbhxPositionService
                 ]
             );
 
-            return $e;
+            throw $e;
         }
     }
 
@@ -236,7 +236,7 @@ class NbhxPositionService
                 ]
             );
 
-            return $e;
+            throw $e;
         }
     }
 
@@ -272,7 +272,7 @@ class NbhxPositionService
             return $result;
         } catch (\Exception $e) {
             log_message('error', '[NbhxPositionService::loadTable] Unexpexted error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
-            return $e;
+            throw $e;
         }
     }
 
@@ -296,7 +296,7 @@ class NbhxPositionService
             return export_to_excel($fileName, $headers, $dataCallback);
         } catch (\Exception $e) {
             log_message('error', '[NbhxPositionService::export] Unexpexted error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
-            return $e;
+            throw $e;
         }
     }
 }

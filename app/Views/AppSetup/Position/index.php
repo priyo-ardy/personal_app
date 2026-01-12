@@ -55,14 +55,21 @@
                                             <th class="align-middle text-center bg-secondary-subtle">
                                                 <input type="checkbox" id="select-all" class="form-check-input rounded-0 border-1 border-primary">
                                             </th>
-                                            <th class="align-middle text-center bg-secondary-subtle">User Name</th>
-                                            <th class="align-middle text-center bg-secondary-subtle">Full Name</th>
-                                            <th class="align-middle text-center bg-secondary-subtle">Email Address</th>
-                                            <th class="align-middle text-center bg-secondary-subtle">Phone Number</th>
-                                            <th class="align-middle text-center bg-secondary-subtle">User Level</th>
-                                            <th class="align-middle text-center bg-secondary-subtle">Last Login</th>
-                                            <th class="align-middle text-center bg-secondary-subtle">Login From</th>
-                                            <th class="align-middle text-center bg-secondary-subtle">Remark</th>
+                                            <th class="align-middle text-center bg-secondary-subtle">Code</th>
+                                            <th class="align-middle text-center bg-secondary-subtle">Name</th>
+                                            <th class="align-middle text-center bg-secondary-subtle">NBHX Position</th>
+                                            <th class="align-middle text-center bg-secondary-subtle">Department</th>
+                                            <th class="align-middle text-center bg-secondary-subtle">Section</th>
+                                            <th class="align-middle text-center bg-secondary-subtle">Report to</th>
+                                            <th class="align-middle text-center bg-secondary-subtle">Grade</th>
+                                            <th class="align-middle text-center bg-secondary-subtle">Rank</th>
+                                            <th class="align-middle text-center bg-secondary-subtle">Status</th>
+                                            <th class="align-middle text-center bg-secondary-subtle">Category</th>
+                                            <th class="align-middle text-center bg-secondary-subtle">NBHX Category</th>
+                                            <th class="align-middle text-center bg-secondary-subtle">Effective Date</th>
+                                            <th class="align-middle text-center bg-secondary-subtle">Allow Absent</th>
+                                            <th class="align-middle text-center bg-secondary-subtle">Allow Overtime</th>
+                                            <th class="align-middle text-center bg-secondary-subtle">Description</th>
                                         </tr>
                                     </thead>
                                     <tbody></tbody>

@@ -67,7 +67,7 @@ class EmployeeGradeService
 
             return true;
         } catch (\Exception $e) {
-            return $e;
+            throw $e;
         }
     }
 
@@ -89,7 +89,7 @@ class EmployeeGradeService
                 'description' => $get_data->description,
             ];
         } catch (\Exception $e) {
-            return $e;
+            throw $e;
         }
     }
 
@@ -126,7 +126,7 @@ class EmployeeGradeService
 
             return true;
         } catch (\Exception $e) {
-            return $e;
+            throw $e;
         }
     }
 
@@ -146,7 +146,7 @@ class EmployeeGradeService
 
             return true;
         } catch (\Exception $e) {
-            return $e;
+            throw $e;
         }
     }
 
@@ -181,7 +181,7 @@ class EmployeeGradeService
             $result['data'] = $data;
             return $result;
         } catch (\Exception $e) {
-            return $e;
+            throw $e;
         }
     }
 
@@ -205,7 +205,7 @@ class EmployeeGradeService
             return export_to_excel($fileName, $headers, $dataCallback);
         } catch (\Exception $e) {
             log_message('error', '[EmployeeGradeService::exportData] Unexpexted error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
-            return $e;
+            throw $e;
         }
     }
 }

@@ -18,6 +18,16 @@ class PositionRepository extends CrudRepository
         return $this->find($id);
     }
 
+    public function generateNewCode()
+    {
+        return $this->generateCode('POS-', 'code', 4);
+    }
+
+    public function generatePositionList()
+    {
+        return $this->model->where('effective_date <=', date('Y-m-d'))->orderBy('code', 'asc')->findAll();
+    }
+
     public function generateData()
     {
         return $this->all('code', 'asc');

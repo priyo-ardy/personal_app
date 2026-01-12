@@ -11,7 +11,13 @@ function validasi() {
           "This field is required";
       } else {
         element.classList.remove("is-invalid");
-        element.parentNode.querySelector(".invalid-feedback").textContent = "";
+        // if (
+        //   element.parentNode.querySelector(".invalid-feedback").textContent !==
+        //   ""
+        // ) {
+        //   element.parentNode.querySelector(".invalid-feedback").textContent =
+        //     "";
+        // }
       }
     });
   }

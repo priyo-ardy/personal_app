@@ -61,7 +61,7 @@ class DepartmentService
             return true;
         } catch (\Exception $e) {
             log_message('error', "[DepartmentService::save] Failed to save new department data by {NIK} : {err}", ['NIK' => session()->get('user_name'), 'err' => $e->getMessage()]);
-            return $e;
+            throw $e;
         }
     }
 
@@ -120,7 +120,7 @@ class DepartmentService
             return false;
         } catch (\Exception $e) {
             log_message('error', "[] Unexpexted error occured : {err} from {ip}", ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
-            return $e;
+            throw $e;
         }
     }
 
@@ -157,7 +157,7 @@ class DepartmentService
             return true;
         } catch (\Exception $e) {
             log_message('error', "[DepartmentService::update] Unexpexted error occured : {err} from {ip}", ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
-            return $e;
+            throw $e;
         }
     }
 
@@ -176,7 +176,7 @@ class DepartmentService
             }
         } catch (\Exception $e) {
             log_message('error', '[DepartmentService::massDelete] Unexpexted error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
-            return $e;
+            throw $e;
         }
     }
 
@@ -200,7 +200,7 @@ class DepartmentService
             return export_to_excel($fileName, $headers, $dataCallback);
         } catch (\Exception $e) {
             log_message('error', '[DepartmentService::exportData] Unexpexted error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
-            return $e;
+            throw $e;
         }
     }
 

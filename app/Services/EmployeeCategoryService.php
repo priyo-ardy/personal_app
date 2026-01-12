@@ -109,7 +109,7 @@ class EmployeeCategoryService
                 'ip' => $_SERVER['REMOTE_ADDR'],
                 'error' => $e->getMessage(),
             ]);
-            return $e;
+            throw $e;
         }
     }
 
@@ -131,7 +131,7 @@ class EmployeeCategoryService
         } catch (\Exception $e) {
             log_message('error', '', []);
 
-            return $e;
+            throw $e;
         }
     }
 
@@ -192,7 +192,7 @@ class EmployeeCategoryService
                 ]
             );
 
-            return $e;
+            throw $e;
         }
     }
 
@@ -211,7 +211,7 @@ class EmployeeCategoryService
             }
         } catch (\Exception $e) {
             log_message('error', '[EmployeeCategoryService::update] Unexpexted error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
-            return $e;
+            throw $e;
         }
     }
 
@@ -235,7 +235,7 @@ class EmployeeCategoryService
             return export_to_excel($fileName, $headers, $dataCallback);
         } catch (\Exception $e) {
             log_message('error', '[DepartmentService::exportData] Unexpexted error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
-            return $e;
+            throw $e;
         }
     }
 }

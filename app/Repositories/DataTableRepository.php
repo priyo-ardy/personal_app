@@ -12,7 +12,7 @@ class DataTableRepository
     protected $defaultOrder;
     protected $customSearch;
 
-    public function __construct(BaseBuilder $builder, array $column_search, array $column_order, array $defaultOrder = [], array $customSearch = [], string $deletedAtColumn)
+    public function __construct(BaseBuilder $builder, array $column_search, array $column_order, array $defaultOrder = [], array $customSearch = [], string $deletedAtColumn = 'deleted_at')
     {
         $this->builder = $builder;
         $this->column_search = $column_search;
@@ -72,14 +72,14 @@ class DataTableRepository
                 if (array_key_exists($column, $this->customSearch)) {
                     $this->customSearch[$column]($this->builder, $searchValue);
                 } else {
-                    $this->builder->like($column, $searchValue);
+                    $this->builder->like($column, $searchValue, 'both', null, true);
                 }
             } else {
                 // Kolom selanjutnya pakai OR LIKE
                 if (array_key_exists($column, $this->customSearch)) {
                     $this->customSearch[$column]($this->builder, $searchValue);
                 } else {
-                    $this->builder->orLike($column, $searchValue);
+                    $this->builder->orLike($column, $searchValue, 'both', null, true);
                 }
             }
         }

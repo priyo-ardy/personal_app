@@ -67,7 +67,7 @@ class SalaryRankService
             return $result;
         } catch (\Exception $e) {
             log_message('error', '[NbhxPositionService::loadTable] Unexpexted error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
-            return $e;
+            throw $e;
         }
     }
 
@@ -111,7 +111,7 @@ class SalaryRankService
             return true;
         } catch (\Exception $e) {
             log_message('error', '[SalaryRankService::save] Unexpected error occured for user {NIK} from {ip} : {err}', ['NIK' => session()->get('user_name'), 'ip' => $_SERVER['REMOTE_ADDR'], 'err' => $e->getMessage()]);
-            return $e;
+            throw $e;
         }
     }
 
@@ -178,7 +178,7 @@ class SalaryRankService
             return true;
         } catch (\Exception $e) {
             log_message('error', '[SalaryRankService::updateData] Unexpected error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
-            return $e;
+            throw $e;
         }
     }
 
@@ -202,7 +202,7 @@ class SalaryRankService
             return export_to_excel($fileName, $headers, $dataCallback);
         } catch (\Exception $e) {
             log_message('error', '[SalaryRankService::export] Unexpected error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
-            return $e;
+            throw $e;
         }
     }
 }

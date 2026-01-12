@@ -126,13 +126,13 @@ class PositionTable extends Migration
         $this->forge->addKey('category');
         $this->forge->addKey('nbhx_category');
 
-        $this->forge->addForeignKey('nbhx_position', 'm_nbhx_position', 'id', 'CASCADE', '', 'nbhx_position');
-        $this->forge->addForeignKey('dept', 'm_department', 'id', 'CASCADE', '', 'department');
-        $this->forge->addForeignKey('section', 'm_section', 'id', 'CASCADE', '', 'section');
-        $this->forge->addForeignKey('grade', 'm_grade', 'id', 'CASCADE', '', 'grade');
-        $this->forge->addForeignKey('rank', 'm_employee_rank', 'id', 'CASCADE', '', 'rank');
-        $this->forge->addForeignKey('category', 'm_employee_category', 'id', 'CASCADE', '', 'category');
-        $this->forge->addForeignKey('nbhx_category', 'm_class_nbhx', 'id', 'CASCADE', '', 'class_nbhx');
+        $this->forge->addForeignKey('nbhx_position', 'm_nbhx_position', 'id', '', 'RESTRICT', 'nbhx_position');
+        $this->forge->addForeignKey('dept', 'm_department', 'id', '', 'RESTRICT', 'department');
+        $this->forge->addForeignKey('section', 'm_section', 'id', '', 'RESTRICT', 'section');
+        $this->forge->addForeignKey('grade', 'm_grade', 'id', '', 'RESTRICT', 'grade');
+        $this->forge->addForeignKey('rank', 'm_employee_rank', 'id', '', 'RESTRICT', 'rank');
+        $this->forge->addForeignKey('category', 'm_employee_category', 'id', '', 'RESTRICT', 'category');
+        $this->forge->addForeignKey('nbhx_category', 'm_class_nbhx', 'id', '', 'RESTRICT', 'class_nbhx');
 
         $this->forge->createTable('m_position', true);
     }

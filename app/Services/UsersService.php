@@ -17,7 +17,7 @@ class UsersService
     protected $db;
     protected $userRepo;
     protected $validasi;
-    
+
     public function __construct(UserRepository $userRepo)
     {
         $this->db = Database::connect();
@@ -208,7 +208,7 @@ class UsersService
             return export_decrypted_data($fileName, $headers, ['user_email', 'user_phone'], $dataCallback);
         } catch (\Exception $e) {
             log_message('error', '[UsersService::exportData] failed to export users data with error {err} from ip {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
-            return $e;
+            throw $e;
         }
     }
 
