@@ -58,9 +58,12 @@
                         <div class="card-body">
                             <form id="formData">
                                 <div class="row g-2">
+                                    <div class="form-group col-12 mb-3 clearfix">
+                                        <input type="text" name="data_token" class="form-control rounded-0 bg-secondary-subtle" readonly value="<?= enkripsi($data->id) ?>">
+                                    </div>
                                     <div class="form-group col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-1 clearfix">
                                         <label class="form-label" for="data_name">Position Name <strong class="text-danger fw-bolder">*</strong></label>
-                                        <input type="text" name="data_name" id="data_name" class="form-control rounded-0" placeholder="Position Name" autocomplete="off" autofocus maxlength="150" required>
+                                        <input type="text" name="data_name" id="data_name" class="form-control rounded-0" placeholder="Position Name" autocomplete="off" autofocus maxlength="150" required value="<?= $data->name ?>">
                                         <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="form-group col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-1 clearfix">
@@ -68,21 +71,21 @@
                                         <select name="nbhx_position" id="nbhx_position" class="form-control select2 select2bs5 rounded-0" required>
                                             <option value="">-- Choose --</option>
                                             <?php foreach ($nbhx_position as $nbp): ?>
-                                                <option value="<?= $nbp->id ?>"><?= "$nbp->code - $nbp->name" ?></option>
+                                                <option <?= ($data->nbhx_position == $nbp->id) ? 'selected' : '' ?> value="<?= $nbp->id ?>"><?= "$nbp->code - $nbp->name" ?></option>
                                             <?php endforeach; ?>
                                         </select>
                                         <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="form-group col-xl-5 col-lg-5 col-md-6 col-sm-12 mb-1 clearfix">
                                         <label class="form-label" for="data_remark">Description</label>
-                                        <input type="text" name="data_remark" id="data_remark" class="form-control rounded-0" placeholder="Description" autocomplete="off" maxlength="255">
+                                        <input type="text" name="data_remark" id="data_remark" class="form-control rounded-0" placeholder="Description" autocomplete="off" maxlength="255" value="<?= $data->description ?>">
                                     </div>
                                     <div class="form-group col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-1 clearfix">
                                         <label class="form-label" for="data_dept">Department <strong class="text-danger">*</strong></label>
                                         <select name="data_dept" id="data_dept" class="form-control select2 select2bs5 rounded-0" required>
                                             <option value="">-- Choose --</option>
                                             <?php foreach ($dept as $dpt): ?>
-                                                <option value="<?= $dpt->id ?>"><?= "$dpt->code - $dpt->name" ?></option>
+                                                <option <?= ($data->dept == $dpt->id) ? 'selected' : '' ?> value="<?= $dpt->id ?>"><?= "$dpt->code - $dpt->name" ?></option>
                                             <?php endforeach; ?>
                                         </select>
                                         <div class="invalid-feedback"></div>
@@ -91,6 +94,9 @@
                                         <label class="form-label" for="data_section">Section <strong class="text-danger">*</strong></label>
                                         <select name="data_section" id="data_section" class="form-select select2 select2bs5 rounded-0" required>
                                             <option value="">-- Choose --</option>
+                                            <?php foreach ($section as $sec): ?>
+                                                <option <?= ($data->section == $sec['token']) ? 'selected' : '' ?> value=" <?= $sec['token'] ?>"><?= "$sec[code] - $sec[name]" ?></option>
+                                            <?php endforeach; ?>
                                         </select>
                                         <div class="invalid-feedback"></div>
                                     </div>
@@ -98,6 +104,9 @@
                                         <label class="form-label" for="data_report_to">Report to Position <strong class="text-danger">*</strong></label>
                                         <select name="data_report_to" id="data_report_to" class="form-select select2 select2bs5 rounded-0" required>
                                             <option value="">-- Choose --</option>
+                                            <?php foreach ($position as $pos): ?>
+                                                <option <?= ($data->report_to == $pos['token']) ? 'selected' : '' ?> value="<?= $pos['token'] ?>"><?= "$pos[code] - $pos[name]" ?></option>
+                                            <?php endforeach; ?>
                                         </select>
                                         <div class="invalid-feedback"></div>
                                     </div>
@@ -106,7 +115,7 @@
                                         <select name="data_grade" id="data_grade" class="form-select select2 select2bs5 rounded-0" required>
                                             <option value="">-- Choose --</option>
                                             <?php foreach ($grade as $grd): ?>
-                                                <option value="<?= $grd->id ?>"><?= "$grd->code - $grd->name" ?></option>
+                                                <option <?= ($data->grade == $grd->id) ? 'selected' : '' ?> value="<?= $grd->id ?>"><?= "$grd->code - $grd->name" ?></option>
                                             <?php endforeach; ?>
                                         </select>
                                         <div class="invalid-feedback"></div>
@@ -116,7 +125,7 @@
                                         <select name="data_rank" id="data_rank" class="form-select  select2 select2bs5 rounded-0" required>
                                             <option value="">-- Choose --</option>
                                             <?php foreach ($rank as $rnk): ?>
-                                                <option value="<?= $rnk->id ?>"><?= "$rnk->code - $rnk->name" ?></option>
+                                                <option <?= ($data->rank == $rnk->id) ? 'selected' : '' ?> value="<?= $rnk->id ?>"><?= "$rnk->code - $rnk->name" ?></option>
                                             <?php endforeach; ?>
                                         </select>
                                         <div class="invalid-feedback"></div>
@@ -124,9 +133,9 @@
                                     <div class="form-group col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-1 clearfix">
                                         <label class="form-label" for="data_status">Position Status <strong class="text-danger">*</strong></label>
                                         <select name="data_status" id="data_status" class="form-select select2 select2bs5 rounded-0" required>
-                                            <option value="">-- Choose --</option>
-                                            <option value="REG">Reguler</option>
-                                            <option value="TMP">Temporary</option>
+                                            <option <?= ($data->emp_status == '') ? 'selected' : '' ?> value="">-- Choose --</option>
+                                            <option <?= ($data->emp_status == 'REG') ? 'selected' : '' ?> value="REG">Reguler</option>
+                                            <option <?= ($data->emp_status == 'TMP') ? 'selected' : '' ?> value="TMP">Temporary</option>
                                         </select>
                                         <div class="invalid-feedback"></div>
                                     </div>
@@ -135,7 +144,7 @@
                                         <select name="data_category" id="data_category" class="form-select  select2 select2bs5 rounded-0" required>
                                             <option value="">-- Choose --</option>
                                             <?php foreach ($emp_category as $ec): ?>
-                                                <option value="<?= $ec->id ?>"><?= "$ec->code - $ec->name" ?></option>
+                                                <option <?= ($data->category == $ec->id) ? 'selected' : '' ?> value="<?= $ec->id ?>"><?= "$ec->code - $ec->name" ?></option>
                                             <?php endforeach; ?>
                                         </select>
                                         <div class="invalid-feedback"></div>
@@ -145,28 +154,28 @@
                                         <select name="nbhx_category" id="nbhx_category" class="form-select select2 select2bs5 rounded-0" required>
                                             <option value="">-- Choose --</option>
                                             <?php foreach ($class_nbhx as $cnb): ?>
-                                                <option value="<?= $cnb->id ?>"><?= "$cnb->code - $cnb->name" ?></option>
+                                                <option <?= ($data->nbhx_category == $cnb->id) ? 'selected' : '' ?> value="<?= $cnb->id ?>"><?= "$cnb->code - $cnb->name" ?></option>
                                             <?php endforeach; ?>
                                         </select>
                                         <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="form-group col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-1 clearfix">
                                         <label class="form-label" for="effective_date">Effective Date <strong class="text-danger">*</strong></label>
-                                        <input type="date" name="effective_date" id="effective_date" class="form-control rounded-0" required>
+                                        <input type="date" name="effective_date" id="effective_date" class="form-control rounded-0" required value="<?= $data->effective_date ?>">
                                         <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="form-group col-xl-2 col-lg-2 col-md-6 col-sm-12 mb-1 clearfix">
                                         <label class="form-label" for="data_absen">Allow Finger <strong class="text-danger fw-bolder">*</strong></label>
                                         <select name="data_absen" id="data_absen" class="form-control select2 select2bs5" required>
-                                            <option value="1">Yes</option>
-                                            <option value="0">No</option>
+                                            <option <?= ($data->hitung_absen == '1') ? 'selected' : '' ?> value="1">Yes</option>
+                                            <option <?= ($data->hitung_absen == '0') ? 'selected' : '' ?> value="0">No</option>
                                         </select>
                                     </div>
                                     <div class="form-group col-xl-2 col-lg-2 col-md-6 col-sm-12 mb-1 clearfix">
                                         <label class="form-label" for="data_lembur">Allow Overtime <strong class="text-danger fw-bolder">*</strong></label>
                                         <select name="data_lembur" id="data_lembur" class=" form-control select2 select2bs5" required>
-                                            <option value="0">No</option>
-                                            <option value="1">Yes</option>
+                                            <option <?= ($data->hitung_lembur == '0') ? 'selected' : '' ?> value="0">No</option>
+                                            <option <?= ($data->hitung_lembur == '1') ? 'selected' : '' ?> value="1">Yes</option>
                                         </select>
                                     </div>
                                 </div>

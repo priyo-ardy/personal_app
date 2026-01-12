@@ -6,6 +6,8 @@ use App\Controllers\BaseController;
 use App\Repositories\NbhxPositionRepository;
 use App\Repositories\PositionRepository;
 use App\Repositories\DepartmentRepository;
+use App\Services\SectionService;
+use App\Repositories\SectionRepository;
 use App\Repositories\DataTableRepository;
 use App\Repositories\EmployeeGradeRepository;
 use App\Repositories\EmployeeRankRepository;
@@ -31,6 +33,7 @@ class PositionController extends BaseController
     protected $categoryService;
     protected $classService;
     protected $positionService;
+    protected $sectionService;
 
     public function __construct()
     {
@@ -41,6 +44,7 @@ class PositionController extends BaseController
         $this->categoryService = new EmployeeCategoryService(new EmployeeCategoryRepository());
         $this->classService = new ClassNbhxService(new ClassNbhxRepository());
         $this->positionService = new PositionService(new PositionRepository());
+        $this->sectionService = new SectionService(new SectionRepository());
     }
     public function index()
     {
@@ -161,8 +165,10 @@ class PositionController extends BaseController
                 'data' => $list,
                 'nbhx_position' => $this->nbhxPositionService->loadData(),
                 'dept' => $this->departmentService->loadData(),
+                'section' => $this->sectionService->getListByDept($list->dept),
                 'grade' => $this->gradeService->loadData(),
                 'rank' => $this->rankService->loadData(),
+                'position' => $this->positionService->loadDataList(),
                 'emp_category' => $this->categoryService->loadData(),
                 'class_nbhx' => $this->classService->loadData(),
                 'footer' => [
