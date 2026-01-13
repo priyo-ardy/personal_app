@@ -147,6 +147,30 @@
             $routes->get('seed', 'AppSetup\SalaryRank\SalaryRankController::seedData');
         });
 
+        // Routes untuk country
+        $routes->group('/country', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+            $routes->get('', 'AppSetup\Country\CountryController::index');
+            $routes->post('save', 'AppSetup\Country\CountryController::save', ['filter' => 'ratelimit:3,60']);
+            $routes->post('table', 'AppSetup\Country\CountryController::loadTable');
+            $routes->get('get/(:any)', 'AppSetup\Country\CountryController::get/$1');
+            $routes->post('update', 'AppSetup\Country\CountryController::update', ['filter' => 'ratelimit:3,60']);
+            $routes->post('delete', 'AppSetup\Country\CountryController::delete', ['filter' => 'ratelimit:3,60']);
+            $routes->get('export', 'AppSetup\Country\CountryController::export', ['filter' => 'ratelimit:3,60']);
+            $routes->get('seed', 'AppSetup\Country\CountryController::seedData');
+        });
+
+        // Routes untuk province
+        $routes->group('/province', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+            $routes->get('', 'AppSetup\Province\ProvinceController::index');
+            $routes->post('save', 'AppSetup\Province\ProvinceController::save', ['filter' => 'ratelimit:3,60']);
+            $routes->post('table', 'AppSetup\Province\ProvinceController::loadTable');
+            $routes->get('get/(:any)', 'AppSetup\Province\ProvinceController::get/$1');
+            $routes->post('update', 'AppSetup\Province\ProvinceController::update', ['filter' => 'ratelimit:3,60']);
+            $routes->post('delete', 'AppSetup\Province\ProvinceController::delete', ['filter' => 'ratelimit:3,60']);
+            $routes->get('export', 'AppSetup\Province\ProvinceController::export', ['filter' => 'ratelimit:3,60']);
+            $routes->get('seed', 'AppSetup\Province\ProvinceController::seedData');
+        });
+
         // Site Setting
         $routes->get('/site-setting', 'SiteSetting\SiteSettingController::index', ['filter' => ['role:superadmin,admin', 'ratelimit:100,60']]);
     });

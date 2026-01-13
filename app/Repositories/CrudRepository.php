@@ -97,4 +97,9 @@ abstract class CrudRepository implements CrudRepositoryInterface
             ->get()
             ->getResultArray();
     }
+
+    public function massDelete(array $id)
+    {
+        return $this->model->update($id, ['deleted_at' => date('Y-m-d H:i:sP')]);
+    }
 }
