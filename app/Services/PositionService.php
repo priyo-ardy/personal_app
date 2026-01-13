@@ -200,4 +200,150 @@ class PositionService
             throw $e;
         }
     }
+
+    function updateData(array $postData)
+    {
+        try {
+            $this->validasi->setRules(PositionValidation::$update);
+
+            if ($this->validasi->run($postData) === false) {
+                $error_to_string = implode('<br>', $this->validasi->getErrors());
+                log_message('error', '[PositionService::updateData] Failed to verify new position data by {NIK} from {ip} : {err}', ['NIK' => session()->get('user_name'), 'ip' => $_SERVER['REMOTE_ADDR'], 'err' => $error_to_string]);
+                throw new \Exception("Validation failed $error_to_string", ResponseInterface::HTTP_BAD_REQUEST);
+            }
+
+            $id = dekripsi($postData['data_token']);
+
+            $data = [
+                'name' => $postData['data_name'],
+                'description' => $postData['data_remark'],
+                'nbhx_position' => $postData['nbhx_position'],
+                'dept' => $postData['data_dept'],
+                'section' => trim($postData['data_section']),
+                'report_to' => $postData['data_report_to'],
+                'grade' => $postData['data_grade'],
+                'rank' => $postData['data_rank'],
+                'emp_status' => $postData['data_status'],
+                'category' => $postData['data_category'],
+                'nbhx_category' => $postData['nbhx_category'],
+                'effective_date' => $postData['effective_date'],
+                'hitung_absen' => $postData['data_absen'],
+                'hitung_lembur' => $postData['data_lembur'],
+                'updated_by' => session()->get('user_name'),
+            ];
+
+            $update = $this->positionRepo->update($id, $data);
+            if (!$update) {
+                log_message('error', '[PositionService::updateData] Failed to update data by {NIK} from {ip}', ['NIK' => session()->get('user_name'), 'ip' => $_SERVER['REMOTE_ADDR']]);
+                throw new \Exception("Failed to update data", ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
+            }
+
+            return true;
+        } catch (\Exception $e) {
+            log_message('error', '[PositionService::updateData] Unexpected error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            throw $e;
+        }
+    }
+
+    public function deleteData(string $id)
+    {
+        try {
+            $delete = $this->positionRepo->delete($id);
+            if (!$delete) {
+                log_message('error', '[PositionService::deleteData] Failed to delete data by {NIK} from {ip}', ['NIK' => session()->get('user_name'), 'ip' => $_SERVER['REMOTE_ADDR']]);
+                throw new \Exception("Failed to delete data", ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
+            }
+
+            return true;
+        } catch (\Exception $e) {
+            log_message('error', '[PositionService::deleteData] Unexpected error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            throw $e;
+        }
+    }
+
+    public function massDelete(array $data)
+    {
+        try {
+            $mass_delete = $this->positionRepo->deleteAll($data);
+
+            if (!$mass_delete) {
+                log_message('error', '[PositionService::massDelete] Failed to delete data by {NIK} from {ip}', ['NIK' => session()->get('user_name'), 'ip' => $_SERVER['REMOTE_ADDR']]);
+                throw new \Exception("Failed to delete data", ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
+            }
+
+            return true;
+        } catch (\Exception $e) {
+            log_message('error', '[PositionService::massDelete] Unexpected error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            throw $e;
+        }
+    }
+
+    public function exportData()
+    {
+        try {
+            $fileName = "postion_list_" . date("Ymd_his") . '.xlsx';
+
+            $headers = [
+                'Code',
+                'Name',
+                'NBHX Position',
+                'Department',
+                'Section',
+                'Report to Position',
+                'Position Grade',
+                'Position Rank',
+                'Position Status',
+                'Position Category',
+                'NBHX Category',
+                'Effective Date',
+                'Allow Absent',
+                'Allow Overtime',
+                'Description'
+            ];
+
+            $dataCallback = function ($offset, $limit) {
+                $column = 'code, name, nbhx_position_name, dept_name, section_name, report_to_position, grade_name, rank_name, status_name, category_name, nbhx_category_name, effective_date, nama_hitung_absen, nama_hitung_lembur, description';
+                return $this->positionRepo->chunkedData($offset, $limit, 'code', $column);
+            };
+
+            return export_to_excel($fileName, $headers, $dataCallback);
+        } catch (\Exception $e) {
+            log_message('error', '[NbhxPositionService::export] Unexpexted error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            throw $e;
+        }
+    }
+
+    public function getPrevData(string $code)
+    {
+        try {
+            $prev = $this->positionRepo->prevData('code', $code);
+            if (!$prev) {
+                throw new \Exception("You are in the first data", ResponseInterface::HTTP_BAD_REQUEST);
+            }
+
+            return [
+                'token' => enkripsi($prev->id),
+            ];
+        } catch (\Exception $e) {
+            log_message('error', '[PositionService::getPrevData] Unexpected error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            throw $e;
+        }
+    }
+
+    public function getNextData(string $code)
+    {
+        try {
+            $next = $this->positionRepo->nextData('code', $code);
+            if (!$next) {
+                throw new \Exception("You are in the first data", ResponseInterface::HTTP_BAD_REQUEST);
+            }
+
+            return [
+                'token' => enkripsi($next->id),
+            ];
+        } catch (\Exception $e) {
+            log_message('error', '[PositionService::getPrevData] Unexpected error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            throw $e;
+        }
+    }
 }

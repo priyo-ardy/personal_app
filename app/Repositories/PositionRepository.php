@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\AppSetup\Position\PositionModel;
+use App\Models\AppSetup\Position\VwPositionModel;
 
 class PositionRepository extends CrudRepository
 {
@@ -44,9 +45,25 @@ class PositionRepository extends CrudRepository
         // return $this->update($id, $data);
     }
 
+    public function delete(string $id)
+    {
+        return $this->model->delete($id);
+    }
+
+    public function deleteAll($data)
+    {
+        return $this->model->update($data, ['deleted_at' => date('Y-m-d H:i:sP')]);
+    }
+
     public function chunkedData($offset, $limit, $order, $column)
     {
-        return $this->getChunkedData($offset, $limit, $order, $column);
+        $view = new VwPositionModel();
+        return $view->select($column)
+            ->where('deleted_at', null)
+            ->orderBy($order, 'ASC')
+            ->limit($limit, $offset)
+            ->get()
+            ->getResultArray();
     }
 
     function nextUser($code)

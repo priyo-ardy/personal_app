@@ -184,4 +184,186 @@ class PositionController extends BaseController
             return pesan($code, $e->getMessage());
         }
     }
+
+    public function updateData()
+    {
+        if ($this->request->getMethod() !== "POST") {
+            log_message('error', "[PositionController::updateData] Request method not allowed for user {NIK} from {ip}", ['NIK' => session()->get('user_name'), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            throw new \Exception("Request not allowed", ResponseInterface::HTTP_METHOD_NOT_ALLOWED);
+        }
+
+        try {
+            $postData = $this->request->getPost();
+
+            if ($this->positionService->updateData($postData)) {
+                return $this->success(ResponseInterface::HTTP_OK, "Position data updated successfully");
+            }
+        } catch (\Exception $e) {
+            log_message('error', '[PositionController::updateData] Unexpected error occured for user {NIK} from {ip} : {err}', ['NIK' => session()->get('user_name'), 'ip' => $_SERVER['REMOTE_ADDR'], 'err' => $e->getMessage()]);
+            $this->exceptionResponse($e);
+        }
+    }
+
+    public function deleteData()
+    {
+        if ($this->request->getMethod() !== "POST") {
+            log_message('error', "[PositionController::deleteData] Request method not allowed for user {NIK} from {ip}", ['NIK' => session()->get('user_name'), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            throw new \Exception("Request not allowed", ResponseInterface::HTTP_METHOD_NOT_ALLOWED);
+        }
+
+        try {
+            $json_data = $this->request->getJSON(true);
+
+            if (!is_array($json_data)) {
+                throw new \Exception("Invalid JSON request", ResponseInterface::HTTP_BAD_REQUEST);
+            }
+
+            if (!isset($json_data['token'])) {
+                throw new \Exception("Token is not available in JSON request", ResponseInterface::HTTP_BAD_REQUEST);
+            }
+
+            $token = trim($json_data['token']);
+            $id = dekripsi($token);
+
+            if ($this->positionService->deleteData($id)) {
+                return $this->success(ResponseInterface::HTTP_OK, "Position data deleted successfully");
+            }
+        } catch (\Exception $e) {
+            log_message('error', '[PositionController::deleteData] Unexpected error occured for user {NIK} from {ip} : {err}', ['NIK' => session()->get('user_name'), 'ip' => $_SERVER['REMOTE_ADDR'], 'err' => $e->getMessage()]);
+            return $this->exceptionResponse($e);
+        }
+    }
+
+    public function massDelete()
+    {
+        if ($this->request->getMethod() !== "POST") {
+            log_message('error', "[PositionController::massDelete] Request method not allowed for user {NIK} from {ip}", ['NIK' => session()->get('user_name'), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            throw new \Exception("Request not allowed", ResponseInterface::HTTP_METHOD_NOT_ALLOWED);
+        }
+
+        try {
+            $json_data = $this->request->getJSON(true);
+
+            if (!is_array($json_data)) {
+                throw new \Exception("Invalid JSON request", ResponseInterface::HTTP_BAD_REQUEST);
+            }
+
+            if (!isset($json_data['token'])) {
+                throw new \Exception("Token is not available in JSON request", ResponseInterface::HTTP_BAD_REQUEST);
+            }
+
+            $token = $json_data['token'];
+            $id_position = [];
+
+            for ($i = 0; $i < count($token); $i++) {
+                $id_position[] = dekripsi($token[$i]);
+            }
+
+            if ($this->positionService->massDelete($id_position)) {
+                return $this->success(ResponseInterface::HTTP_OK, "Position data deleted successfully");
+            }
+        } catch (\Exception $e) {
+            $code = $e->getCode() ?? ResponseInterface::HTTP_INTERNAL_SERVER_ERROR;
+            log_message('error', '[PositionController::massDelete] Unexpected error occured for user {NIK} from {ip} : {err}', ['NIK' => session()->get('user_name'), 'ip' => $_SERVER['REMOTE_ADDR'], 'err' => $e->getMessage()]);
+
+            return pesan($code, $e->getMessage());
+        }
+    }
+
+    public function exportData()
+    {
+        try {
+            try {
+                $result = $this->positionService->exportData();
+
+                // If the result is an exception, throw it
+                if ($result instanceof \Exception) {
+                    throw $result;
+                }
+
+                // If the result is a ResponseInterface, return it directly
+                if ($result instanceof \CodeIgniter\HTTP\ResponseInterface) {
+                    return $result;
+                }
+
+                // If we get here, something unexpected happened
+                throw new \RuntimeException('Unexpected response from export service');
+            } catch (\Exception $e) {
+                return $this->exceptionResponse($e);
+            }
+        } catch (\Exception $e) {
+            $code = $e->getCode() ?? ResponseInterface::HTTP_INTERNAL_SERVER_ERROR;
+            log_message('error', '[PositionController::export] Unexpected error occured for user {NIK} from {ip} : {err}', ['NIK' => session()->get('user_name'), 'ip' => $_SERVER['REMOTE_ADDR'], 'err' => $e->getMessage()]);
+
+            return pesan($code, $e->getMessage());
+        }
+    }
+
+    public function prevData()
+    {
+        if ($this->request->getMethod() !== 'POST') {
+            log_message('error', "[PositionController::prevData] Request method not allowed for user {NIK} from {ip}", ['NIK' => session()->get('user_name'), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            throw new \Exception("Request not allowed", ResponseInterface::HTTP_METHOD_NOT_ALLOWED);
+        }
+
+        try {
+            $json_data = $this->request->getJSON(true);
+
+            if (!is_array($json_data)) {
+                throw new \Exception("Invalid JSON request", ResponseInterface::HTTP_BAD_REQUEST);
+            }
+
+            if (!isset($json_data['code'])) {
+                throw new \Exception("Code is not available in JSON request", ResponseInterface::HTTP_BAD_REQUEST);
+            }
+
+            $code = trim($json_data['code']);
+
+            $prev = $this->positionService->getPrevData($code);
+            if (!$prev) {
+                throw new \Exception("You are in the first data", ResponseInterface::HTTP_BAD_REQUEST);
+            }
+
+
+            return $this->success(ResponseInterface::HTTP_OK, "Data retrieved successfully", $prev);
+        } catch (\Exception $e) {
+            $code = $e->getCode() ?? ResponseInterface::HTTP_INTERNAL_SERVER_ERROR;
+            log_message('error', '[PositionController::prevData] Unexpected error occured for user {NIK} from {ip} : {err}', ['NIK' => session()->get('user_name'), 'ip' => $_SERVER['REMOTE_ADDR'], 'err' => $e->getMessage()]);
+            return pesan($code, $e->getMessage());
+        }
+    }
+
+    public function nextData()
+    {
+        if ($this->request->getMethod() !== 'POST') {
+            log_message('error', "[PositionController::nextData] Request method not allowed for user {NIK} from {ip}", ['NIK' => session()->get('user_name'), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            throw new \Exception("Request not allowed", ResponseInterface::HTTP_METHOD_NOT_ALLOWED);
+        }
+
+        try {
+            $json_data = $this->request->getJSON(true);
+
+            if (!is_array($json_data)) {
+                throw new \Exception("Invalid JSON request", ResponseInterface::HTTP_BAD_REQUEST);
+            }
+
+            if (!isset($json_data['code'])) {
+                throw new \Exception("Code is not available in JSON request", ResponseInterface::HTTP_BAD_REQUEST);
+            }
+
+            $code = trim($json_data['code']);
+
+            $next = $this->positionService->getNextData($code);
+            if (!$next) {
+                throw new \Exception("You are in the first data", ResponseInterface::HTTP_BAD_REQUEST);
+            }
+
+
+            return $this->success(ResponseInterface::HTTP_OK, "Data retrieved successfully", $next);
+        } catch (\Exception $e) {
+            $code = $e->getCode() ?? ResponseInterface::HTTP_INTERNAL_SERVER_ERROR;
+            log_message('error', '[PositionController::prevData] Unexpected error occured for user {NIK} from {ip} : {err}', ['NIK' => session()->get('user_name'), 'ip' => $_SERVER['REMOTE_ADDR'], 'err' => $e->getMessage()]);
+            return pesan($code, $e->getMessage());
+        }
+    }
 }

@@ -41,9 +41,12 @@
             $routes->get('get/(:any)', 'AppSetup\Position\PositionController::getData/$1');
             $routes->get('show/(:any)', 'AppSetup\Position\PositionController::showData/$1');
             $routes->post('update', 'AppSetup\Position\PositionController::updateData', ['filter' => 'ratelimit:3,60']);
+            $routes->post('delete', 'AppSetup\Position\PositionController::deleteData', ['filter' => 'ratelimit:3,60']);
             $routes->post('mass-delete', 'AppSetup\Position\PositionController::massDelete', ['filter' => 'ratelimit:3,60']);
             $routes->get('export', 'AppSetup\Position\PositionController::exportData', ['filter' => 'ratelimit:3,60']);
             $routes->get('list', 'AppSetup\Position\PositionController::dataList');
+            $routes->post('prev', 'AppSetup\Position\PositionController::prevData');
+            $routes->post('next', 'AppSetup\Position\PositionController::nextData');
             $routes->get('seed', 'AppSetup\Position\PositionController::seedData');
         });
 
