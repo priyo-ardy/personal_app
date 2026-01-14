@@ -272,7 +272,7 @@
                     <a href="#" class="nav-link">
                         <i class="bi bi-buildings nav-icon"></i>
                         <p>
-                            Manufacturing Setup
+                            Mfg. Setup
                             <i class="nav-arrow bi bi-chevron-right"></i>
                         </p>
                     </a>
@@ -302,7 +302,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="<?= base_url() . 'equipment_type' ?>" class="nav-link" onclick="loading()">
                                 <i class="nav-icon bi bi-arrow-right-circle"></i>
                                 <p>
                                     Equipment Type

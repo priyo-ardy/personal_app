@@ -231,6 +231,18 @@
             $routes->get('seed', 'AppSetup\MaterialCategory\MaterialCategoryController::seedData');
         });
 
+        // Route untuk equipment type
+        $routes->group('/equipment_type', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+            $routes->get('', 'AppSetup\EquipmentType\EquipmentTypeController::index');
+            $routes->post('table', 'AppSetup\EquipmentType\EquipmentTypeController::loadTable');
+            $routes->post('save', 'AppSetup\EquipmentType\EquipmentTypeController::save', ['filter' => 'ratelimit:3,60']);
+            $routes->get('get/(:any)', 'AppSetup\EquipmentType\EquipmentTypeController::get/$1');
+            $routes->post('update', 'AppSetup\EquipmentType\EquipmentTypeController::update', ['filter' => 'ratelimit:3,60']);
+            $routes->post('delete', 'AppSetup\EquipmentType\EquipmentTypeController::delete', ['filter' => 'ratelimit:3,60']);
+            $routes->get('export', 'AppSetup\EquipmentType\EquipmentTypeController::export', ['filter' => 'ratelimit:3,60']);
+            $routes->get('seed', 'AppSetup\EquipmentType\EquipmentTypeController::seedData');
+        });
+
         // Site Setting
         $routes->get('/site-setting', 'SiteSetting\SiteSettingController::index', ['filter' => ['role:superadmin,admin', 'ratelimit:100,60']]);
     });

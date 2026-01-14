@@ -85,7 +85,7 @@
                     <li class="nav-item dropdown user-menu">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" title="Profile">
                             <img
-                                src=""
+                                src="<?= (session()->get('user_image')) ? base_url() . 'img/' . session()->get('user_image') : base_url() . 'img/default.png' ?>"
                                 class="user-image rounded-circle shadow"
                                 alt="User Image" />
                             <span class="d-none d-md-inline"><?= session('full_name') ?></span>
@@ -93,7 +93,7 @@
                         <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
                             <li class="user-header text-bg-light">
                                 <img
-                                    src=""
+                                    src="<?= (session()->get('user_image')) ? base_url() . 'img/' . session()->get('user_image') : base_url() . 'img/default.png' ?>"
                                     class="rounded-circle shadow"
                                     alt="User Image" />
                                 <p>
