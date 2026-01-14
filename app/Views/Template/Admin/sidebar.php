@@ -310,6 +310,14 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="<?= base_url() . 'repair_reason' ?>" class="nav-link" onclick="loading()">
+                                <i class="nav-icon bi bi-arrow-right-circle"></i>
+                                <p>
+                                    Repair Reason
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon bi bi-arrow-right-circle"></i>
                                 <p>
