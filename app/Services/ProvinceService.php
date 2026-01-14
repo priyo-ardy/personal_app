@@ -203,7 +203,7 @@ class ProvinceService
 
             return export_to_excel($fileName, $headers, $dataCallback);
         } catch (\Exception $e) {
-            log_message('error', '[DepartmentService::exportData] Unexpexted error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            log_message('error', '[ProvinceService::exportData] Unexpexted error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
             throw $e;
         }
     }

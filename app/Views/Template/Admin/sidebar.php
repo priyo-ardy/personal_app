@@ -165,6 +165,306 @@
                 <li class="nav-header">APP SETUP</li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
+                        <i class="nav-icon bi bi-person-workspace"></i>
+                        <p>
+                            HR Setup
+                            <i class="nav-arrow bi bi-chevron-right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav-treeview">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="bi bi-diagram-3 nav-icon"></i>
+                                <p>
+                                    Organization
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav-treeview">
+                                <li class="nav-item">
+                                    <a href="<?= base_url() . 'position' ?>" class="nav-link" onclick="loading()">
+                                        <i class="bi bi-arrow-right-circle nav-icon"></i>
+                                        <p>
+                                            Position
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="<?= base_url() . 'department' ?>" class="nav-link" onclick="loading()">
+                                        <i class="bi bi-arrow-right-circle nav-icon"></i>
+                                        <p>
+                                            Department
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="<?= base_url() . 'section' ?>" class="nav-link" onclick="loading()">
+                                        <i class="bi bi-arrow-right-circle nav-icon"></i>
+                                        <p>
+                                            Section
+                                        </p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="bi bi-person-gear nav-icon"></i>
+                                <p>
+                                    Employee Setup
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav-treeview">
+                                <li class="nav-item">
+                                    <a href="<?= base_url() . 'employee_grade' ?>" class="nav-link" onclick="loading()">
+                                        <i class="bi bi-arrow-right-circle nav-icon"></i>
+                                        <p>
+                                            Employee Grade
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="<?= base_url() . 'employee_category' ?>" class="nav-link" onclick="loading()">
+                                        <i class="bi bi-arrow-right-circle nav-icon"></i>
+                                        <p>
+                                            Employee Category
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="<?= base_url() . 'employee_rank' ?>" class="nav-link" onclick="loading()">
+                                        <i class="bi bi-arrow-right-circle nav-icon"></i>
+                                        <p>
+                                            Employee Rank
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="<?= base_url() . 'employee_class_nbhx' ?>" class="nav-link" onclick="loading()">
+                                        <i class="bi bi-arrow-right-circle nav-icon"></i>
+                                        <p>
+                                            NBHX Employee Class
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="<?= base_url() . 'nbhx_position' ?>" class="nav-link" onclick="loading()">
+                                        <i class="bi bi-arrow-right-circle nav-icon"></i>
+                                        <p>
+                                            NBHX Position
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="<?= base_url() . 'salary_rank' ?>" class="nav-link" onclick="loading()">
+                                        <i class="bi bi-arrow-right-circle nav-icon"></i>
+                                        <p>
+                                            Salary Rank
+                                        </p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="bi bi-buildings nav-icon"></i>
+                        <p>
+                            Manufacturing Setup
+                            <i class="nav-arrow bi bi-chevron-right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav-treeview">
+                        <li class="nav-item">
+                            <a href="<?= base_url() . 'workshop' ?>" class="nav-link" onclick="loading()">
+                                <i class="nav-icon bi bi-arrow-right-circle"></i>
+                                <p>
+                                    List of Workshop
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="<?= base_url() . 'tonnage' ?>" class="nav-link" onclick="loading()">
+                                <i class="nav-icon bi bi-arrow-right-circle"></i>
+                                <p>
+                                    List of Tonnage
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="<?= base_url() . 'material_category' ?>" class="nav-link" onclick="loading()">
+                                <i class="nav-icon bi bi-arrow-right-circle"></i>
+                                <p>
+                                    Material Category
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon bi bi-arrow-right-circle"></i>
+                                <p>
+                                    Equipment Type
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon bi bi-arrow-right-circle"></i>
+                                <p>
+                                    Machine List
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon bi bi-arrow-right-circle"></i>
+                                <p>
+                                    Material List
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon bi bi-arrow-right-circle"></i>
+                                <p>
+                                    Leader
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon bi bi-arrow-right-circle"></i>
+                                <p>
+                                    Group Leader
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon bi bi-arrow-right-circle"></i>
+                                <p>
+                                    Asst. Group Leader
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon bi bi-columns-gap"></i>
+                        <p>
+                            RnD Setup
+                            <i class="nav-arrow bi bi-chevron-right"></i>
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon bi bi-rulers"></i>
+                        <p>
+                            Quality Setup
+                            <i class="nav-arrow bi bi-chevron-right"></i>
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon bi bi-folder2-open"></i>
+                        <p>
+                            Basic Data
+                            <i class="nav-arrow bi bi-chevron-right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav-treeview">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon bi bi-arrow-right-circle"></i>
+                                <p>
+                                    Customer Category
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon bi bi-arrow-right-circle"></i>
+                                <p>
+                                    List of Customers
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon bi bi-arrow-right-circle"></i>
+                                <p>
+                                    List of Supplier
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="<?= base_url() . 'location' ?>" class="nav-link">
+                                <i class="nav-icon bi bi-arrow-right-circle"></i>
+                                <p>
+                                    Factory Location
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon bi bi-arrow-right-circle"></i>
+                                <p>
+                                    Unit of Measure (UoM)
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon bi bi-globe"></i>
+                                <p>
+                                    Region
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav-treeview">
+                                <li class="nav-item">
+                                    <a href="<?= base_url() . 'country' ?>" class="nav-link">
+                                        <i class="nav-icon bi bi-arrow-right-circle"></i>
+                                        <p>
+                                            Country
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="<?= base_url() . 'province' ?>" class="nav-link">
+                                        <i class="nav-icon bi bi-arrow-right-circle"></i>
+                                        <p>
+                                            Province
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="<?= base_url() . 'city' ?>" class="nav-link">
+                                        <i class="nav-icon bi bi-arrow-right-circle"></i>
+                                        <p>
+                                            City
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="<?= base_url() . 'birth_place' ?>" class="nav-link">
+                                        <i class="nav-icon bi bi-arrow-right-circle"></i>
+                                        <p>
+                                            Place of Birth
+                                        </p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
                         <i class="nav-icon bi bi-person-gear"></i>
                         <p>
                             User Management
@@ -185,143 +485,6 @@
                                 <i class="nav-icon bi bi-arrow-right-circle"></i>
                                 <p>
                                     User Role
-                                </p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="bi bi-diagram-3 nav-icon"></i>
-                        <p>
-                            Organization
-                            <i class="nav-arrow bi bi-chevron-right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav-treeview">
-                        <li class="nav-item">
-                            <a href="<?= base_url() . 'position' ?>" class="nav-link">
-                                <i class="bi bi-arrow-right-circle nav-icon"></i>
-                                <p>
-                                    Position
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="<?= base_url() . 'department' ?>" class="nav-link">
-                                <i class="bi bi-arrow-right-circle nav-icon"></i>
-                                <p>
-                                    Department
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="<?= base_url() . 'section' ?>" class="nav-link">
-                                <i class="bi bi-arrow-right-circle nav-icon"></i>
-                                <p>
-                                    Section
-                                </p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="bi bi-person-gear nav-icon"></i>
-                        <p>
-                            Employee Setup
-                            <i class="nav-arrow bi bi-chevron-right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav-treeview">
-                        <li class="nav-item">
-                            <a href="<?= base_url() . 'employee_grade' ?>" class="nav-link">
-                                <i class="bi bi-arrow-right-circle nav-icon"></i>
-                                <p>
-                                    Employee Grade
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="<?= base_url() . 'employee_category' ?>" class="nav-link">
-                                <i class="bi bi-arrow-right-circle nav-icon"></i>
-                                <p>
-                                    Employee Category
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="<?= base_url() . 'employee_rank' ?>" class="nav-link">
-                                <i class="bi bi-arrow-right-circle nav-icon"></i>
-                                <p>
-                                    Employee Rank
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="<?= base_url() . 'employee_class_nbhx' ?>" class="nav-link">
-                                <i class="bi bi-arrow-right-circle nav-icon"></i>
-                                <p>
-                                    NBHX Employee Class
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="<?= base_url() . 'nbhx_position' ?>" class="nav-link">
-                                <i class="bi bi-arrow-right-circle nav-icon"></i>
-                                <p>
-                                    NBHX Position
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="<?= base_url() . 'salary_rank' ?>" class="nav-link">
-                                <i class="bi bi-arrow-right-circle nav-icon"></i>
-                                <p>
-                                    Salary Rank
-                                </p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon bi bi-globe"></i>
-                        <p>
-                            Region
-                            <i class="nav-arrow bi bi-chevron-right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav-treeview">
-                        <li class="nav-item">
-                            <a href="<?= base_url() . 'country' ?>" class="nav-link">
-                                <i class="nav-icon bi bi-arrow-right-circle"></i>
-                                <p>
-                                    Country
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="<?= base_url() . 'province' ?>" class="nav-link">
-                                <i class="nav-icon bi bi-arrow-right-circle"></i>
-                                <p>
-                                    Province
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="<?= base_url() . 'city' ?>" class="nav-link">
-                                <i class="nav-icon bi bi-arrow-right-circle"></i>
-                                <p>
-                                    City
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="<?= base_url() . 'birth_place' ?>" class="nav-link">
-                                <i class="nav-icon bi bi-arrow-right-circle"></i>
-                                <p>
-                                    Place of Birth
                                 </p>
                             </a>
                         </li>

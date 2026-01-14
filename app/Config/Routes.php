@@ -171,6 +171,66 @@
             $routes->get('seed', 'AppSetup\Province\ProvinceController::seedData');
         });
 
+        // Routes untuk city
+        $routes->group('/city', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+            $routes->get('', 'AppSetup\City\CityController::index');
+            $routes->post('save', 'AppSetup\City\CityController::save', ['filter' => 'ratelimit:3,60']);
+            $routes->post('table', 'AppSetup\City\CityController::loadTable');
+            $routes->get('get/(:any)', 'AppSetup\City\CityController::get/$1');
+            $routes->post('update', 'AppSetup\City\CityController::update', ['filter' => 'ratelimit:3,60']);
+            $routes->post('delete', 'AppSetup\City\CityController::delete', ['filter' => 'ratelimit:3,60']);
+            $routes->get('export', 'AppSetup\City\CityController::export', ['filter' => 'ratelimit:3,60']);
+            $routes->get('seed', 'AppSetup\City\CityController::seedData');
+        });
+
+        // Routes untuk tempat lahir
+        $routes->group('/birth_place', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+            $routes->get('', 'AppSetup\TempatLahir\TempatLahirController::index');
+            $routes->post('save', 'AppSetup\TempatLahir\TempatLahirController::save', ['filter' => 'ratelimit:3,60']);
+            $routes->post('table', 'AppSetup\TempatLahir\TempatLahirController::loadTable');
+            $routes->get('get/(:any)', 'AppSetup\TempatLahir\TempatLahirController::get/$1');
+            $routes->post('update', 'AppSetup\TempatLahir\TempatLahirController::update', ['filter' => 'ratelimit:3,60']);
+            $routes->post('delete', 'AppSetup\TempatLahir\TempatLahirController::delete', ['filter' => 'ratelimit:3,60']);
+            $routes->get('export', 'AppSetup\TempatLahir\TempatLahirController::export', ['filter' => 'ratelimit:3,60']);
+            $routes->get('seed', 'AppSetup\TempatLahir\TempatLahirController::seedData');
+        });
+
+        // Routes untuk workshop
+        $routes->group('/workshop', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+            $routes->get('', 'AppSetup\Workshop\WorkshopController::index');
+            $routes->post('table', 'AppSetup\Workshop\WorkshopController::loadTable');
+            $routes->post('save', 'AppSetup\Workshop\WorkshopController::save', ['filter' => 'ratelimit:3,60']);
+            $routes->get('get/(:any)', 'AppSetup\Workshop\WorkshopController::get/$1');
+            $routes->post('update', 'AppSetup\Workshop\WorkshopController::update', ['filter' => 'ratelimit:3,60']);
+            $routes->post('delete', 'AppSetup\Workshop\WorkshopController::delete', ['filter' => 'ratelimit:3,60']);
+            $routes->get('export', 'AppSetup\Workshop\WorkshopController::export', ['filter' => 'ratelimit:3,60']);
+            $routes->get('seed', 'AppSetup\Workshop\WorkshopController::seedData');
+        });
+
+        // Routes untuk tonnage
+        $routes->group('/tonnage', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+            $routes->get('', 'AppSetup\Tonnage\TonnageController::index');
+            $routes->post('table', 'AppSetup\Tonnage\TonnageController::loadTable');
+            $routes->post('save', 'AppSetup\Tonnage\TonnageController::save', ['filter' => 'ratelimit:3,60']);
+            $routes->get('get/(:any)', 'AppSetup\Tonnage\TonnageController::get/$1');
+            $routes->post('update', 'AppSetup\Tonnage\TonnageController::update', ['filter' => 'ratelimit:3,60']);
+            $routes->post('delete', 'AppSetup\Tonnage\TonnageController::delete', ['filter' => 'ratelimit:3,60']);
+            $routes->get('export', 'AppSetup\Tonnage\TonnageController::export', ['filter' => 'ratelimit:3,60']);
+            $routes->get('seed', 'AppSetup\Tonnage\TonnageController::seedData');
+        });
+
+        // Route untuk material category
+        $routes->group('/material_category', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+            $routes->get('', 'AppSetup\MaterialCategory\MaterialCategoryController::index');
+            $routes->post('table', 'AppSetup\MaterialCategory\MaterialCategoryController::loadTable');
+            $routes->post('save', 'AppSetup\MaterialCategory\MaterialCategoryController::save', ['filter' => 'ratelimit:3,60']);
+            $routes->get('get/(:any)', 'AppSetup\MaterialCategory\MaterialCategoryController::get/$1');
+            $routes->post('update', 'AppSetup\MaterialCategory\MaterialCategoryController::update', ['filter' => 'ratelimit:3,60']);
+            $routes->post('delete', 'AppSetup\MaterialCategory\MaterialCategoryController::delete', ['filter' => 'ratelimit:3,60']);
+            $routes->get('export', 'AppSetup\MaterialCategory\MaterialCategoryController::export', ['filter' => 'ratelimit:3,60']);
+            $routes->get('seed', 'AppSetup\MaterialCategory\MaterialCategoryController::seedData');
+        });
+
         // Site Setting
         $routes->get('/site-setting', 'SiteSetting\SiteSettingController::index', ['filter' => ['role:superadmin,admin', 'ratelimit:100,60']]);
     });
