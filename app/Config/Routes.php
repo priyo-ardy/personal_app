@@ -243,6 +243,19 @@
             $routes->get('seed', 'AppSetup\EquipmentType\EquipmentTypeController::seedData');
         });
 
+        $routes->group('/machine', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+            $routes->get('', 'AppSetup\Machine\MachineController::index');
+            $routes->get('add', 'AppSetup\Machine\MachineController::add');
+            $routes->post('save', 'AppSetup\Machine\MachineController::save', ['filter' => 'ratelimit:3,60']);
+            $routes->post('table', 'AppSetup\Machine\MachineController::loadTable');
+            $routes->get('get/(:any)', 'AppSetup\Machine\MachineController::get/$1');
+            $routes->post('update', 'AppSetup\Machine\MachineController::update', ['filter' => 'ratelimit:3,60']);
+            $routes->post('delete', 'AppSetup\Machine\MachineController::delete', ['filter' => 'ratelimit:3,60']);
+            $routes->post('mass-delete', 'AppSetup\Machine\MachineController::delete', ['filter' => 'ratelimit:3,60']);
+            $routes->get('export', 'AppSetup\Machine\MachineController::export', ['filter' => 'ratelimit:3,60']);
+            $routes->get('seed', 'AppSetup\Machine\MachineController::seedData');
+        });
+
         // Site Setting
         $routes->get('/site-setting', 'SiteSetting\SiteSettingController::index', ['filter' => ['role:superadmin,admin', 'ratelimit:100,60']]);
     });
