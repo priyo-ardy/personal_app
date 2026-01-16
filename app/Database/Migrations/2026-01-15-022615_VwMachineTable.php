@@ -24,7 +24,7 @@ class VwMachineTable extends Migration
                 C.name AS tonnage_name,
                 A.rate,
                 A.mfg_date,
-                A.puchase_date,
+                A.purchase_date,
                 A.description,
                 A.created_at,
                 A.created_by,

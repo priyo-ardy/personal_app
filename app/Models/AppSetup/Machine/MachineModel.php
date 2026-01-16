@@ -9,7 +9,7 @@ class MachineModel extends BaseModel
 {
     protected $table            = 'm_machine';
     protected $primaryKey       = 'id';
-    protected $useAutoIncrement = true;
+    protected $useAutoIncrement = false;
     protected $returnType       = 'object';
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
@@ -24,7 +24,7 @@ class MachineModel extends BaseModel
         'tonnage',
         'rate',
         'mfg_date',
-        'puchase_date',
+        'purchase_date',
         'description',
         'created_at',
         'created_by',
@@ -32,4 +32,10 @@ class MachineModel extends BaseModel
         'updated_by',
         'deleted_at',
     ];
+
+    protected bool $allowEmptyInserts = false;
+    protected bool $updateOnlyChanged = true;
+
+    protected array $casts = [];
+    protected array $castHandlers = [];
 }

@@ -56,7 +56,7 @@ class MachineTable extends Migration
                 'type' => "DATE",
                 'null' => true
             ],
-            'puchase_date' => [
+            'purchase_date' => [
                 'type' => "DATE",
                 'null' => true
             ],

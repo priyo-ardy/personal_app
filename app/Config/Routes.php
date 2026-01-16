@@ -249,9 +249,12 @@
             $routes->post('save', 'AppSetup\Machine\MachineController::save', ['filter' => 'ratelimit:3,60']);
             $routes->post('table', 'AppSetup\Machine\MachineController::loadTable');
             $routes->get('get/(:any)', 'AppSetup\Machine\MachineController::get/$1');
+            $routes->get('show/(:any)', 'AppSetup\Machine\MachineController::show/$1');
             $routes->post('update', 'AppSetup\Machine\MachineController::update', ['filter' => 'ratelimit:3,60']);
             $routes->post('delete', 'AppSetup\Machine\MachineController::delete', ['filter' => 'ratelimit:3,60']);
-            $routes->post('mass-delete', 'AppSetup\Machine\MachineController::delete', ['filter' => 'ratelimit:3,60']);
+            $routes->post('prev', 'AppSetup\Machine\MachineController::prev');
+            $routes->post('next', 'AppSetup\Machine\MachineController::next');
+            $routes->post('mass-delete', 'AppSetup\Machine\MachineController::massDelete', ['filter' => 'ratelimit:3,60']);
             $routes->get('export', 'AppSetup\Machine\MachineController::export', ['filter' => 'ratelimit:3,60']);
             $routes->get('seed', 'AppSetup\Machine\MachineController::seedData');
         });
