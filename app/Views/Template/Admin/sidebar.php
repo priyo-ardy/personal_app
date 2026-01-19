@@ -310,6 +310,14 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="<?= base_url() . 'uom' ?>" class="nav-link" onclick="loading()">
+                                <i class="nav-icon bi bi-arrow-right-circle"></i>
+                                <p>
+                                    List of UoM
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="<?= base_url() . 'machine' ?>" class="nav-link" onclick="loading()">
                                 <i class="nav-icon bi bi-arrow-right-circle"></i>
                                 <p>
@@ -359,6 +367,16 @@
                             <i class="nav-arrow bi bi-chevron-right"></i>
                         </p>
                     </a>
+                    <ul class="nav-treeview">
+                        <li class="nav-item">
+                            <a href="<?= base_url() . 'process_routes' ?>" class="nav-link" onclick="loading()">
+                                <i class="nav-icon bi bi-arrow-right-circle"></i>
+                                <p>
+                                    Process Routes
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">

@@ -243,6 +243,30 @@
             $routes->get('seed', 'AppSetup\EquipmentType\EquipmentTypeController::seedData');
         });
 
+        // Route untuk UoM module
+        $routes->group('/uom', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+            $routes->get('', 'AppSetup\Uom\UomController::index');
+            $routes->post('table', 'AppSetup\Uom\UomController::loadTable');
+            $routes->post('save', 'AppSetup\Uom\UomController::save', ['filter' => 'ratelimit:3,60']);
+            $routes->get('get/(:any)', 'AppSetup\Uom\UomController::get/$1');
+            $routes->post('update', 'AppSetup\Uom\UomController::update', ['filter' => 'ratelimit:3,60']);
+            $routes->post('delete', 'AppSetup\Uom\UomController::delete', ['filter' => 'ratelimit:3,60']);
+            $routes->get('export', 'AppSetup\Uom\UomController::export', ['filter' => 'ratelimit:3,60']);
+            $routes->get('seed', 'AppSetup\Uom\UomController::seedData');
+        });
+
+        // Route untuk process routes
+        $routes->group('process_routes', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+            $routes->get('', 'AppSetup\ProcessRoute\ProcessRouteController::index');
+            $routes->post('table', 'AppSetup\ProcessRoute\ProcessRouteController::loadTable');
+            $routes->post('save', 'AppSetup\ProcessRoute\ProcessRouteController::save', ['filter' => 'ratelimit:3,60']);
+            $routes->get('get/(:any)', 'AppSetup\ProcessRoute\ProcessRouteController::get/$1');
+            $routes->post('update', 'AppSetup\ProcessRoute\ProcessRouteController::update', ['filter' => 'ratelimit:3,60']);
+            $routes->post('delete', 'AppSetup\ProcessRoute\ProcessRouteController::delete', ['filter' => 'ratelimit:3,60']);
+            $routes->get('export', 'AppSetup\ProcessRoute\ProcessRouteController::export', ['filter' => 'ratelimit:3,60']);
+            $routes->get('seed', 'AppSetup\ProcessRoute\ProcessRouteController::seedData');
+        });
+
         $routes->group('/machine', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
             $routes->get('', 'AppSetup\Machine\MachineController::index');
             $routes->get('add', 'AppSetup\Machine\MachineController::add');
