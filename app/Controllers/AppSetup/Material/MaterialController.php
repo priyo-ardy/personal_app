@@ -152,4 +152,24 @@ class MaterialController extends BaseController
             return pesan($code, $e->getMessage());
         }
     }
+
+    public function update()
+    {
+        if ($this->request->getMethod() !== 'POST') {
+            log_message('error', "[MaterialController::update] Request method not allowed for user {NIK} from {ip}", ['NIK' => session()->get('user_name'), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            throw new \Exception("Request not allowed", ResponseInterface::HTTP_METHOD_NOT_ALLOWED);
+        }
+
+        try {
+            $data = $this->request->getPost();
+
+            if ($this->material->updateData($data)) {
+                return $this->success(ResponseInterface::HTTP_OK, "Data updated successfully");
+            }
+        } catch (\Exception $e) {
+            $code = $e->getCode() ?? ResponseInterface::HTTP_INTERNAL_SERVER_ERROR;
+            log_message('error', '[MaterialController::update] Unexpexted error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            return pesan($code, $e->getMessage());
+        }
+    }
 }

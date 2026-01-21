@@ -232,4 +232,33 @@ class MaterialService
             throw $e;
         }
     }
+
+    public function updateData(array $data, $uploadFile = null)
+    {
+        try {
+            $uploadService = new UploadImageService();
+            $imageFile = null;
+
+            $this->validation->setRules(MaterialValidation::$update);
+
+            if ($this->validation->run($data) === false) {
+                $error_to_string = implode("<br>", $this->validation->getErrors());
+                log_message('error', '[MaterialService::updateData] Validation error : {err} from {ip}', ['err' => $error_to_string, 'ip' => $_SERVER['REMOTE_ADDR']]);
+                throw new \Exception($error_to_string, ResponseInterface::HTTP_BAD_REQUEST);
+            }
+            
+            if ($$uploadFile && $$uploadFile->isValid() && !$$uploadFile->hasMoved()) {
+                try {
+                    $uploadResult = $uploadService->upload_single_image('material', $$uploadFile);
+                    $imageFile = $uploadResult['file_name'];
+                } catch (\Exception $e) {
+                    log_message('error', '[MaterialService::saveData] Error when upload image : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+                    throw $e;
+                }
+            }
+        } catch (\Exception $e) {
+            log_message('error', '[MaterialService::updateData] Unexpected error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            throw $e;
+        }
+    }
 }
