@@ -283,6 +283,23 @@
             $routes->get('seed', 'AppSetup\Machine\MachineController::seedData');
         });
 
+        // Route material module
+        $routes->group('/material', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+            $routes->get('', 'AppSetup\Material\MaterialController::index');
+            $routes->get('add', 'AppSetup\Material\MaterialController::add');
+            $routes->post('save', 'AppSetup\Material\MaterialController::save', ['filter' => 'ratelimit:3,60']);
+            $routes->post('table', 'AppSetup\Material\MaterialController::loadTable');
+            $routes->get('get/(:any)', 'AppSetup\Material\MaterialController::get/$1');
+            $routes->get('show/(:any)', 'AppSetup\Material\MaterialController::show/$1');
+            $routes->post('update', 'AppSetup\Material\MaterialController::update', ['filter' => 'ratelimit:3,60']);
+            $routes->post('delete', 'AppSetup\Material\MaterialController::delete', ['filter' => 'ratelimit:3,60']);
+            $routes->post('prev', 'AppSetup\Material\MaterialController::prev');
+            $routes->post('next', 'AppSetup\Material\MaterialController::next');
+            $routes->post('mass-delete', 'AppSetup\Material\MaterialController::massDelete', ['filter' => 'ratelimit:3,60']);
+            $routes->get('export', 'AppSetup\Material\MaterialController::export', ['filter' => 'ratelimit:3,60']);
+            $routes->get('seed', 'AppSetup\Material\MaterialController::seedData');
+        });
+
         // Site Setting
         $routes->get('/site-setting', 'SiteSetting\SiteSettingController::index', ['filter' => ['role:superadmin,admin', 'ratelimit:100,60']]);
     });

@@ -326,7 +326,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="<?= base_url() . 'material' ?>" class="nav-link" onclick="loading();">
                                 <i class="nav-icon bi bi-arrow-right-circle"></i>
                                 <p>
                                     Material List

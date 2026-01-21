@@ -111,10 +111,10 @@ class MachineService
                 'workshop' => trim($data['data_workshop']),
                 'brand' => trim($data['data_brand']),
                 'serial_no' => trim($data['serial_no']),
-                'tonnage' => trim($data['data_tonnage']),
+                'tonnage' => ($data['data_tonnage'] ? trim($data['data_tonnage']) : null),
                 'rate' => trim($data['data_rate']),
-                'mfg_date' => trim($data['mfg_date']),
-                'purchase_date' => trim($data['purchase_date']),
+                'mfg_date' => ($data['mfg_date'] ? date('Y-m-d', strtotime($data['mfg_date'])) : null),
+                'purchase_date' => ($data['purchase_date'] ? date('Y-m-d', strtotime($data['purchase_date'])) : null),
                 'description' => trim($data['data_remark']),
                 'created_by' => session()->get('user_name')
             ];
@@ -126,8 +126,8 @@ class MachineService
             if ($this->db->transStatus() === false) {
                 $this->db->transRollback();
                 $php_errormsg = $this->db->error();
-                log_message('error', '[MachineService::saveData] Failed to save new machine data by {NIK} : {err}', ['NIK' => session()->get('user_name'), 'err' => $php_errormsg['message']]);
-                throw new \Exception("Failed to save new machine data", ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
+                log_message('error', '[MachineService::saveData] Failed to save new machine data by {NIK} : {err}', ['NIK' => session()->get('user_name'), 'err' => $php_errormsg]);
+                throw new \Exception("Failed to save new machine data " . $this->db->error(), ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
             }
 
             return true;
@@ -209,10 +209,10 @@ class MachineService
                 'workshop' => trim($data['data_workshop']),
                 'brand' => trim($data['data_brand']),
                 'serial_no' => trim($data['serial_no']),
-                'tonnage' => trim($data['data_tonnage']),
+                'tonnage' => ($data['data_tonnage'] ? trim($data['data_tonnage']) : null),
                 'rate' => trim($data['data_rate']),
-                'mfg_date' => trim($data['mfg_date']),
-                'purchase_date' => trim($data['purchase_date']),
+                'mfg_date' => ($data['mfg_date'] ? date('Y-m-d', strtotime($data['mfg_date'])) : null),
+                'purchase_date' => ($data['purchase_date'] ? date('Y-m-d', strtotime($data['purchase_date'])) : null),
                 'description' => trim($data['data_remark']),
                 'updated_by' => session()->get('user_name')
             ];
