@@ -53,13 +53,13 @@ buttons.delete.addEventListener("click", () => {
 
 buttons.prev.addEventListener("click", (e) => {
   const code = document.getElementById("data_code");
-  const workshop = document.getElementById("data_workshop");
+  const category = document.getElementById("data_category");
   try {
     loading();
     fetchData(
       baseurl + "/material/prev/",
       "POST",
-      JSON.stringify({ code: code.value, workshop: workshop.value }),
+      JSON.stringify({ code: code.value, category: category.value }),
     )
       .then((result) => {
         window.location.replace(
@@ -78,13 +78,13 @@ buttons.prev.addEventListener("click", (e) => {
 
 buttons.next.addEventListener("click", () => {
   const code = document.getElementById("data_code");
-  const workshop = document.getElementById("data_workshop");
+  const category = document.getElementById("data_category");
   try {
     loading();
     fetchData(
       baseurl + "/material/next/",
       "POST",
-      JSON.stringify({ code: code.value, workshop: workshop.value }),
+      JSON.stringify({ code: code.value, category: category.value }),
     )
       .then((result) => {
         window.location.replace(

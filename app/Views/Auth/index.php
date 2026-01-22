@@ -55,7 +55,7 @@
                         <span class="input-group-text">
                             <i class="bi bi-person"></i>
                         </span>
-                        <input type="text" class="form-control" id="username" name="user_name" placeholder="Enter username" required autocomplete="off">
+                        <input type="text" class="form-control" id="username" name="user_name" placeholder="Enter username" required autocomplete="off" autofocus>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>

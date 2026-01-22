@@ -233,7 +233,7 @@ class MaterialService
         }
     }
 
-    public function updateData(array $data, $uploadFile = null)
+    public function updateData(array $requestData, $uploadFile = null)
     {
         try {
             $uploadService = new UploadImageService();
@@ -241,23 +241,225 @@ class MaterialService
 
             $this->validation->setRules(MaterialValidation::$update);
 
-            if ($this->validation->run($data) === false) {
+            if ($this->validation->run($requestData) === false) {
                 $error_to_string = implode("<br>", $this->validation->getErrors());
                 log_message('error', '[MaterialService::updateData] Validation error : {err} from {ip}', ['err' => $error_to_string, 'ip' => $_SERVER['REMOTE_ADDR']]);
                 throw new \Exception($error_to_string, ResponseInterface::HTTP_BAD_REQUEST);
             }
-            
-            if ($$uploadFile && $$uploadFile->isValid() && !$$uploadFile->hasMoved()) {
+
+            $id = dekripsi($requestData['data_token']);
+            $get_old_data = $this->repository->find($id);
+
+            if (!$get_old_data) {
+                log_message('error', '[MaterialService::updateData] Material with id {id} not found', ['id' => $id]);
+                throw new \Exception("Material with id $id not found", ResponseInterface::HTTP_NOT_FOUND);
+            }
+
+            $old_category = $get_old_data->category;
+            $old_code = $get_old_data->code;
+
+            if ($requestData['data_category'] !== $old_category || $requestData['data_code'] !== $old_code) {
+
+                $check_code = $this->repository->checkCode($requestData['data_workshop'], $requestData['data_code']);
+
+                if ($check_code) {
+                    $getCategory = $this->category->find($requestData['data_category']);
+                    $categoryName = $getCategory->name ?? 'Unknown'; // Fallback jika kategori tidak ketemu
+
+                    log_message('error', '[MaterialService::saveData] Material code {code} already exist from {ip}', ['code' => $requestData['data_code'], 'ip' => $_SERVER['REMOTE_ADDR']]);
+
+                    throw new \Exception("Material code " . $requestData['data_code'] . " already exist in material category " . $categoryName, ResponseInterface::HTTP_BAD_REQUEST);
+                }
+            }
+
+            if ($uploadFile && $uploadFile->isValid() && !$uploadFile->hasMoved()) {
                 try {
-                    $uploadResult = $uploadService->upload_single_image('material', $$uploadFile);
+                    $uploadResult = $uploadService->upload_single_image('material', $uploadFile);
                     $imageFile = $uploadResult['file_name'];
                 } catch (\Exception $e) {
                     log_message('error', '[MaterialService::saveData] Error when upload image : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
                     throw $e;
                 }
             }
+
+            $data = [
+                'code'           => strtoupper(trim($requestData['data_code'])),
+                'name'           => ucwords(trim($requestData['data_name'])),
+                'specification'  => trim($requestData['data_specification']),
+                'category'       => $requestData['data_category'],
+                'cust_part_no'   => trim($requestData['data_cust_part_no']),
+                'cust_part_name' => strtoupper(trim($requestData['data_cust_part_name'])),
+                'color'          => ucwords(trim($requestData['data_color'])),
+                'workshop'       => $requestData['data_workshop'],
+                'property'       => $requestData['data_property'],
+                'uom'            => $requestData['data_uom'],
+                'shift_capacity' => trim($requestData['data_shift_capacity'] ?? 0),
+                'spq'            => trim($requestData['data_spq'] ?? 0),
+                'qty_per_bag'    => trim($requestData['data_qty_per_bag'] ?? 0),
+                'net_weight'     => trim($requestData['data_net_weight'] ?? 0),
+                'gross_weight'   => trim($requestData['data_gross_weight'] ?? 0),
+                'cavity'         => trim($requestData['data_cavity'] ?? 0),
+                'description'    => trim($requestData['data_description']),
+                'updated_by'     => session()->get('user_name'),
+            ];
+
+            if ($imageFile !== null) {
+                $data['image'] = $imageFile;
+
+                if (!empty($get_old_data->image)) {
+                    $filePath = FCPATH . 'uploads/material/' . $get_old_data->image;
+                    if (file_exists($filePath) && is_file($filePath)) {
+                        unlink($filePath); // Hapus file
+                    }
+                }
+            }
+
+            $this->db->transStart();
+            $this->repository->update($id, $data);
+            $this->db->transComplete();
+
+            if ($this->db->transStatus() === false) {
+                $dbError = $this->db->error();
+                $errMsg = is_array($dbError) ? json_encode($dbError) : $dbError;
+
+                log_message('error', '[MaterialService::updateData] Failed to update data : {err} from {ip}', ['err' => $errMsg, 'ip' => $_SERVER['REMOTE_ADDR']]);
+                throw new \Exception("Failed to update data", ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
+            }
+
+            log_message('info', '[MaterialService::updateData] Material with id {id} has been updated', ['id' => $id]);
+            return true;
         } catch (\Exception $e) {
-            log_message('error', '[MaterialService::updateData] Unexpected error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            log_message('error', '[MaterialService::updateData] Unexpected error: {err}', ['err' => $e->getMessage()]);
+            throw $e;
+        }
+    }
+
+    public function deleteData(string $id)
+    {
+        try {
+            $this->db->transStart();
+            $this->repository->delete($id);
+            $this->db->transComplete();
+
+            if ($this->db->transStatus() === false) {
+                $this->db->transRollback();
+                $php_errormsg = $this->db->error();
+                log_message('error', '[MaterialService::deleteData] Failed to delete data : {err} from {ip}', ['err' => $php_errormsg, 'ip' => $_SERVER['REMOTE_ADDR']]);
+                throw new \Exception("Failed to delete data", ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
+            }
+
+            log_message('info', '[MaterialService::deleteData] Material with id {id} has been deleted', ['id' => $id]);
+            return true;
+        } catch (\Exception $e) {
+            log_message('error', '[MaterialService::deleteData] Unexpexted error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            throw $e;
+        }
+    }
+
+    public function massDeleteData(array $data)
+    {
+        try {
+            $this->db->transStart();
+            $this->repository->massDelete($data);
+            $this->db->transComplete();
+
+            if ($this->db->transStatus() === false) {
+                $this->db->transRollback();
+                $php_errormsg = $this->db->error();
+                log_message('error', '[MaterialService::massDeleteData] Failed to delete data : {err} from {ip}', ['err' => $php_errormsg, 'ip' => $_SERVER['REMOTE_ADDR']]);
+                throw new \Exception("Failed to delete data", ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
+            }
+
+            return true;
+        } catch (\Exception $e) {
+            log_message('error', '[MaterialService::massDeleteData] Unexpexted error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            throw $e;
+        }
+    }
+
+    public function exportData()
+    {
+        try {
+            $file_name = 'material_list_' . date('Ymd_his') . '.xlsx';
+
+            $headers = [
+                'Code',
+                'Name',
+                'Specification',
+                'Material Catego',
+                'Cust Pa',
+                'Cust Pa',
+                'Color',
+                'Workshop',
+                'Material Proper',
+                'UoM',
+                'Shift Capaci',
+                'SQP',
+                'Qty/B',
+                'Net Weig',
+                'Gross Weig',
+                'Cavity',
+                'Description',
+            ];
+
+            $dataCallBack = function ($offset, $limit) {
+                $column = 'code, name, specification, category_name, cust_part_no, cust_part_name, color, workshop_name, property, uom_name, shift_capacity , spq, qty_per_bag, net_weight, gross_weight, cavity, description';
+                return $this->repository->chunkedData($offset, $limit, 'code', $column);
+            };
+
+            return export_to_excel($file_name, $headers, $dataCallBack);
+        } catch (\Exception $e) {
+            log_message('error', '[MaterialService::exportData] Unexpexted error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            throw $e;
+        }
+    }
+
+    public function getAllData()
+    {
+        try {
+            $data = $this->repository->all('code', 'asc');
+
+            if (!$data) {
+                log_message('error', '[MaterialService::getAllData] Data Material from {ip} with error {err}', ['ip' => $_SERVER['REMOTE_ADDR'], 'err' => 'Data not found']);
+                throw new \Exception("Data not found", ResponseInterface::HTTP_NOT_FOUND);
+            }
+
+            return $data;
+        } catch (\Exception $e) {
+            log_message('error', '[MaterialService::getAllData] Unexpexted error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            throw $e;
+        }
+    }
+    public function prevData(string $category, string $code)
+    {
+        try {
+            $prev = $this->repository->getPrevData($code, $category);
+            if (!$prev) {
+                throw new \Exception("You are in the first data", ResponseInterface::HTTP_BAD_REQUEST);
+            }
+
+            return [
+                'token' => enkripsi($prev->id)
+            ];
+        } catch (\Exception $e) {
+            log_message('error', '[MaterialService::prevData] Unexpexted error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            throw $e;
+        }
+    }
+
+    public function nextData(string $category, string $code)
+    {
+        try {
+            $next = $this->repository->getNextData($code, $category);
+            if (!$next) {
+                throw new \Exception("You are in the last data", ResponseInterface::HTTP_BAD_REQUEST);
+            }
+
+            return [
+                'token' => enkripsi($next->id)
+            ];
+        } catch (\Exception $e) {
+            log_message('error', '[MaterialService::nextData] Unexpexted error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
             throw $e;
         }
     }
