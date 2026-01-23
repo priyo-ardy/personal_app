@@ -300,6 +300,35 @@
             $routes->get('seed', 'AppSetup\Material\MaterialController::seedData');
         });
 
+        // Route untuk customer category module
+        $routes->group('/customer_category', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+            $routes->get('', 'AppSetup\CustomerCategory\CustomerCategoryController::index');
+            $routes->post('table', 'AppSetup\CustomerCategory\CustomerCategoryController::loadTable');
+            $routes->post('save', 'AppSetup\CustomerCategory\CustomerCategoryController::save', ['filter' => 'ratelimit:3,60']);
+            $routes->get('get/(:any)', 'AppSetup\CustomerCategory\CustomerCategoryController::get/$1');
+            $routes->post('update', 'AppSetup\CustomerCategory\CustomerCategoryController::update', ['filter' => 'ratelimit:3,60']);
+            $routes->post('delete', 'AppSetup\CustomerCategory\CustomerCategoryController::delete', ['filter' => 'ratelimit:3,60']);
+            $routes->get('export', 'AppSetup\CustomerCategory\CustomerCategoryController::export', ['filter' => 'ratelimit:3,60']);
+            $routes->get('seed', 'AppSetup\CustomerCategory\CustomerCategoryController::seedData');
+        });
+
+        // Routes untuk Customer module
+        $routes->group('/customer', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+            $routes->get('', 'AppSetup\Customer\CustomerController::index');
+            $routes->get('add', 'AppSetup\Customer\CustomerController::add');
+            $routes->post('save', 'AppSetup\Customer\CustomerController::save', ['filter' => 'ratelimit:3,60']);
+            $routes->post('table', 'AppSetup\Customer\CustomerController::loadTable');
+            $routes->get('get/(:any)', 'AppSetup\Customer\CustomerController::get/$1');
+            $routes->get('show/(:any)', 'AppSetup\Customer\CustomerController::show/$1');
+            $routes->post('update', 'AppSetup\Customer\CustomerController::update', ['filter' => 'ratelimit:3,60']);
+            $routes->post('delete', 'AppSetup\Customer\CustomerController::delete', ['filter' => 'ratelimit:3,60']);
+            $routes->post('prev', 'AppSetup\Customer\CustomerController::prev');
+            $routes->post('next', 'AppSetup\Customer\CustomerController::next');
+            $routes->post('mass-delete', 'AppSetup\Customer\CustomerController::massDelete', ['filter' => 'ratelimit:3,60']);
+            $routes->get('export', 'AppSetup\Customer\CustomerController::export', ['filter' => 'ratelimit:3,60']);
+            $routes->get('seed', 'AppSetup\Customer\CustomerController::seedData');
+        });
+
         // Site Setting
         $routes->get('/site-setting', 'SiteSetting\SiteSettingController::index', ['filter' => ['role:superadmin,admin', 'ratelimit:100,60']]);
     });

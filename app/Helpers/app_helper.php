@@ -68,6 +68,109 @@ if (!function_exists('phone_hash')) {
     }
 }
 
+if (!function_exists('sensor_email')) {
+    /**
+     * Custom Masking Email sesuai Request
+     * * Logika Nama:
+     * - admin.customer -> a****.c*******
+     * - budi -> b*** (fallback jika tidak ada titik)
+     * * Logika Domain:
+     * - datacom.co.id -> *******.co.id
+     * - gmail.com -> *****.com
+     */
+    function sensor_email(string $email): string
+    {
+        // 1. Validasi dasar
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return $email;
+        }
+
+        // 2. Pisahkan Nama dan Domain
+        [$local, $fullDomain] = explode('@', $email);
+
+        // --- PROSES BAGIAN NAMA (LOCAL PART) ---
+        // Cek apakah ada titik (.)
+        if (strpos($local, '.') !== false) {
+            // Pecah berdasarkan titik (misal: admin, customer)
+            $parts = explode('.', $local);
+            $maskedParts = [];
+
+            foreach ($parts as $part) {
+                $len = strlen($part);
+                if ($len > 0) {
+                    // Ambil huruf pertama, sisanya bintang
+                    $maskedParts[] = substr($part, 0, 1) . str_repeat('*', $len - 1);
+                } else {
+                    $maskedParts[] = '';
+                }
+            }
+            // Gabungkan kembali dengan titik
+            $finalLocal = implode('.', $maskedParts);
+        } else {
+            // Fallback jika nama tidak punya titik (misal: "admin")
+            // Tetap ambil huruf pertama, sisanya bintang
+            $len = strlen($local);
+            $finalLocal = substr($local, 0, 1) . str_repeat('*', $len - 1);
+        }
+
+        // --- PROSES BAGIAN DOMAIN ---
+        // Kita asumsikan bagian pertama setelah @ adalah nama perusahaan/provider
+        // dan sisanya adalah TLD (.com, .co.id, dll)
+
+        // Limit=2 artinya kita hanya memecah pada titik PERTAMA.
+        // Contoh: datacom.co.id -> [0] = datacom, [1] = co.id
+        $domainParts = explode('.', $fullDomain, 2);
+
+        if (count($domainParts) == 2) {
+            $domainName = $domainParts[0]; // datacom
+            $domainExt  = $domainParts[1]; // co.id
+
+            // Sensor total nama domainnya
+            $maskedDomain = str_repeat('*', strlen($domainName)) . '.' . $domainExt;
+        } else {
+            // Fallback jika domain tidak punya titik (jarang terjadi di email valid, misal localhost)
+            $maskedDomain = $fullDomain;
+        }
+
+        return $finalLocal . '@' . $maskedDomain;
+    }
+}
+
+if (!function_exists('sensor_phone')) {
+    /**
+     * Masking Phone Number
+     * Standard: 081234567890 -> 0812****7890
+     */
+    function sensor_phone(string $phone, string $maskChar = '*'): string
+    {
+        // Bersihkan input selain angka
+        $cleanPhone = preg_replace('/\D/', '', $phone);
+        $len = strlen($cleanPhone);
+
+        // Jika terlalu pendek (misal extension), jangan di mask atau return as is
+        if ($len < 8) {
+            return $phone;
+        }
+
+        // Konfigurasi Standar
+        $showStart = 4; // Tampilkan 4 digit awal (misal 0812)
+        $showEnd   = 3; // Tampilkan 3 digit akhir
+
+        $maskLen = $len - ($showStart + $showEnd);
+
+        // Safety check jika panjang negatif
+        if ($maskLen < 1) {
+            return $cleanPhone;
+        }
+
+        $startPart = substr($cleanPhone, 0, $showStart);
+        $endPart   = substr($cleanPhone, -$showEnd);
+        $maskedPart = str_repeat($maskChar, 4); // Fixed 4 bintang agar rapi, atau gunakan $maskLen untuk dynamic
+
+        return $startPart . $maskedPart . $endPart;
+    }
+}
+
 if (!function_exists('updateEnv')) {
     /**
      * Update file .env
