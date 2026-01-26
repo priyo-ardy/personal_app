@@ -421,7 +421,15 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="<?= base_url() . 'location' ?>" class="nav-link">
+                            <a href="<?= base_url() . 'factory' ?>" class="nav-link" onclick="loading()">
+                                <i class="nav-icon bi bi-arrow-right-circle"></i>
+                                <p>
+                                    List of Factory
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="<?= base_url() . 'location' ?>" class="nav-link" onclick="laoding()">
                                 <i class="nav-icon bi bi-arrow-right-circle"></i>
                                 <p>
                                     Factory Location

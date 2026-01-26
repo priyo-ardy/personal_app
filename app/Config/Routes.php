@@ -346,6 +346,18 @@
             $routes->get('seed', 'AppSetup\Supplier\SupplierController::seedData');
         });
 
+        // Routes untuk location module
+        $routes->group('/location', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+            $routes->get('', 'AppSetup\Location\LocationController::index');
+            $routes->post('table', 'AppSetup\Location\LocationController::loadTable');
+            $routes->post('save', 'AppSetup\Location\LocationController::save', ['filter' => 'ratelimit:3,60']);
+            $routes->get('get/(:any)', 'AppSetup\Location\LocationController::get/$1');
+            $routes->post('update', 'AppSetup\Location\LocationController::update', ['filter' => 'ratelimit:3,60']);
+            $routes->post('delete', 'AppSetup\Location\LocationController::delete', ['filter' => 'ratelimit:3,60']);
+            $routes->get('export', 'AppSetup\Location\LocationController::export', ['filter' => 'ratelimit:3,60']);
+            $routes->get('seed', 'AppSetup\Location\LocationController::seedData');
+        });
+
         // Site Setting
         $routes->get('/site-setting', 'SiteSetting\SiteSettingController::index', ['filter' => ['role:superadmin,admin', 'ratelimit:100,60']]);
     });
