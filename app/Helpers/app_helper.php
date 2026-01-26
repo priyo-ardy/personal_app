@@ -68,6 +68,22 @@ if (!function_exists('phone_hash')) {
     }
 }
 
+if (!function_exists('npwp_hash')) {
+    function npwp_hash(string $npwp)
+    {
+        $secret_key = getenv('npwp_salt') ? getenv('npwp_salt') : '*#NpWp!!#*';
+        return hash('sha256', $secret_key . $npwp);
+    }
+}
+
+if (!function_exists('bank_account_no_hash')) {
+    function bank_account_no_hash(string $bank_account_no)
+    {
+        $secret_key = getenv('bank_account_no_salt') ? getenv('bank_account_no_salt') : '*#BankAccNo!!#*';
+        return hash('sha256', $secret_key . $bank_account_no);
+    }
+}
+
 if (!function_exists('sensor_email')) {
     /**
      * Custom Masking Email sesuai Request

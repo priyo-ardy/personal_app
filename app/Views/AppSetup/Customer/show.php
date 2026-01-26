@@ -86,11 +86,11 @@
                                     </div>
                                     <div class="form-group col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-3 clearfix">
                                         <label class="form-label" for="data_email">Email Address</label>
-                                        <input type="email" name="data_email" id="data_email" class="form-control rounded-0" placeholder="Email Address" maxlength="150" autocomplete="off" value="<?= ($customer['email']) ? dekripsi($customer['email']) : '' ?>" disabled>
+                                        <input type="email" name="data_email" id="data_email" class="form-control rounded-0" placeholder="Email Address" maxlength="150" autocomplete="off" value="<?= $customer['email'] ?>" disabled>
                                     </div>
                                     <div class="form-group col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-3 clearfix">
                                         <label class="form-label" for="data_phone">Phone Number</label>
-                                        <input type="number" name="data_phone" id="data_phone" class="form-control rounded-0" placeholder="Phone Number" maxlength="20" autocomplete="off" value="<?= ($customer['phone']) ? dekripsi($customer['phone']) : '' ?>" disabled>
+                                        <input type="number" name="data_phone" id="data_phone" class="form-control rounded-0" placeholder="Phone Number" maxlength="20" autocomplete="off" value="<?= $customer['phone'] ?>" disabled>
                                     </div>
                                     <div class="form-group col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-3 clearfix">
                                         <label class="form-label" for="data_contact">Contact Person</label>
@@ -98,11 +98,11 @@
                                     </div>
                                     <div class="form-group col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-3 clearfix">
                                         <label class="form-label" for="email_contact">Email Contact Person</label>
-                                        <input type="email" name="email_contact" id="email_contact" class="form-control rounded-0" placeholder="Contact Person Email" autocomplete="off" maxlength="150" value="<?= ($customer['contact_person_email']) ? dekripsi($customer['contact_person_email']) : '' ?>" disabled>
+                                        <input type="email" name="email_contact" id="email_contact" class="form-control rounded-0" placeholder="Contact Person Email" autocomplete="off" maxlength="150" value="<?= $customer['contact_person_email'] ?>" disabled>
                                     </div>
                                     <div class="form-group col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-3 clearfix">
                                         <label class="form-label" for="phone_contact">Email Contact Person</label>
-                                        <input type="number" name="phone_contact" id="phone_contact" class="form-control rounded-0" placeholder="Contact Person Phone" autocomplete="off" maxlength="150" value="<?= ($customer['contact_person_phone']) ? dekripsi($customer['contact_person_phone']) : '' ?>" disabled>
+                                        <input type="number" name="phone_contact" id="phone_contact" class="form-control rounded-0" placeholder="Contact Person Phone" autocomplete="off" maxlength="150" value="<?= $customer['contact_person_phone'] ?>" disabled>
                                     </div>
                                     <div class="form-group col-xl-9 col-lg-9 col-md-6 cool-sm-12 mb-3 clearfix">
                                         <label class="form-label" for="data_remark">Remark</label>

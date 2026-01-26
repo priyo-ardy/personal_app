@@ -104,6 +104,7 @@ class CustomerController extends BaseController
 
     public function show($token)
     {
+
         if ($this->request->getMethod() !== 'GET') {
             log_message('error', '[CustomerController::show] Request not allowed from {ip}', ['ip' => $_SERVER['REMOTE_ADDR']]);
             return pesan(ResponseInterface::HTTP_BAD_REQUEST, "Request not allowed");

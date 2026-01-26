@@ -14,8 +14,8 @@
                         <li class="breadcrumb-item"><a href="<?= base_url() . 'dashboard' ?>" onclick="loading()">Dashboard</a></li>
                         <li class="breadcrumb-item">Application Setup</li>
                         <li class="breadcrumb-item">Base Data</li>
-                        <li class="breadcrumb-item">List of Customer</li>
-                        <li class="breadcrumb-item active">Add New Customer</li>
+                        <li class="breadcrumb-item">List of Supplier</li>
+                        <li class="breadcrumb-item active">Add New Supplier</li>
                     </ol>
                 </div>
             </div>
@@ -46,28 +46,18 @@
                             <div class="card-body">
                                 <div class="row g-2">
                                     <div class="form-group col-xl-2 col-lg-2 col-md-6 col-sm-12 mb-3 clearfix">
-                                        <label class="form-label" for="data_code">Customer Code</label>
+                                        <label class="form-label" for="data_code">Supplier Code</label>
                                         <input type="text" name="data_code" id="data_code" class="form-control rounded-0 bg-secondary-subtle" readonly placeholder="Automatically generated after save" maxlength="20">
                                         <div class="invalid-feedback"></div>
                                     </div>
-                                    <div class="form-group col-xl-2 col-lg-2 col-md-6 col-sm-12 mb-3 clearfix">
-                                        <label class="form-label" for="data_category">Category <strong class="text-danger fw-bolder">*</strong></label>
-                                        <select name="data_category" id="data_category" class="form-control select2 select2bs5" required>
-                                            <option value="">-- Choose --</option>
-                                            <?php foreach ($category as $row) : ?>
-                                                <option value="<?= $row->id ?>"><?= $row->name ?></option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                        <div class="invalid-feedback"></div>
-                                    </div>
                                     <div class="form-group col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-3 clearfix">
-                                        <label class="form-label" for="data_name">Customer Name <strong class="text-danger fw-bolder">*</strong></label>
-                                        <input type="text" name="data_name" id="data_name" class="form-control rounded-0" required placeholder="Customer Name" maxlength="150" autocomplete="off">
+                                        <label class="form-label" for="data_name">Supplier Name <strong class="text-danger fw-bolder">*</strong></label>
+                                        <input type="text" name="data_name" id="data_name" class="form-control rounded-0" required placeholder="Supplier Name" maxlength="150" autocomplete="off">
                                         <div class="invalid-feedback"></div>
                                     </div>
-                                    <div class="form-group col-xl-5 col-lg-5 col-md-6 col-sm-12 mb-3 clearfix">
+                                    <div class="form-group col-xl-7 col-lg-7 col-md-6 col-sm-12 mb-3 clearfix">
                                         <label class="form-label" for="data_address">Address</label>
-                                        <input type="text" name="data_address" id="data_address" class="form-control rounded-0" placeholder="Customer Address" autocomplete="off">
+                                        <input type="text" name="data_address" id="data_address" class="form-control rounded-0" placeholder="Supplier Address" autocomplete="off">
                                     </div>
                                     <div class="form-group col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-3 clearfix">
                                         <label class="form-label" for="data_email">Email Address</label>
@@ -78,20 +68,36 @@
                                         <input type="number" name="data_phone" id="data_phone" class="form-control rounded-0" placeholder="Phone Number" maxlength="20" autocomplete="off">
                                     </div>
                                     <div class="form-group col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-3 clearfix">
-                                        <label class="form-label" for="data_contact">Contact Person</label>
-                                        <input type="text" name="data_contact" id="data_contact" class="form-control rounded-0" placeholder="Contact Person Name" autocomplete="off" maxlength="150">
+                                        <label class="form-label" for="data_contact_person">Contact Person</label>
+                                        <input type="text" name="data_contact_person" id="data_contact_person" class="form-control rounded-0" placeholder="Contact Person Name" autocomplete="off" maxlength="150">
                                     </div>
                                     <div class="form-group col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-3 clearfix">
-                                        <label class="form-label" for="email_contact">Email Contact Person</label>
-                                        <input type="email" name="email_contact" id="email_contact" class="form-control rounded-0" placeholder="Contact Person Email" autocomplete="off" maxlength="150">
+                                        <label class="form-label" for="data_contact_person_email">Email Contact Person</label>
+                                        <input type="email" name="data_contact_person_email" id="data_contact_person_email" class="form-control rounded-0" placeholder="Contact Person Email" autocomplete="off" maxlength="150">
                                     </div>
                                     <div class="form-group col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-3 clearfix">
-                                        <label class="form-label" for="phone_contact">Email Contact Person</label>
-                                        <input type="number" name="phone_contact" id="phone_contact" class="form-control rounded-0" placeholder="Contact Person Phone" autocomplete="off" maxlength="150">
+                                        <label class="form-label" for="data_contact_person_phone">Contact Person Phone No.</label>
+                                        <input type="number" name="data_contact_person_phone" id="data_contact_person_phone" class="form-control rounded-0" placeholder="Contact Person Phone" autocomplete="off" maxlength="150">
                                     </div>
-                                    <div class="form-group col-xl-9 col-lg-9 col-md-6 cool-sm-12 mb-3 clearfix">
+                                    <div class="form-group col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-3 clearfix">
+                                        <label class="form-label" for="data_npwp_no">Tax Registration No</label>
+                                        <input type="number" name="data_npwp_no" id="data_npwp_no" class="form-control rounded-0" placeholder="Tax Registration No" autocomplete="off" maxlength="20">
+                                    </div>
+                                    <div class="for-group col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-3 clearfix">
+                                        <label class="form-label" for="data_bank_name">Bank Name</label>
+                                        <input type="text" name="data_bank_name" id="data_bank_name" class="form-control rounded-0" placeholder="Bank Name" autocomplete="off" maxlength="150">
+                                    </div>
+                                    <div class="form-group col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-3 clearfix">
+                                        <label class="form-label" for="data_bank_account_no">Bank Account No.</label>
+                                        <input type="number" name="data_bank_account_no" id="data_bank_account_no" class="form-control rounded-0" placeholder="Bank Account No." autocomplete="off" maxlength="20">
+                                    </div>
+                                    <div class="form-group col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-3 clearfix">
+                                        <label class="form-label" for="data_bank_account_name">Bank Account Name</label>
+                                        <input type="text" name="data_bank_account_name" id="data_bank_account_name" class="form-control rounded-0" placeholder="Bank Account Name" autocomplete="off" maxlength="150">
+                                    </div>
+                                    <div class=" form-group col-xl-9 col-lg-9 col-md-6 cool-sm-12 mb-3 clearfix">
                                         <label class="form-label" for="data_remark">Remark</label>
-                                        <textarea name="data_remark" id="data_remark" class="form-control" rows="1" placeholder="Remark"></textarea>
+                                        <textarea name="data_remark" id="data_remark" class="form-control rounded-0" rows="1" placeholder="Remark"></textarea>
                                     </div>
                                 </div>
                         </form>

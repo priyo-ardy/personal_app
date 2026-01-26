@@ -16,7 +16,7 @@ const buttons = {
 
 buttons.back.addEventListener("click", (e) => {
   loading();
-  window.location.replace(baseurl + "/customer");
+  window.location.replace(baseurl + "/supplier");
 });
 
 buttons.cancel.addEventListener("click", (e) => {
@@ -28,7 +28,7 @@ buttons.update.addEventListener("click", () => {
   if (validasi()) {
     try {
       loading();
-      fetchData(baseurl + "/customer/update", "POST", new FormData(formData))
+      fetchData(baseurl + "/supplier/update", "POST", new FormData(formData))
         .then((result) => {
           pesanSukses(result.message);
           setTimeout(() => {
@@ -48,22 +48,21 @@ buttons.update.addEventListener("click", () => {
 
 buttons.delete.addEventListener("click", () => {
   const token = document.getElementById("data_token");
-  disableData("/customer/delete", token.value, "/customer");
+  disableData("/supplier/delete", token.value, "/supplier");
 });
 
 buttons.prev.addEventListener("click", (e) => {
   const code = document.getElementById("data_code");
-  const category = document.getElementById("data_category");
   try {
     loading();
     fetchData(
-      baseurl + "/customer/prev/",
+      baseurl + "/supplier/prev/",
       "POST",
-      JSON.stringify({ code: code.value, category: category.value }),
+      JSON.stringify({ code: code.value }),
     )
       .then((result) => {
         window.location.replace(
-          baseurl + "/customer/show/" + result.data.token,
+          baseurl + "/supplier/show/" + result.data.token,
         );
       })
       .catch((err) => {
@@ -78,17 +77,16 @@ buttons.prev.addEventListener("click", (e) => {
 
 buttons.next.addEventListener("click", () => {
   const code = document.getElementById("data_code");
-  const category = document.getElementById("data_category");
   try {
     loading();
     fetchData(
-      baseurl + "/customer/next/",
+      baseurl + "/supplier/next/",
       "POST",
-      JSON.stringify({ code: code.value, category: category.value }),
+      JSON.stringify({ code: code.value }),
     )
       .then((result) => {
         window.location.replace(
-          baseurl + "/customer/show/" + result.data.token,
+          baseurl + "/supplier/show/" + result.data.token,
         );
       })
       .catch((err) => {

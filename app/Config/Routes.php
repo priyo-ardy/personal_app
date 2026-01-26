@@ -329,6 +329,23 @@
             $routes->get('seed', 'AppSetup\Customer\CustomerController::seedData');
         });
 
+        // Routes untuk supplier module
+        $routes->group('/supplier', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+            $routes->get('', 'AppSetup\Supplier\SupplierController::index');
+            $routes->get('add', 'AppSetup\Supplier\SupplierController::add');
+            $routes->post('save', 'AppSetup\Supplier\SupplierController::save', ['filter' => 'ratelimit:3,60']);
+            $routes->post('table', 'AppSetup\Supplier\SupplierController::loadTable');
+            $routes->get('get/(:any)', 'AppSetup\Supplier\SupplierController::get/$1');
+            $routes->get('show/(:any)', 'AppSetup\Supplier\SupplierController::show/$1');
+            $routes->post('update', 'AppSetup\Supplier\SupplierController::update', ['filter' => 'ratelimit:3,60']);
+            $routes->post('delete', 'AppSetup\Supplier\SupplierController::delete', ['filter' => 'ratelimit:3,60']);
+            $routes->post('prev', 'AppSetup\Supplier\SupplierController::prev');
+            $routes->post('next', 'AppSetup\Supplier\SupplierController::next');
+            $routes->post('mass-delete', 'AppSetup\Supplier\SupplierController::massDelete', ['filter' => 'ratelimit:3,60']);
+            $routes->get('export', 'AppSetup\Supplier\SupplierController::export', ['filter' => 'ratelimit:3,60']);
+            $routes->get('seed', 'AppSetup\Supplier\SupplierController::seedData');
+        });
+
         // Site Setting
         $routes->get('/site-setting', 'SiteSetting\SiteSettingController::index', ['filter' => ['role:superadmin,admin', 'ratelimit:100,60']]);
     });
