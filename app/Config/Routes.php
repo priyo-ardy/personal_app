@@ -342,8 +342,20 @@
             $routes->post('prev', 'AppSetup\Supplier\SupplierController::prev');
             $routes->post('next', 'AppSetup\Supplier\SupplierController::next');
             $routes->post('mass-delete', 'AppSetup\Supplier\SupplierController::massDelete', ['filter' => 'ratelimit:3,60']);
-            $routes->get('export', 'AppSetup\Supplier\SupplierController::export', ['filter' => 'ratelimit:3,60']);
+        $routes->get('export', 'AppSetup\Supplier\Supplierontroller::export', ['filter' => 'ratelimit:3,60']);
             $routes->get('seed', 'AppSetup\Supplier\SupplierController::seedData');
+        });
+
+        // Routes untuk factory module
+        $routes->group('/factory', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+            $routes->get('', 'AppSetup\Factory\FactoryController::index');
+            $routes->post('table', 'AppSetup\Factory\FactoryController::loadTable');
+            $routes->post('save', 'AppSetup\Factory\FactoryController::save', ['filter' => 'ratelimit:3,60']);
+            $routes->get('get/(:any)', 'AppSetup\Factory\FactoryController::get/$1');
+            $routes->post('update', 'AppSetup\Factory\FactoryController::update', ['filter' => 'ratelimit:3,60']);
+            $routes->post('delete', 'AppSetup\Factory\FactoryController::delete', ['filter' => 'ratelimit:3,60']);
+            $routes->get('export', 'AppSetup\Factory\FactoryController::export', ['filter' => 'ratelimit:3,60']);
+            $routes->get('seed', 'AppSetup\Factory\FactoryController::seedData');
         });
 
         // Routes untuk location module
