@@ -20,147 +20,15 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-header">TRANSACTION</li>
-                <li class="nav-item">
-                    <a href="<?= base_url() . 'document' ?>" class="nav-link" onclick="loading();">
-                        <i class="nav-icon bi bi-folder2-open"></i>
-                        <p>
-                            List of Project
-                        </p>
-                    </a>
-                </li>
+                <li class="nav-header">MODULE</li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon bi bi-vector-pen"></i>
+                        <i class="nav-icon bi bi-person-rolodex"></i>
                         <p>
-                            Approval
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-header">MASTER DATA</li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon bi bi-box-seam"></i>
-                        <p>
-                            Common Data
+                            HRIS
                             <i class="nav-arrow bi bi-chevron-right"></i>
                         </p>
                     </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="<?= base_url('customer_category') ?> " class="nav-link" onclick="loading()">
-                                <i class="nav-icon bi bi-arrow-right-circle"></i>
-                                <p>
-                                    Customer Category
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="<?= base_url('customer') ?>" class="nav-link" onclick="loading()">
-                                <i class="nav-icon bi bi-arrow-right-circle"></i>
-                                <p>
-                                    List of Customers
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="<?= base_url('satuan') ?>" class="nav-link" onclick="loading()">
-                                <i class="nav-icon bi bi-arrow-right-circle"></i>
-                                <p>
-                                    List of UoM
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="<?= base_url('routes') ?>" class="nav-link" onclick="loading()">
-                                <i class="nav-icon bi bi-arrow-right-circle"></i>
-                                <p>
-                                    List of Routes
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="<?= base_url('material_category') ?>" class="nav-link" onclick="loading()">
-                                <i class="nav-icon bi bi-arrow-right-circle"></i>
-                                <p>
-                                    Material Category List
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="<?= base_url('workshop') ?>" class="nav-link" onclick="loading()">
-                                <i class="nav-icon bi bi-arrow-right-circle"></i>
-                                <p>
-                                    List of Workshop
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="<?= base_url('material') ?>" class="nav-link" onclick="loading()">
-                                <i class="nav-icon bi bi-arrow-right-circle"></i>
-                                <p>
-                                    List of Material
-                                </p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon bi bi-gear"></i>
-                        <p>
-                            APQP Setup
-                            <i class="nav-arrow bi bi-chevron-right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="<?= base_url('apqp_level') ?>" class="nav-link" onclick="loading()">
-                                <i class="bi bi-arrow-right-circle"></i>
-                                <p>
-                                    APQP Setup
-                                </p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="bi bi-bezier2 nav-icon"></i>
-                        <p>
-                            Project Management
-                            <i class="nav-arrow bi bi-chevron-right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav-treeview">
-                        <li class="nav-item">
-                            <a href="<?= base_url() . 'project'  ?>" class="nav-link">
-                                <i class="bi bi-arrow-right-circle"></i>
-                                <p>
-                                    Project Setup
-                                </p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon bi bi-clipboard-data"></i>
-                        <p>
-                            Document Flow
-                        </p>
-                        <i class="nav-arrow bi bi-chevron-right"></i>
-                    </a>
-                    <ul class="nav-treeview">
-                        <li class="nav-item">
-                            <a href="<?= base_url() . 'document-flow' ?>" class="nav-link">
-                                <i class="bi bi-arrow-right-circle"></i>
-                                <p>
-                                    Setup Document Flow
-                                </p>
-                            </a>
-                        </li>
-                    </ul>
                 </li>
                 <li class="nav-header">APP SETUP</li>
                 <li class="nav-item">
@@ -172,6 +40,25 @@
                         </p>
                     </a>
                     <ul class="nav-treeview">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon bi bi-person-rolodex"></i>
+                                <p>
+                                    Employee
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav-treeview">
+                                <li class="nav-item">
+                                    <a href="<?= base_url() . 'employee' ?>" class="nav-link" onclick="loading()">
+                                        <i class="nav-icon bi bi-arrow-right-circle"></i>
+                                        <p>
+                                            List of Employee
+                                        </p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="bi bi-diagram-3 nav-icon"></i>
@@ -273,14 +160,6 @@
                                         </p>
                                     </a>
                                     <ul class="nav-treeview">
-                                        <li class="nav-item">
-                                            <a href="" class="nav-link" onclick="loading()">
-                                                <i class="nav-icon bi bi-arrow-bar-right"></i>
-                                                <p>
-                                                    Religion
-                                                </p>
-                                            </a>
-                                        </li>
                                         <li class="nav-item">
                                             <a href="" class="nav-link" onclick="loading()">
                                                 <i class="nav-icon bi bi-arrow-bar-right"></i>

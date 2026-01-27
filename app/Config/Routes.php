@@ -370,6 +370,23 @@
             $routes->get('seed', 'AppSetup\Location\LocationController::seedData');
         });
 
+        // Routes untuk employee module
+        $routes->group('/employee', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+            $routes->get('', 'AppSetup\Employee\EmployeeController::index');
+            $routes->get('add', 'AppSetup\Employee\EmployeeController::add');
+            $routes->post('save', 'AppSetup\Employee\EmployeeController::save');
+            $routes->get('get/(:any)', 'AppSetup\Employee\EmployeeController::get/$1');
+            $routes->get('show/(:any)', 'AppSetup\Employee\EmployeeController::show/$1');
+            $routes->post('update', 'AppSetup\Employee\EmployeeController::update');
+            $routes->post('update', 'AppSetup\Employee\EmployeeController::update');
+            $routes->post('delete', 'AppSetup\Employee\EmployeeController::delete');
+            $routes->post('mass-delete', 'AppSetup\Employee\EmployeeController::massDelete');
+            $routes->post('prev', 'AppSetup\Employee\EmployeeController::prev');
+            $routes->post('next', 'AppSetup\Employee\EmployeeController::next');
+            $routes->get('export', 'AppSetup\Employee\EmployeeController::export');
+            $routes->get('seed', 'AppSetup\Employee\EmployeeController::seedData');
+        });
+
         // Route untuk APQP Setup
         $routes->group('/apqp_setup', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
             $routes->get('', 'AppSetup\ApqpSetup\ApqpHeaderController::index');

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Employee;
+namespace App\Models\AppSetup\Employee;
 
 use CodeIgniter\Model;
 
