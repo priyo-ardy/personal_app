@@ -13,8 +13,8 @@
                     <ol class="breadcrumb float-sm-end">
                         <li class="breadcrumb-item"><a href="<?= base_url() . 'dashboard' ?>" onclick="loading()">Dashboard</a></li>
                         <li class="breadcrumb-item">App Setup</li>
-                        <li class="breadcrumb-item">Base Setup</li>
-                        <li class="breadcrumb-item active">Location Management</li>
+                        <li class="breadcrumb-item">RnD Setup</li>
+                        <li class="breadcrumb-item active">APQP Setup</li>
                     </ol>
                 </div>
             </div>
@@ -24,7 +24,7 @@
     <div class="app-content">
         <div class="container-fluid">
             <div class="row g-2">
-                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 clearfix">
+                <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 clearfix">
                     <div class="card rounded-0">
                         <form id="formData">
                             <div class="card-header rounded-0">
@@ -35,27 +35,14 @@
                                     <input type="text" name="data_token" id="data_token" class="form-control rounded-0 bg-secondary-subtle" readonly>
                                 </div>
                                 <div class="form-group mb-3 clearfix">
-                                    <label class="form-label" for="data_code">Code</label>
-                                    <input type="text" name="data_code" id="data_code" class="form-control rounded-0 bg-secondary-subtle" readonly placeholder="Automatically generate after save">
+                                    <label class="form-label" for="data_sequence">Code</label>
+                                    <input type="text" name="data_sequence" id="data_sequence" class="form-control rounded-0" placeholder="APQP Sequence" autocomplete="off" autofocus>
                                 </div>
-                                <div class="form-group mb-3 clearfix">
-                                    <label class="form-label" for="data_factory">Province <strong class="text-danger fw-bolder">*</strong></label>
-                                    <select name="data_factory" id="data_factory" class="form-select rounded-0 select2 select2bs5" required>
-                                        <option value="">Select Factory</option>
-                                        <?php foreach ($factory as $row) : ?>
-                                            <option value="<?= $row->id ?>"><?= $row->name ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                    <div class="invalid-feedback"></div>
-                                </div>
+
                                 <div class="form-group mb-3 clearfix">
                                     <label class="form-label" for="data_name">Name<strong class="text-danger fw-bolder">*</strong></label>
-                                    <input type="text" name="data_name" id="data_name" class="form-control rounded-0" placeholder="Enter name" maxlength="150" required autofocus autocomplete="off">
+                                    <input type="text" name="data_name" id="data_name" class="form-control rounded-0" placeholder="APQP Name" maxlength="150" required autocomplete="off">
                                     <div class="invalid-feedback"></div>
-                                </div>
-                                <div class="form-group mb-3 clearfix">
-                                    <label class="form-label" for="data_address">Address</label>
-                                    <textarea name="data_address" id="data_address" class="form-control rounded-0" placeholder="Write location address here ..."></textarea>
                                 </div>
                                 <div class="form-group clearfix">
                                     <label class="form-label" for="data_remark">Remark</label>
@@ -72,13 +59,12 @@
                         </form>
                     </div>
                 </div>
-                <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12 clearfix">
+                <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 clearfix">
                     <div class="card rounded-0">
                         <div class="card-header rounded-0">
                             <h3 class="card-title"><i class="bi bi-list-ul me-2"></i>Country List</h3>
                             <div class="card-tools">
                                 <button type="button" id="btnDelete" class="btn btn-tool text-black fw-bolder" title="Delete"><i class="bi bi-trash3"></i></button>
-                                <button type="button" id="btnExport" class="btn btn-tool text-black fw-bolder" title="Export to excel"><i class="bi bi-download"></i></button>
                                 <button type="button" id="btnRefresh" class="btn btn-tool text-black fw-bolder" title="Refresh"><i class="bi bi-arrow-repeat"></i></button>
                             </div>
                         </div>
@@ -87,14 +73,14 @@
                                 <table class="table table-striped table-hover" id="dataTable">
                                     <thead>
                                         <tr>
-                                            <th class="align-middle text-center bg-secondary-subtle">
+                                            <th class="align-middle text-center bg-secondary-subtle col-1">
                                                 <input type="checkbox" id="select-all" class="form-check-input border-1 border-primary rounded-0">
                                             </th>
-                                            <th class="align-middle text-center bg-secondary-subtle">Code</th>
-                                            <th class="align-middle text-center bg-secondary-subtle">Factory</th>
-                                            <th class="align-middle text-center bg-secondary-subtle">Location Name</th>
-                                            <th class="align-middle text-center bg-secondary-subtle">Address</th>
-                                            <th class="align-middle text-center bg-secondary-subtle">Description</th>
+                                            <th class="align-middle text-center bg-secondary-subtle col-1">Sequence</th>
+                                            <th class="align-middle text-center bg-secondary-subtle col-3">APQP Name</th>
+                                            <th class="align-middle text-center bg-secondary-subtle col-2">APQP Approver</th>
+                                            <th class="align-middle text-center bg-secondary-subtle col-2">APQP Item</th>
+                                            <th class="align-middle text-center bg-secondary-subtle col-3">Remark</th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -106,4 +92,6 @@
         </div>
     </div>
 </main>
+
+<?= $this->include('AppSetup/ApqpSetup/modal.php'); ?>
 <?= $this->endSection(); ?>

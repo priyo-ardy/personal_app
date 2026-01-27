@@ -20,6 +20,25 @@ if (!function_exists('generate_uuid')) {
     }
 }
 
+if (!function_exists('uuid_v7')) {
+    function uuid_v7()
+    {
+        $mili = (int) (microtime(true) * 1000);
+        $miliHex = str_pad(dechex($mili), 12, '0', STR_PAD_LEFT);
+
+        $randomHex = bin2hex(random_bytes(10));
+
+        $uuid = sprintf(
+            '%08s-%04s-%04x-%04x-%012s',
+            substr($miliHex, 0, 8),           // 32 bits awal waktu
+            substr($miliHex, 8, 4),           // 16 bits akhir waktu
+            (hexdec(substr($randomHex, 0, 4)) & 0x0fff) | 0x7000, // Version 7
+            (hexdec(substr($randomHex, 4, 4)) & 0x3fff) | 0x8000, // Variant 10
+            substr($randomHex, 8, 12)          // Sisa random
+        );
+    }
+}
+
 if (!function_exists('enkripsi')) {
     function enkripsi($value)
     {

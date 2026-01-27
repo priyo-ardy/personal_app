@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Models\AppSetup\Location;
+namespace App\Models\AppSetup\ApqpSetup;
 
 use App\Models\BaseModel;
 use CodeIgniter\Model;
 
-class LocationModel extends BaseModel
+class ApqpHeaderModel extends BaseModel
 {
-    protected $table            = 'm_location';
+    protected $table            = 'm_apqp_header';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = false;
     protected $returnType       = 'object';
@@ -15,15 +15,13 @@ class LocationModel extends BaseModel
     protected $protectFields    = true;
     protected $allowedFields    = [
         'id',
-        'code',
-        'factory',
+        'sequence',
         'name',
-        'address',
-        'description',
+        'remark',
         'created_at',
         'created_by',
         'updated_at',
         'updated_by',
-        'deleted_at',
+        'deleted_at'
     ];
 }

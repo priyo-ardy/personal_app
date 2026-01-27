@@ -1,5 +1,5 @@
 window.addEventListener("DOMContentLoaded", () => {
-  loadTable("dataTable", "/location/table");
+  loadTable("dataTable", "/apqp_setup/table");
 
   $("#select-all").on("click", function () {
     var isChecked = this.checked;
@@ -25,16 +25,13 @@ const button = {
   update: document.getElementById("btnUpdate"),
   save: document.getElementById("btnSave"),
   delete: document.getElementById("btnDelete"),
-  export: document.getElementById("btnExport"),
   refresh: document.getElementById("btnRefresh"),
 };
 
 const inputForm = {
   token: document.getElementById("data_token"),
-  code: document.getElementById("data_code"),
-  factory: document.getElementById("data_factory"),
+  sequence: document.getElementById("data_sequence"),
   name: document.getElementById("data_name"),
-  address: document.getElementById("data_address"),
   remark: document.getElementById("data_remark"),
 };
 
@@ -44,9 +41,10 @@ function refreshTable() {
 
 function resetForm() {
   formData.reset();
-  inputForm.name.focus();
-  $(inputForm.factory).trigger("change");
+  inputForm.sequence.focus();
 
+  inputForm.sequence.removeAttribute("readonly");
+  inputForm.sequence.classList.remove("bg-secondary-subtle");
   button.update.setAttribute("hidden", true);
   button.save.removeAttribute("hidden");
 }
@@ -63,7 +61,7 @@ button.save.addEventListener("click", () => {
   if (validasi()) {
     try {
       loading();
-      fetchData(baseurl + "/location/save", "POST", new FormData(formData))
+      fetchData(baseurl + "/apqp_setup/save", "POST", new FormData(formData))
         .then((result) => {
           pesanSukses(result.message);
           resetForm();
@@ -84,16 +82,15 @@ button.save.addEventListener("click", () => {
 function getData(token) {
   try {
     loading();
-    fetchData(baseurl + "/location/get/" + token, "GET")
+    fetchData(baseurl + "/apqp_setup/get/" + token, "GET")
       .then((result) => {
         hideLoading();
         inputForm.token.value = result.data.token;
-        inputForm.code.value = result.data.code;
-        inputForm.factory.value = result.data.factory;
-        $(inputForm.factory).trigger("change");
+        inputForm.sequence.value = result.data.sequence;
         inputForm.name.value = result.data.name;
-        inputForm.address.value = result.data.address;
-        inputForm.remark.value = result.data.description;
+        inputForm.remark.value = result.data.remark;
+        inputForm.sequence.setAttribute("readonly", true);
+        inputForm.sequence.classList.add("bg-secondary-subtle");
 
         inputForm.name.focus();
 
@@ -114,7 +111,7 @@ button.update.addEventListener("click", (e) => {
   if (validasi()) {
     try {
       loading();
-      fetchData(baseurl + "/location/update", "POST", new FormData(formData))
+      fetchData(baseurl + "/apqp_setup/update", "POST", new FormData(formData))
         .then((result) => {
           pesanSukses(result.message);
           resetForm();
@@ -146,56 +143,13 @@ button.delete.addEventListener("click", (e) => {
       .get();
 
     try {
-      disableData("/location/delete", selectedData);
+      disableData("/apqp_setup/delete", selectedData);
     } catch (e) {
       pesanError(e.message);
     }
   }
 });
 
-button.export.addEventListener("click", async (e) => {
-  try {
-    loading();
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 300000);
-
-    const response = await fetch(baseurl + "/location/export", {
-      method: "GET",
-      signal: controller.signal,
-    });
-
-    clearTimeout(timeoutId);
-
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => null);
-      throw new Error(
-        errorData?.error || `HTTP error! status: ${response.status}`,
-      );
-    }
-
-    // Dapatkan Blob
-    const blob = await response.blob();
-
-    if (blob.size === 0) {
-      throw new Error("Failed to creating exported file");
-    }
-
-    // Buat link downlaod
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.style.display = "none";
-    a.href = url;
-    a.download =
-      "location_list_" + moment().format("YYYYMMDD_HHMMSS") + ".xlsx";
-    document.body.appendChild(a);
-    a.click();
-
-    // Bersihkan
-    window.URL.revokeObjectURL(url);
-    a.remove();
-    hideLoading();
-  } catch (e) {
-    pesanError(e.message);
-    hideLoading();
-  }
-});
+function getApprover(token) {
+  $("#modalApprover").modal("show");
+}

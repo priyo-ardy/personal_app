@@ -264,6 +264,140 @@
                                         </p>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon bi bi-arrow-right-circle"></i>
+                                        <p>
+                                            Common Data
+                                            <i class="nav-arrow bi bi-chevron-right"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav-treeview">
+                                        <li class="nav-item">
+                                            <a href="" class="nav-link" onclick="loading()">
+                                                <i class="nav-icon bi bi-arrow-bar-right"></i>
+                                                <p>
+                                                    Religion
+                                                </p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="" class="nav-link" onclick="loading()">
+                                                <i class="nav-icon bi bi-arrow-bar-right"></i>
+                                                <p>
+                                                    Employee Relation
+                                                </p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="" class="nav-link" onclick="loading()">
+                                                <i class="nav-icon bi bi-arrow-bar-right"></i>
+                                                <p>
+                                                    Education Degree
+                                                </p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="" class="nav-link" onclick="loading()">
+                                                <i class="nav-icon bi bi-arrow-bar-right"></i>
+                                                <p>
+                                                    Family Occupation
+                                                </p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="" class="nav-link" onclick="loading()">
+                                                <i class="nav-icon bi bi-arrow-bar-right"></i>
+                                                <p>
+                                                    Employee Facility
+                                                </p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="" class="nav-link" onclick="loading()">
+                                                <i class="nav-icon bi bi-arrow-bar-right"></i>
+                                                <p>
+                                                    Uniform Type
+                                                </p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="" class="nav-link" onclick="loading()">
+                                                <i class="nav-icon bi bi-arrow-bar-right"></i>
+                                                <p>
+                                                    Uniform Size
+                                                </p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="" class="nav-link" onclick="loading()">
+                                                <i class="nav-icon bi bi-arrow-bar-right"></i>
+                                                <p>
+                                                    Shoes Size
+                                                </p>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon bi- bi-clock"></i>
+                                <p>
+                                    Time & Labor Setup
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav-treeview">
+                                <li class="nav-item">
+                                    <a href="" class="nav-link" onclick="loading()">
+                                        <i class="nav-icon bi bi-arrow-right-circle"></i>
+                                        <p>
+                                            Absence Status
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="" class="nav-link" onclick="loading()">
+                                        <i class="nav-icon bi bi-arrow-right-circle"></i>
+                                        <p>
+                                            Overtime Setup
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="" class="nav-link" onclick="loading()">
+                                        <i class="nav-icon bi bi-arrow-right-circle"></i>
+                                        <p>
+                                            Shift Setup
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="" class="nav-link" onclick="loading()">
+                                        <i class="nav-icon bi bi-arrow-right-circle"></i>
+                                        <p>
+                                            Special Leave Setup
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="" class="nav-link" onclick="loading()">
+                                        <i class="nav-icon bi bi-arrow-right-circle"></i>
+                                        <p>
+                                            Schedulle Setup
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="" class="nav-link" onclick="loading()">
+                                        <i class="nav-icon bi bi-arrow-right-circle"></i>
+                                        <p>
+                                            Period Setup
+                                        </p>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                     </ul>
@@ -376,6 +510,14 @@
                                 </p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="<?= base_url() . 'apqp_setup' ?>" class="nav-link" onclick="loading()">
+                                <i class="nav-icon bi bi-arrow-right-circle"></i>
+                                <p>
+                                    APQP Setup
+                                </p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 <li class="nav-item">
@@ -433,14 +575,6 @@
                                 <i class="nav-icon bi bi-arrow-right-circle"></i>
                                 <p>
                                     Factory Location
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon bi bi-arrow-right-circle"></i>
-                                <p>
-                                    Unit of Measure (UoM)
                                 </p>
                             </a>
                         </li>

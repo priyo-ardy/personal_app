@@ -342,7 +342,7 @@
             $routes->post('prev', 'AppSetup\Supplier\SupplierController::prev');
             $routes->post('next', 'AppSetup\Supplier\SupplierController::next');
             $routes->post('mass-delete', 'AppSetup\Supplier\SupplierController::massDelete', ['filter' => 'ratelimit:3,60']);
-        $routes->get('export', 'AppSetup\Supplier\Supplierontroller::export', ['filter' => 'ratelimit:3,60']);
+            $routes->get('export', 'AppSetup\Supplier\Supplierontroller::export', ['filter' => 'ratelimit:3,60']);
             $routes->get('seed', 'AppSetup\Supplier\SupplierController::seedData');
         });
 
@@ -368,6 +368,16 @@
             $routes->post('delete', 'AppSetup\Location\LocationController::delete', ['filter' => 'ratelimit:3,60']);
             $routes->get('export', 'AppSetup\Location\LocationController::export', ['filter' => 'ratelimit:3,60']);
             $routes->get('seed', 'AppSetup\Location\LocationController::seedData');
+        });
+
+        // Route untuk APQP Setup
+        $routes->group('/apqp_setup', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+            $routes->get('', 'AppSetup\ApqpSetup\ApqpHeaderController::index');
+            $routes->post('table', 'AppSetup\ApqpSetup\ApqpHeaderController::loadTable');
+            $routes->post('save', 'AppSetup\ApqpSetup\ApqpHeaderController::save');
+            $routes->get('get/(:any)', 'AppSetup\ApqpSetup\ApqpHeaderController::get/$1');
+            $routes->post('update', 'AppSetup\ApqpSetup\ApqpHeaderController::update');
+            $routes->post('delete', 'AppSetup\ApqpSetup\ApqpHeaderController::delete');
         });
 
         // Site Setting

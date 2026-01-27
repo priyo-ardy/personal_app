@@ -108,16 +108,16 @@ class LocationService
             if (!$getData) {
                 log_message('error', '[LocationService::getDat] Data token $id by {NIK} from {ip} with error {err}', ['NIK' => session()->get('user_name'), 'ip' => $_SERVER['REMOTE_ADDR'], 'err' => 'Data not found']);
                 throw new \Exception("Data not found", ResponseInterface::HTTP_NOT_FOUND);
-
-                return [
-                    'token' => enkripsi($getData->id),
-                    'code' => $getData->code,
-                    'factory' => $getData->factory,
-                    'name' => $getData->name,
-                    'address' => $getData->address,
-                    'description' => $getData->description
-                ];
             }
+
+            return [
+                'token' => enkripsi($getData->id),
+                'code' => $getData->code,
+                'factory' => $getData->factory,
+                'name' => $getData->name,
+                'address' => $getData->address,
+                'description' => $getData->description
+            ];
         } catch (\Exception $e) {
             log_message('error', '[LocationService::getDat] Unexpexted error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
             throw $e;

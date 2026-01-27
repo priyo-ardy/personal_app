@@ -94,7 +94,7 @@ class LocationController extends BaseController
         }
     }
 
-    public function updateData()
+    public function update()
     {
         if ($this->request->getMethod() !== 'POST') {
             log_message('error', '[LocationController::updateData] Request not allowed from {ip}', ['ip' => $_SERVER['REMOTE_ADDR']]);
