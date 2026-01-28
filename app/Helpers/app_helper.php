@@ -105,6 +105,30 @@ if (!function_exists('bank_account_no_hash')) {
     }
 }
 
+if (!function_exists('ktp_hash')) {
+    function ktp_hash($no_ktp)
+    {
+        $secret_key = getenv('ktp_salt') ? getenv('ktp_salt') : '*#Ktp!!#*';
+        return hash('sha256', $secret_key . $no_ktp);
+    }
+}
+
+if (!function_exists('bpjs_kesehatan_hash')) {
+    function bpjs_kesehatan_hash($no_bpjs_kesehatan)
+    {
+        $secret_key = getenv('bpjs_kesehatan_salt') ? getenv('bpjs_kesehatan_salt') : '*#BpjsKesehatan!!#*';
+        return hash('sha256', $secret_key . $no_bpjs_kesehatan);
+    }
+}
+
+if (!function_exists('bpjs_ketenagakerjaan_hash')) {
+    function bpjs_ketenagakerjaan_hash($no_bpjs_ketenagakerjaan)
+    {
+        $secret_key = getenv('bpjs_ketenagakerjaan_salt') ? getenv('bpjs_ketenagakerjaan_salt') : '*#BpjsKetenagakerjaan!!#*';
+        return hash('sha256', $secret_key . $no_bpjs_ketenagakerjaan);
+    }
+}
+
 if (!function_exists('sensor_email')) {
     /**
      * Custom Masking Email sesuai Request

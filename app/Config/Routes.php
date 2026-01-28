@@ -406,6 +406,18 @@
             $routes->get('seed', 'AppSetup\FamilyOccupation\FamilyOccupationController::seedData');
         });
 
+        // Route untuk employee family facility
+        $routes->group('/employee_facility', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+            $routes->get('', 'AppSetup\EmployeeFacility\EmployeeFacilityController::index');
+            $routes->post('table', 'AppSetup\EmployeeFacility\EmployeeFacilityController::loadTable');
+            $routes->post('save', 'AppSetup\EmployeeFacility\EmployeeFacilityController::save', ['filter' => 'ratelimit:3,60']);
+            $routes->get('get/(:any)', 'AppSetup\EmployeeFacility\EmployeeFacilityController::get/$1');
+            $routes->post('update', 'AppSetup\EmployeeFacility\EmployeeFacilityController::update', ['filter' => 'ratelimit:3,60']);
+            $routes->post('delete', 'AppSetup\EmployeeFacility\EmployeeFacilityController::delete', ['filter' => 'ratelimit:3,60']);
+            $routes->get('export', 'AppSetup\EmployeeFacility\EmployeeFacilityController::export', ['filter' => 'ratelimit:3,60']);
+            $routes->get('seed', 'AppSetup\EmployeeFacility\EmployeeFacilityController::seedData');
+        });
+
         // Routes untuk employee module
         $routes->group('/employee', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
             $routes->get('', 'AppSetup\Employee\EmployeeController::index');
