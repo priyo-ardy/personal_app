@@ -370,6 +370,42 @@
             $routes->get('seed', 'AppSetup\Location\LocationController::seedData');
         });
 
+        // Route untuk employee family relation
+        $routes->group('/family_relation', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+            $routes->get('', 'AppSetup\FamilyRelation\FamilyRelationController::index');
+            $routes->post('table', 'AppSetup\FamilyRelation\FamilyRelationController::loadTable');
+            $routes->post('save', 'AppSetup\FamilyRelation\FamilyRelationController::save', ['filter' => 'ratelimit:3,60']);
+            $routes->get('get/(:any)', 'AppSetup\FamilyRelation\FamilyRelationController::get/$1');
+            $routes->post('update', 'AppSetup\FamilyRelation\FamilyRelationController::update', ['filter' => 'ratelimit:3,60']);
+            $routes->post('delete', 'AppSetup\FamilyRelation\FamilyRelationController::delete', ['filter' => 'ratelimit:3,60']);
+            $routes->get('export', 'AppSetup\FamilyRelation\FamilyRelationController::export', ['filter' => 'ratelimit:3,60']);
+            $routes->get('seed', 'AppSetup\FamilyRelation\FamilyRelationController::seedData');
+        });
+
+        // Route untuk employee education degree
+        $routes->group('/education_degree', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+            $routes->get('', 'AppSetup\EducationDegree\EducationDegreeController::index');
+            $routes->post('table', 'AppSetup\EducationDegree\EducationDegreeController::loadTable');
+            $routes->post('save', 'AppSetup\EducationDegree\EducationDegreeController::save', ['filter' => 'ratelimit:3,60']);
+            $routes->get('get/(:any)', 'AppSetup\EducationDegree\EducationDegreeController::get/$1');
+            $routes->post('update', 'AppSetup\EducationDegree\EducationDegreeController::update', ['filter' => 'ratelimit:3,60']);
+            $routes->post('delete', 'AppSetup\EducationDegree\EducationDegreeController::delete', ['filter' => 'ratelimit:3,60']);
+            $routes->get('export', 'AppSetup\EducationDegree\EducationDegreeController::export', ['filter' => 'ratelimit:3,60']);
+            $routes->get('seed', 'AppSetup\EducationDegree\EducationDegreeController::seedData');
+        });
+
+        // Route untuk employee family occupation
+        $routes->group('/family_occupation', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+            $routes->get('', 'AppSetup\FamilyOccupation\FamilyOccupationController::index');
+            $routes->post('table', 'AppSetup\FamilyOccupation\FamilyOccupationController::loadTable');
+            $routes->post('save', 'AppSetup\FamilyOccupation\FamilyOccupationController::save', ['filter' => 'ratelimit:3,60']);
+            $routes->get('get/(:any)', 'AppSetup\FamilyOccupation\FamilyOccupationController::get/$1');
+            $routes->post('update', 'AppSetup\FamilyOccupation\FamilyOccupationController::update', ['filter' => 'ratelimit:3,60']);
+            $routes->post('delete', 'AppSetup\FamilyOccupation\FamilyOccupationController::delete', ['filter' => 'ratelimit:3,60']);
+            $routes->get('export', 'AppSetup\FamilyOccupation\FamilyOccupationController::export', ['filter' => 'ratelimit:3,60']);
+            $routes->get('seed', 'AppSetup\FamilyOccupation\FamilyOccupationController::seedData');
+        });
+
         // Routes untuk employee module
         $routes->group('/employee', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
             $routes->get('', 'AppSetup\Employee\EmployeeController::index');

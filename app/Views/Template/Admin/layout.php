@@ -60,7 +60,7 @@
     <?= csrf_meta() . PHP_EOL ?>
 </head>
 
-<body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+<body class="layout-fixed sidebar-expand-lg bg-body-tertiary fixed-header">
     <div id="loading-overlay">
         <div class="spinner"></div>
         <p>Loading...</p>

@@ -4,30 +4,29 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class ApqpApproverTable extends Migration
+class EducationDegreeTable extends Migration
 {
     public function up()
     {
         $this->forge->addField([
             'id' => [
-                'type' => "VARCHAR",
+                'type' => 'VARCHAR',
                 'constraint' => 50,
-                'null' => false
-            ],
-            'id_apqp' => [
-                'type' => "VARCHAR",
-                'constraint' => 50,
-                'null' => false
-            ],
-            'approver' => [
-                'type' => "VARCHAR",
-                'constraint' => 50,
-                'null' => false
-            ],
-            'row_no' => [
-                'type' => "INT",
                 'null' => false,
-                'default' => 1
+            ],
+            'code' => [
+                'type' => 'VARCHAR',
+                'constraint' => 20,
+                'null' => false,
+            ],
+            'name' => [
+                'type' => 'VARCHAR',
+                'constraint' => 150,
+                'null' => false,
+            ],
+            'description' => [
+                'type' => 'TEXT',
+                'null' => true,
             ],
             'created_at' => [
                 'type' => 'TIMESTAMPTZ',
@@ -57,16 +56,13 @@ class ApqpApproverTable extends Migration
         ]);
 
         $this->forge->addKey('id', true, true);
-        $this->forge->addKey('id_apqp');
-        $this->forge->addKey('approver');
-        $this->forge->addForeignKey('id_apqp', 'm_apqp_header', 'id', 'CASCADE', 'CASCADE');
-        $this->forge->addForeignKey('approver',  'm_karyawan', 'id', 'RESTRICT', 'RESTRICT');
-
-        $this->forge->createTable('m_apqp_approver');
+        $this->forge->addKey('code', false, true);
+        $this->forge->addKey('name', false, false);
+        $this->forge->createTable('m_degree', true);
     }
 
     public function down()
     {
-        $this->forge->dropTable('m_apqp_approver');
+        $this->forge->dropTable('m_degree', true);
     }
 }

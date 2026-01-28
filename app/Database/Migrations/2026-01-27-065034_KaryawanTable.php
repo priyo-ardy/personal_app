@@ -234,6 +234,8 @@ class KaryawanTable extends Migration
             ]
         ]);
 
+        $this->forge->addKey('id', true, true);
+        $this->forge->addKey('nik', false, true);
         $this->forge->createTable('m_karyawan', true);
     }
 

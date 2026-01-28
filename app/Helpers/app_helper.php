@@ -36,6 +36,8 @@ if (!function_exists('uuid_v7')) {
             (hexdec(substr($randomHex, 4, 4)) & 0x3fff) | 0x8000, // Variant 10
             substr($randomHex, 8, 12)          // Sisa random
         );
+
+        return $uuid;
     }
 }
 

@@ -161,15 +161,15 @@
                                     </a>
                                     <ul class="nav-treeview">
                                         <li class="nav-item">
-                                            <a href="" class="nav-link" onclick="loading()">
+                                            <a href="<?= base_url() . 'family_relation' ?>" class="nav-link" onclick="loading()">
                                                 <i class="nav-icon bi bi-arrow-bar-right"></i>
                                                 <p>
-                                                    Employee Relation
+                                                    Family Relation
                                                 </p>
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="" class="nav-link" onclick="loading()">
+                                            <a href="<?= base_url() . 'education_degree' ?>" class="nav-link" onclick="loading()">
                                                 <i class="nav-icon bi bi-arrow-bar-right"></i>
                                                 <p>
                                                     Education Degree
@@ -177,7 +177,7 @@
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="" class="nav-link" onclick="loading()">
+                                            <a href="<?= base_url() . 'family_occupation' ?>" class="nav-link" onclick="loading()">
                                                 <i class="nav-icon bi bi-arrow-bar-right"></i>
                                                 <p>
                                                     Family Occupation
@@ -185,7 +185,7 @@
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="" class="nav-link" onclick="loading()">
+                                            <a href="<?= base_url() . 'employee_facility' ?>" class="nav-link" onclick="loading()">
                                                 <i class="nav-icon bi bi-arrow-bar-right"></i>
                                                 <p>
                                                     Employee Facility
