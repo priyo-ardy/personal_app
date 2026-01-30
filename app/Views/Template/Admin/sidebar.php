@@ -193,7 +193,7 @@
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="" class="nav-link" onclick="loading()">
+                                            <a href="<?= base_url() . 'uniform_type' ?>" class="nav-link" onclick="loading()">
                                                 <i class="nav-icon bi bi-arrow-bar-right"></i>
                                                 <p>
                                                     Uniform Type
@@ -201,7 +201,7 @@
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="" class="nav-link" onclick="loading()">
+                                            <a href="<?= base_url() . 'uniform_size' ?>" class="nav-link" onclick="loading()">
                                                 <i class="nav-icon bi bi-arrow-bar-right"></i>
                                                 <p>
                                                     Uniform Size
@@ -209,7 +209,7 @@
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="" class="nav-link" onclick="loading()">
+                                            <a href="<?= base_url() . 'shoes_size' ?>" class="nav-link" onclick="loading()">
                                                 <i class="nav-icon bi bi-arrow-bar-right"></i>
                                                 <p>
                                                     Shoes Size

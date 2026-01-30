@@ -406,7 +406,7 @@
             $routes->get('seed', 'AppSetup\FamilyOccupation\FamilyOccupationController::seedData');
         });
 
-        // Route untuk employee family facility
+        // Route untuk employee facility
         $routes->group('/employee_facility', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
             $routes->get('', 'AppSetup\EmployeeFacility\EmployeeFacilityController::index');
             $routes->post('table', 'AppSetup\EmployeeFacility\EmployeeFacilityController::loadTable');
@@ -416,6 +416,42 @@
             $routes->post('delete', 'AppSetup\EmployeeFacility\EmployeeFacilityController::delete', ['filter' => 'ratelimit:3,60']);
             $routes->get('export', 'AppSetup\EmployeeFacility\EmployeeFacilityController::export', ['filter' => 'ratelimit:3,60']);
             $routes->get('seed', 'AppSetup\EmployeeFacility\EmployeeFacilityController::seedData');
+        });
+
+        // Route untuk uniform type
+        $routes->group('/uniform_type', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+            $routes->get('', 'AppSetup\UniformType\UniformTypeController::index');
+            $routes->post('table', 'AppSetup\UniformType\UniformTypeController::loadTable');
+            $routes->post('save', 'AppSetup\UniformType\UniformTypeController::save', ['filter' => 'ratelimit:3,60']);
+            $routes->get('get/(:any)', 'AppSetup\UniformType\UniformTypeController::get/$1');
+            $routes->post('update', 'AppSetup\UniformType\UniformTypeController::update', ['filter' => 'ratelimit:3,60']);
+            $routes->post('delete', 'AppSetup\UniformType\UniformTypeController::delete', ['filter' => 'ratelimit:3,60']);
+            $routes->get('export', 'AppSetup\UniformType\UniformTypeController::export', ['filter' => 'ratelimit:3,60']);
+            $routes->get('seed', 'AppSetup\UniformType\UniformTypeController::seedData');
+        });
+
+        // Route untuk uniform size
+        $routes->group('/uniform_size', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+            $routes->get('', 'AppSetup\UniformSize\UniformSizeController::index');
+            $routes->post('table', 'AppSetup\UniformSize\UniformSizeController::loadTable');
+            $routes->post('save', 'AppSetup\UniformSize\UniformSizeController::save', ['filter' => 'ratelimit:3,60']);
+            $routes->get('get/(:any)', 'AppSetup\UniformSize\UniformSizeController::get/$1');
+            $routes->post('update', 'AppSetup\UniformSize\UniformSizeController::update', ['filter' => 'ratelimit:3,60']);
+            $routes->post('delete', 'AppSetup\UniformSize\UniformSizeController::delete', ['filter' => 'ratelimit:3,60']);
+            $routes->get('export', 'AppSetup\UniformSize\UniformSizeController::export', ['filter' => 'ratelimit:3,60']);
+            $routes->get('seed', 'AppSetup\UniformSize\UniformSizeController::seedData');
+        });
+
+        // Route untuk safety shoes size
+        $routes->group('/shoes_size', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+            $routes->get('', 'AppSetup\ShoesSize\ShoesSizeController::index');
+            $routes->post('table', 'AppSetup\ShoesSize\ShoesSizeController::loadTable');
+            $routes->post('save', 'AppSetup\ShoesSize\ShoesSizeController::save', ['filter' => 'ratelimit:3,60']);
+            $routes->get('get/(:any)', 'AppSetup\ShoesSize\ShoesSizeController::get/$1');
+            $routes->post('update', 'AppSetup\ShoesSize\ShoesSizeController::update', ['filter' => 'ratelimit:3,60']);
+            $routes->post('delete', 'AppSetup\ShoesSize\ShoesSizeController::delete', ['filter' => 'ratelimit:3,60']);
+            $routes->get('export', 'AppSetup\ShoesSize\ShoesSizeController::export', ['filter' => 'ratelimit:3,60']);
+            $routes->get('seed', 'AppSetup\ShoesSize\ShoesSizeController::seedData');
         });
 
         // Routes untuk employee module
