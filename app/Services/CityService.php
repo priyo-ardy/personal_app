@@ -216,4 +216,29 @@ class CityService
             throw $e;
         }
     }
+
+    public function getCityByProvince(string $province)
+    {
+        try {
+            $get_city_list = $this->cityRepo->getCityList($province);
+            if (!$get_city_list) {
+                log_message('error', '[CityService::getCityByProvince] Data not found by {NIK} from {ip}', ['NIK' => session()->get('user_name'), 'ip' => $_SERVER['REMOTE_ADDR']]);
+                throw new \Exception('Data not found', ResponseInterface::HTTP_NOT_FOUND);
+            }
+
+            $list = [];
+
+            foreach ($get_city_list as $row) {
+                $list[] = [
+                    'id' => $row['id'],
+                    'name' => $row['name']
+                ];
+            }
+
+            return $list;
+        } catch (\Exception $e) {
+            log_message('error', '[CityService::getCityByProvince] Unexpexted error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            throw $e;
+        }
+    }
 }

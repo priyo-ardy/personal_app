@@ -22,4 +22,15 @@ class EmployeeService
         $this->validation = Services::validation();
         $this->repository = new EmployeeRepository();
     }
+
+    public function newNik(string $category)
+    {
+        try {
+            $nik = $this->repository->getNewNik($category);
+            return $nik;
+        } catch (\Exception $e) {
+            log_message('error', "[EmployeeService::newNik] Unexpected error occured : {err} from {ip}", ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            throw $e;
+        }
+    }
 }

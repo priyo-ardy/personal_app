@@ -175,4 +175,24 @@ class CityController extends BaseController
             return pesan($code, $e->getMessage());
         }
     }
+
+    public function getCity(string $province)
+    {
+        if ($this->request->getMethod() !== 'GET') {
+            log_message('error', "[CityController::getCityByProvince] Invalid request method NIK : {NIK}, from IP {ip}", ['NIK' => session()->get('user_name'), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            throw new \Exception("Request not allowed", ResponseInterface::HTTP_METHOD_NOT_ALLOWED);
+        }
+
+        try {
+            $get_data = $this->citySerice->getCityByProvince($province);
+
+            if ($get_data) {
+                return $this->success(ResponseInterface::HTTP_OK, 'Data found', $get_data);
+            }
+        } catch (\Exception $e) {
+            $code = $e->getCode() ?? ResponseInterface::HTTP_INTERNAL_SERVER_ERROR;
+            log_message('error', "[CityController::getCityByProvince] Unexpected error occured : {err} from {ip}", ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            return pesan($code, $e->getMessage());
+        }
+    }
 }

@@ -29,6 +29,27 @@
                             <i class="nav-arrow bi bi-chevron-right"></i>
                         </p>
                     </a>
+                    <ul class="nav-treeview">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon bi bi-arrow-right-circle"></i>
+                                <p>
+                                    Employee Mgmt.
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav-treeview">
+                                <li class="nav-item">
+                                    <a href="<?= base_url() . 'employee' ?>" class="nav-link">
+                                        <i class="nav-icon bi bi-arrow-return-right"></i>
+                                        <p>
+                                            List of Employee
+                                        </p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
                 </li>
                 <li class="nav-header">APP SETUP</li>
                 <li class="nav-item">

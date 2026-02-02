@@ -15,6 +15,14 @@ class CityRepository extends CrudRepository
         $this->model = new CityModel();
     }
 
+    public function getCityList($province_id)
+    {
+        return $this->model->where('province', $province_id)
+            ->orderBy('name', 'asc')
+            ->get()
+            ->getResultArray();
+    }
+
     public function chunkedData($offset, $limit, $order, $column)
     {
         $view = new VwCityModel();

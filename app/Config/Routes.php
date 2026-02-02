@@ -181,6 +181,7 @@
             $routes->post('delete', 'AppSetup\City\CityController::delete', ['filter' => 'ratelimit:3,60']);
             $routes->get('export', 'AppSetup\City\CityController::export', ['filter' => 'ratelimit:3,60']);
             $routes->get('seed', 'AppSetup\City\CityController::seedData');
+            $routes->get('getCity/(:any)', 'AppSetup\City\CityController::getCity/$1');
         });
 
         // Routes untuk tempat lahir
@@ -456,19 +457,20 @@
 
         // Routes untuk employee module
         $routes->group('/employee', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
-            $routes->get('', 'AppSetup\Employee\EmployeeController::index');
-            $routes->get('add', 'AppSetup\Employee\EmployeeController::add');
-            $routes->post('save', 'AppSetup\Employee\EmployeeController::save');
-            $routes->get('get/(:any)', 'AppSetup\Employee\EmployeeController::get/$1');
-            $routes->get('show/(:any)', 'AppSetup\Employee\EmployeeController::show/$1');
-            $routes->post('update', 'AppSetup\Employee\EmployeeController::update');
-            $routes->post('update', 'AppSetup\Employee\EmployeeController::update');
-            $routes->post('delete', 'AppSetup\Employee\EmployeeController::delete');
-            $routes->post('mass-delete', 'AppSetup\Employee\EmployeeController::massDelete');
-            $routes->post('prev', 'AppSetup\Employee\EmployeeController::prev');
-            $routes->post('next', 'AppSetup\Employee\EmployeeController::next');
-            $routes->get('export', 'AppSetup\Employee\EmployeeController::export');
-            $routes->get('seed', 'AppSetup\Employee\EmployeeController::seedData');
+            $routes->get('', 'MasterData\Employee\EmployeeController::index');
+            $routes->post('new_nik', 'MasterData\Employee\EmployeeController::generateNik');
+            $routes->get('add', 'MasterData\Employee\EmployeeController::add');
+            $routes->post('save', 'MasterData\Employee\EmployeeController::save');
+            $routes->get('get/(:any)', 'MasterData\Employee\EmployeeController::get/$1');
+            $routes->get('show/(:any)', 'MasterData\Employee\EmployeeController::show/$1');
+            $routes->post('update', 'MasterData\Employee\EmployeeController::update');
+            $routes->post('update', 'MasterData\Employee\EmployeeController::update');
+            $routes->post('delete', 'MasterData\Employee\EmployeeController::delete');
+            $routes->post('mass-delete', 'MasterData\Employee\EmployeeController::massDelete');
+            $routes->post('prev', 'MasterData\Employee\EmployeeController::prev');
+            $routes->post('next', 'MasterData\Employee\EmployeeController::next');
+            $routes->get('export', 'MasterData\Employee\EmployeeController::export');
+            $routes->get('seed', 'MasterData\Employee\EmployeeController::seedData');
         });
 
         // Route untuk APQP Setup
