@@ -14,6 +14,14 @@ use App\Services\ProvinceService;
 use App\Repositories\ProvinceRepository;
 use App\Services\FamilyRelation\FamilyRelationService;
 use App\Repositories\FamilyRelation\FamilyRelationRepository;
+use App\Services\UniformType\UniformTypeService;
+use App\Repositories\UniformType\UniformTypeRepository;
+use App\Services\UniformSize\UniformSizeService;
+use App\Repositories\UniformSize\UniformSizeRepository;
+use App\Services\ShoesSize\ShoesSizeService;
+use App\Repositories\ShoesSize\ShoesSizeRepository;
+use App\Services\FamilyOccupation\FamilyOccupationService;
+use App\Repositories\FamilyOccupation\FamilyOccupationRepository;
 
 class EmployeeController extends BaseController
 {
@@ -22,6 +30,10 @@ class EmployeeController extends BaseController
     protected $province;
     protected $relasi;
     protected $employee;
+    protected $jenisSeragam;
+    protected $ukuranSeragam;
+    protected $ukuranSepatu;
+    protected $pekerjaan;
 
     public function __construct()
     {
@@ -30,6 +42,10 @@ class EmployeeController extends BaseController
         $this->tempat_lahir = new TempatLahirService(new TempatLahirRepository());
         $this->province = new ProvinceService(new ProvinceRepository());
         $this->relasi = new FamilyRelationService(new FamilyRelationRepository());
+        $this->jenisSeragam = new UniformTypeService(new UniformTypeRepository());
+        $this->ukuranSeragam = new UniformSizeService(new UniformSizeRepository());
+        $this->ukuranSepatu = new ShoesSizeService(new ShoesSizeRepository());
+        $this->pekerjaan = new FamilyOccupationService(new FamilyOccupationRepository());
     }
 
     public function index()
@@ -53,6 +69,9 @@ class EmployeeController extends BaseController
             'tempat_lahir' => $this->tempat_lahir->loadAllData(),
             'province' => $this->province->loadAllData(),
             'relasi' => $this->relasi->getAllData(),
+            'jenis_seragam' => $this->jenisSeragam->getAllData(),
+            'ukuran_seragam' => $this->ukuranSeragam->getAllData(),
+            'ukuran_sepatu' => $this->ukuranSepatu->getAllData(),
             'footer' => [
                 '<script src="' . base_url() . 'js/App/validasi.js"></script>',
                 '<script src="' . base_url() . 'js/MasterData/Employee/add.js' . '"></script>'
@@ -80,5 +99,42 @@ class EmployeeController extends BaseController
             log_message('error', "[EmployeeController::generateNik] Unexpected error occured : {err} from {ip}", ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
             return pesan($code, $e->getMessage());
         }
+    }
+
+    public function save()
+    {
+        if ($this->request->getMethod() !== 'POST') {
+            log_message('error', '[EmployeeController::save] Unexpected request method : {method} from {ip}', ['method' => $this->request->getMethod(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            throw new \Exception("Request not allowed", ResponseInterface::HTTP_METHOD_NOT_ALLOWED);
+        }
+
+        try {
+            $postData = $this->request->getPost();
+            $uploadFile = $this->request->getFile('fupload');
+
+            $save = $this->employee->saveData($postData, $uploadFile);
+
+            return pesan(ResponseInterface::HTTP_OK, "Data saved successfully", $save);
+        } catch (\Exception $e) {
+            $code = $e->getCode() ?? ResponseInterface::HTTP_INTERNAL_SERVER_ERROR;
+            log_message('error', '[EmployeeController::save] Unexpected error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            return pesan($code, $e->getMessage());
+        }
+    }
+
+    public function keluarga(string $token)
+    {
+        $data = [
+            'title' => "Register new employee family member",
+            'token' => $token,
+            'relasi' => $this->relasi->getAllData(),
+            'pekerjaan' => $this->pekerjaan->getAllData(),
+            'footer' => [
+                '<script src="' . base_url() . 'js/App/validasi.js"></script>',
+                '<script src="' . base_url() . 'js/MasterData/Employee/keluarga.js' . '"></script>'
+            ]
+        ];
+
+        return view('MasterData/Employee/keluarga', $data);
     }
 }

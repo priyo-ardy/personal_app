@@ -59,7 +59,7 @@ class EmployeeTable extends Migration
                 'null' => false,
                 'comment' => 'L = Laki-laki, P = Perempuan',
             ],
-            'golonga_darah' => [
+            'golongan_darah' => [
                 'type' => 'VARCHAR',
                 'constraint' => 2,
                 'null' => true,
@@ -242,6 +242,12 @@ class EmployeeTable extends Migration
             'ukuran_sepatu' => [
                 'type' => 'UUID',
                 'null' => false
+            ],
+            'aksesoris' => [
+                'type' => 'VARCHAR',
+                'constraint' => 20,
+                'null' => true,
+                'comment' => '1. Topi Navy, 2. Topi Kuning, 3. Hijab'
             ],
             'created_at' => [
                 'type' => 'TIMESTAMPTZ',

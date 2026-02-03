@@ -90,6 +90,19 @@ function saveData() {
   try {
     if (validasi()) {
       loading();
+      fetchData(baseurl + "/employee/save", "POST", new FormData(formData))
+        .then((result) => {
+          pesanSukses(result.message);
+          setTimeout(() => {
+            window.location.replace(
+              baseurl + "/employee/family/" + result.data.token,
+            );
+          }, 1000);
+        })
+        .catch((err) => {
+          pesanError(err.message);
+          hideLoading();
+        });
     }
   } catch (e) {
     pesanError(e.message);
@@ -166,7 +179,7 @@ function getCityByProvince(province, element) {
     loading();
     fetchData(baseurl + "/city/getCity/" + province, "GET")
       .then((result) => {
-        inputForm.kota_ktp.innerHTML = '<option value="">-- Choose --</option>';
+        element.innerHTML = '<option value="">-- Choose --</option>';
         result.data.forEach((item) => {
           element.innerHTML += `<option value="${item.id}">${item.name}</option>`;
         });

@@ -461,16 +461,7 @@
             $routes->post('new_nik', 'MasterData\Employee\EmployeeController::generateNik');
             $routes->get('add', 'MasterData\Employee\EmployeeController::add');
             $routes->post('save', 'MasterData\Employee\EmployeeController::save');
-            $routes->get('get/(:any)', 'MasterData\Employee\EmployeeController::get/$1');
-            $routes->get('show/(:any)', 'MasterData\Employee\EmployeeController::show/$1');
-            $routes->post('update', 'MasterData\Employee\EmployeeController::update');
-            $routes->post('update', 'MasterData\Employee\EmployeeController::update');
-            $routes->post('delete', 'MasterData\Employee\EmployeeController::delete');
-            $routes->post('mass-delete', 'MasterData\Employee\EmployeeController::massDelete');
-            $routes->post('prev', 'MasterData\Employee\EmployeeController::prev');
-            $routes->post('next', 'MasterData\Employee\EmployeeController::next');
-            $routes->get('export', 'MasterData\Employee\EmployeeController::export');
-            $routes->get('seed', 'MasterData\Employee\EmployeeController::seedData');
+            $routes->get('family/(:any)', 'MasterData\Employee\EmployeeController::keluarga/$1');
         });
 
         // Route untuk APQP Setup
