@@ -10,34 +10,31 @@ function addRow() {
     `
         <tr>
             <td class="align-middle">
-                <select name="data_relation[]" class="form-control select2 select2bs5" required>
+                <select name="data_degree[]" class="form-control select2 select2bs5" required>
                     <option value="">-- Choose --</option>
                     ` +
-    document.getElementById("listRelasi").innerHTML +
+    document.getElementById("listPendidikan").innerHTML +
     `
                 </select>
                 <div class="invalid-feedback"></div>
             </td>
             <td class="align-middle">
-                <input type="text" name="data_name[]" class="form-control rounded-0" placeholder="Family member name" minlength="3" maxlength="150" required>
+                <input type="text" name="data_sekolah[]" class="form-control rounded-0" placeholder="School name" minlength="3" maxlength="150" required>
                 <div class="invalid-feedback"></div>
             </td>
             <td class="align-middle">
-                <select name="data_ocupation[]" class="form-control select2 select2bs5" required>
-                    <option value="">-- Choose --</option>
-                    ` +
-    document.getElementById("listPekerjaan").innerHTML +
-    `
-                </select>
+                <input type="text" name="data_jurusan[]" class="form-control rounded-0" placeholder="Major" minlength="3" maxlength="150" required>
+                <div class="invalid-feedback"></div>
+            </td>
+            <td class="align-middle">
+                <input type="number" name="data_tahun_lulus[]" class="form-control rounded-0" placeholder="Year of graduation" minlength="3" maxlength="150" required>
                 <div class="invalid-feedback"></div>
             </td>
             <td class="align-middle">
                 <input type="text" name="data_remark[]" class="form-control rounded-0" placeholder="Additional information">
-                <div class="invalid-feedback"></div>
             </td>
             <td class="text-center align-middle">
                 <button type="button" class="btn btn-success btn-sm rounded-0" onclick="addRow()"><i class="bi bi-plus"></i></button>
-                <button type="button" class="btn btn-danger btn-sm rounded-0" onclick="removeRow(this)"><i class="bi bi-dash"></i></button>
             </td>
         </tr>
     `;

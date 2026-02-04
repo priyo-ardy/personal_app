@@ -92,6 +92,9 @@
                                                     <td class="align-middle">
                                                         <select name="data_degree[]" class="form-control select2 select2bs5" required>
                                                             <option value="">-- Choose --</option>
+                                                            <?php foreach ($pendidikan as $row): ?>
+                                                                <option value="<?= $row->id ?>"><?= $row->name ?></option>
+                                                            <?php endforeach; ?>
                                                         </select>
                                                         <div class="invalid-feedback"></div>
                                                     </td>
@@ -146,5 +149,11 @@
         </div>
     </div>
 </main>
+
+<div id="listPendidikan" style="display: none;">
+    <?php foreach ($pendidikan as $row): ?>
+        <option value="<?= $row->id ?>"><?= $row->name ?></option>
+    <?php endforeach; ?>
+</div>
 
 <?= $this->endSection(); ?>
