@@ -201,4 +201,16 @@ class EmployeeService
             throw $e;
         }
     }
+
+    public function getData(string $employee_id)
+    {
+        try {
+            $data = $this->repository->find($employee_id);
+
+            return $data;
+        } catch (\Exception $e) {
+            log_message('error', "[EmployeeService::getData] Unexpected error occured : {err} from {ip}", ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            throw $e;
+        }
+    }
 }

@@ -121,20 +121,4 @@ class EmployeeController extends BaseController
             return pesan($code, $e->getMessage());
         }
     }
-
-    public function keluarga(string $token)
-    {
-        $data = [
-            'title' => "Register new employee family member",
-            'token' => $token,
-            'relasi' => $this->relasi->getAllData(),
-            'pekerjaan' => $this->pekerjaan->getAllData(),
-            'footer' => [
-                '<script src="' . base_url() . 'js/App/validasi.js"></script>',
-                '<script src="' . base_url() . 'js/MasterData/Employee/keluarga.js' . '"></script>'
-            ]
-        ];
-
-        return view('MasterData/Employee/keluarga', $data);
-    }
 }

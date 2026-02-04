@@ -461,7 +461,10 @@
             $routes->post('new_nik', 'MasterData\Employee\EmployeeController::generateNik');
             $routes->get('add', 'MasterData\Employee\EmployeeController::add');
             $routes->post('save', 'MasterData\Employee\EmployeeController::save');
-            $routes->get('family/(:any)', 'MasterData\Employee\EmployeeController::keluarga/$1');
+            $routes->get('family/(:any)', 'MasterData\Employee\FamilyController::add/$1');
+            $routes->post('family/save', 'MasterData\Employee\FamilyController::save');
+            $routes->get('education/(:any)', 'MasterData\Employee\EducationController::add/$1');
+            $routes->post('education/save', 'MasterData\Employee\EducationController::save');
         });
 
         // Route untuk APQP Setup

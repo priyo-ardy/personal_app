@@ -14,4 +14,5 @@ interface CrudRepositoryInterface
     public function generateCode(string $prefix, string $column = 'code', int $padding = 4);
     public function getChunkedData($offset, $limit, $order, $column);
     public function massDelete(array $id);
+    public function massSave(array $data);
 }

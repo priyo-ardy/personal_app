@@ -148,7 +148,7 @@ class CustomerService
 
             if ($this->db->transStatus() === false) {
                 $this->db->transRollback();
-                log_message('error', '[CustomerService::saveData] Failed to save data : {err} from {ip}', ['err' => $this->db->error(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+                log_message('error', '[CustomerService::saveData] Failed to save data : {err} from {ip}', ['err' => $this->db->error()['message'], 'ip' => $_SERVER['REMOTE_ADDR']]);
                 throw new \Exception('Failed to save data', ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
             }
         } catch (\Exception $e) {

@@ -196,6 +196,34 @@ class EmployeeValidation
                 'required' => 'Employee emergency contact address is required'
             ]
         ],
+        'data_jenis_seragam' => [
+            'label' => "Uniform type",
+            'rules' => 'required',
+            'errors' => [
+                'required' => "Uniform type is required"
+            ]
+        ],
+        'data_ukuran_seragam' => [
+            'label' => "Uniform size",
+            'rules' => 'required',
+            'errors' => [
+                'required' => "Uniform size is required"
+            ]
+        ],
+        'data_ukuran_sepatu' => [
+            'label' => "Shoes size",
+            'rules' => 'required',
+            'errors' => [
+                'required' => "Shoes size is required"
+            ]
+        ],
+        'data_aksesoris' => [
+            'label' => "Accessories",
+            'rules' => 'required',
+            'errors' => [
+                'required' => "Accessories is required"
+            ]
+        ]
     ];
 
     public static $update = [];

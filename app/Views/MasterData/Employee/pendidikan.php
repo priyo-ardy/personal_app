@@ -79,40 +79,36 @@
                                         <table class="table table-hover table-striped" id="dataTable">
                                             <thead>
                                                 <tr>
-                                                    <th class="text-center align-middle bg-secondary-subtle col-2">Relation</th>
-                                                    <th class="text-center align-middle bg-secondary-subtle col-3">Name</th>
-                                                    <th class="text-center align-middle bg-secondary-subtle col-2">Ocupation</th>
-                                                    <th class="text-center align-middle bg-secondary-subtle col-4">Remark</th>
+                                                    <th class="text-center align-middle bg-secondary-subtle col-2">Degree</th>
+                                                    <th class="text-center align-middle bg-secondary-subtle col-3">School Name</th>
+                                                    <th class="text-center align-middle bg-secondary-subtle col-2">Major</th>
+                                                    <th class="text-center align-middle bg-secondary-subtle col-2">Year of Graduation</th>
+                                                    <th class="text-center align-middle bg-secondary-subtle col-2">Remark</th>
                                                     <th class="text-center align-middle bg-secondary-subtle col-1">#</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="tbody">
                                                 <tr>
                                                     <td class="align-middle">
-                                                        <select name="data_relation[]" class="form-control select2 select2bs5" required>
+                                                        <select name="data_degree[]" class="form-control select2 select2bs5" required>
                                                             <option value="">-- Choose --</option>
-                                                            <?php foreach ($relasi as $row) : ?>
-                                                                <option value="<?= $row->id ?>"><?= $row->name ?></option>
-                                                            <?php endforeach; ?>
                                                         </select>
                                                         <div class="invalid-feedback"></div>
                                                     </td>
                                                     <td class="align-middle">
-                                                        <input type="text" name="data_name[]" class="form-control rounded-0" placeholder="Family member name" minlength="3" maxlength="150" required>
+                                                        <input type="text" name="data_sekolah[]" class="form-control rounded-0" placeholder="School name" minlength="3" maxlength="150" required>
                                                         <div class="invalid-feedback"></div>
                                                     </td>
                                                     <td class="align-middle">
-                                                        <select name="data_ocupation[]" class="form-control select2 select2bs5" required>
-                                                            <option value="">-- Choose --</option>
-                                                            <?php foreach ($pekerjaan as $row) : ?>
-                                                                <option value="<?= $row->id ?>"><?= $row->name ?></option>
-                                                            <?php endforeach; ?>
-                                                        </select>
+                                                        <input type="text" name="data_jurusan[]" class="form-control rounded-0" placeholder="Major" minlength="3" maxlength="150" required>
+                                                        <div class="invalid-feedback"></div>
+                                                    </td>
+                                                    <td class="align-middle">
+                                                        <input type="number" name="data_tahun_lulus[]" class="form-control rounded-0" placeholder="Year of graduation" minlength="3" maxlength="150" required>
                                                         <div class="invalid-feedback"></div>
                                                     </td>
                                                     <td class="align-middle">
                                                         <input type="text" name="data_remark[]" class="form-control rounded-0" placeholder="Additional information">
-                                                        <div class="invalid-feedback"></div>
                                                     </td>
                                                     <td class="text-center align-middle">
                                                         <button type="button" class="btn btn-success btn-sm rounded-0" onclick="addRow()"><i class="bi bi-plus"></i></button>
@@ -150,17 +146,5 @@
         </div>
     </div>
 </main>
-
-<div id="listRelasi" style="display: none;">
-    <?php foreach ($relasi as $list): ?>
-        <option value="<?= $list->id ?>"><?= $list->name ?></option>
-    <?php endforeach; ?>
-</div>
-
-<div id="listPekerjaan" style="display: none;">
-    <?php foreach ($pekerjaan as $item): ?>
-        <option value="<?= $item->id ?>"><?= $item->name ?></option>
-    <?php endforeach; ?>
-</div>
 
 <?= $this->endSection(); ?>

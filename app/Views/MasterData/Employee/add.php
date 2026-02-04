@@ -352,39 +352,43 @@
                                 <div class="row g-2">
                                     <div class="form-group col-xl-3 col-lg-3 col-md-6 col-sm-12 clearfix">
                                         <label class="form-label" for="data_jenis_seragam">Uniform Type</label>
-                                        <select name="data_jenis_seragam" id="data_jenis_seragam" class="form-control select2 select2bs5">
+                                        <select name="data_jenis_seragam" id="data_jenis_seragam" class="form-control select2 select2bs5" required>
                                             <option value="">-- Choose --</option>
                                             <?php foreach ($jenis_seragam as $js): ?>
                                                 <option value="<?= $js->id ?>"><?= $js->name ?></option>
                                             <?php endforeach; ?>
                                         </select>
+                                        <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="form-group col-xl-3 col-lg-3 col-md-6 col-sm-12 clearfix">
                                         <label class="form-label" for="data_ukuran_seragam">Uniform Size</label>
-                                        <select name="data_ukuran_seragam" id="data_ukuran_seragam" class="form-control select2 select2bs5">
+                                        <select name="data_ukuran_seragam" id="data_ukuran_seragam" class="form-control select2 select2bs5" required>
                                             <option value="">-- Choose --</option>
                                             <?php foreach ($ukuran_seragam as $us): ?>
                                                 <option value="<?= $us->id ?>"><?= $us->name ?></option>
                                             <?php endforeach; ?>
                                         </select>
+                                        <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="form-group col-xl-3 col-lg-3 col-md-6 col-sm-12 clearfix">
                                         <label class="form-label" for="data_ukuran_sepatu">Shoes Size</label>
-                                        <select name="data_ukuran_sepatu" id="data_ukuran_sepatu" class="form-control select2 select2bs5">
+                                        <select name="data_ukuran_sepatu" id="data_ukuran_sepatu" class="form-control select2 select2bs5" required>
                                             <option value="">-- Choose --</option>
                                             <?php foreach ($ukuran_sepatu as $ss): ?>
                                                 <option value="<?= $ss->id ?>"><?= $ss->name ?></option>
                                             <?php endforeach; ?>
                                         </select>
+                                        <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="form-group col-xl-3 col-lg-3 col-md-6 col-sm-12 clearfix">
                                         <label class="form-label" for="data_aksesoris">Accessories</label>
-                                        <select name="data_aksesoris" id="data_aksesoris" class="form-control select2 select2bs5">
+                                        <select name="data_aksesoris" id="data_aksesoris" class="form-control select2 select2bs5" required>
                                             <option value="">-- Choose --</option>
                                             <option value="1">Topi Navy</option>
                                             <option value="2">Topi Kuning</option>
                                             <option value="3">Hijab</option>
                                         </select>
+                                        <div class="invalid-feedback"></div>
                                     </div>
                                 </div>
                             </div>
