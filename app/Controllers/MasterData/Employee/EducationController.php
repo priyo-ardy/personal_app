@@ -8,16 +8,20 @@ use App\Services\Employee\EmployeeService;
 use App\Repositories\Employee\EmployeeRepository;
 use App\Services\EducationDegree\EducationDegreeService;
 use App\Repositories\EducationDegree\EducationDegreeRepository;
+use App\Services\Employee\EmployeeEducationService;
+use App\Repositories\Employee\EmployeeEducationRepository;
 
 class EducationController extends BaseController
 {
     protected $karyawan;
     protected $pendidikan;
+    protected $education;
 
     public function __construct()
     {
         $this->karyawan = new EmployeeService(new EmployeeRepository());
         $this->pendidikan = new EducationDegreeService(new EducationDegreeRepository());
+        $this->education = new EmployeeEducationService(new EmployeeEducationRepository());
     }
     public function index()
     {
@@ -52,6 +56,10 @@ class EducationController extends BaseController
 
         try {
             $postData = $this->request->getPost();
+
+            $save = $this->education->saveData($postData);
+
+            return pesan(ResponseInterface::HTTP_OK, "Employee education data successfully registered", $save);
         } catch (\Exception $e) {
             $code = $e->getCode() ?? ResponseInterface::HTTP_INTERNAL_SERVER_ERROR;
             log_message('error', '[EducationController::save] Unexpected error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);

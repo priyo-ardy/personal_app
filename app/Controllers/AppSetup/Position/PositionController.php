@@ -148,6 +148,24 @@ class PositionController extends BaseController
         }
     }
 
+    public function getPosition(string $token)
+    {
+        if ($this->request->getMethod() !== "GET") {
+            log_message('error', "[PositionController::getPosition] Request method not allowed for user {NIK} from {ip}", ['NIK' => session()->get('user_name'), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            throw new \Exception("Request not allowed", ResponseInterface::HTTP_METHOD_NOT_ALLOWED);
+        }
+
+        try {
+            $get = $this->positionService->getPositionData($token);
+
+            return pesan(ResponseInterface::HTTP_OK, "Data retrieved successfully", $get);
+        } catch (\Exception $e) {
+            $code = $e->getCode() ?? ResponseInterface::HTTP_INTERNAL_SERVER_ERROR;
+            log_message('error', '[PositionController::getPosition] Unexpected error occured for user {NIK} from {ip} : {err}', ['NIK' => session()->get('user_name'), 'ip' => $_SERVER['REMOTE_ADDR'], 'err' => $e->getMessage()]);
+            return pesan($code, $e->getMessage());
+        }
+    }
+
     public function showData($token)
     {
         if ($this->request->getMethod() !== "GET") {

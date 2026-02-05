@@ -23,7 +23,7 @@ function addRow() {
                 <div class="invalid-feedback"></div>
             </td>
             <td class="align-middle">
-                <input type="text" name="data_jurusan[]" class="form-control rounded-0" placeholder="Major" minlength="3" maxlength="150" required>
+                <input type="text" name="data_jurusan[]" class="form-control rounded-0" placeholder="Major" minlength="1" maxlength="150" required>
                 <div class="invalid-feedback"></div>
             </td>
             <td class="align-middle">
@@ -61,14 +61,14 @@ function saveData() {
     try {
       loading();
       fetchData(
-        baseurl + "/employee/family/save",
+        baseurl + "/employee/education/save",
         "POST",
         new FormData(formData),
       )
         .then((result) => {
           pesanSukses(result.message);
           window.location.replace(
-            baseurl + "/employee/education/" + result.data.token,
+            baseurl + "/employee/job_data/" + result.data.token,
           );
         })
         .catch((err) => {

@@ -99,15 +99,15 @@
                                                         <div class="invalid-feedback"></div>
                                                     </td>
                                                     <td class="align-middle">
-                                                        <input type="text" name="data_sekolah[]" class="form-control rounded-0" placeholder="School name" minlength="3" maxlength="150" required>
+                                                        <input type="text" name="data_sekolah[]" class="form-control rounded-0" placeholder="School name" minlength="3" maxlength="50" required>
                                                         <div class="invalid-feedback"></div>
                                                     </td>
                                                     <td class="align-middle">
-                                                        <input type="text" name="data_jurusan[]" class="form-control rounded-0" placeholder="Major" minlength="3" maxlength="150" required>
+                                                        <input type="text" name="data_jurusan[]" class="form-control rounded-0" placeholder="Major" minlength="1" maxlength="20" required>
                                                         <div class="invalid-feedback"></div>
                                                     </td>
                                                     <td class="align-middle">
-                                                        <input type="number" name="data_tahun_lulus[]" class="form-control rounded-0" placeholder="Year of graduation" minlength="3" maxlength="150" required>
+                                                        <input type="number" name="data_tahun_lulus[]" class="form-control rounded-0" placeholder="Year of graduation" minlength="3" maxlength="6" required>
                                                         <div class="invalid-feedback"></div>
                                                     </td>
                                                     <td class="align-middle">

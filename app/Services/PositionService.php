@@ -346,4 +346,41 @@ class PositionService
             throw $e;
         }
     }
+
+    public function getAllData()
+    {
+        try {
+            return $this->positionRepo->generatePositionList();
+        } catch (\Exception $e) {
+            log_message('error', '[PositionService::getAllData] Unexpected error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            throw $e;
+        }
+    }
+
+    public function getPositionData(string $position)
+    {
+        try {
+            $model = new VwPositionModel();
+
+
+            $query =  $model->where('id', $position)->first();
+
+            $data = [
+                'nbhx_position' => $query->nbhx_position_name,
+                'dept' => $query->dept_name,
+                'section' => $query->section_name,
+                'report_to_position' => $query->report_to_position,
+                'grade' => $query->grade_name,
+                'rank' => $query->rank_name,
+                'status' => $query->status_name,
+                'category' => $query->category_name,
+                'nbhx_category' => $query->nbhx_category_name
+            ];
+
+            return $data;
+        } catch (\Exception $e) {
+            log_message('error', '[PositionService::getPositionData] Unexpected error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            throw $e;
+        }
+    }
 }

@@ -39,6 +39,7 @@
             $routes->post('save', 'AppSetup\Position\PositionController::saveData', ['filter' => 'ratelimit:3,60']);
             $routes->post('table', 'AppSetup\Position\PositionController::loadTable');
             $routes->get('get/(:any)', 'AppSetup\Position\PositionController::getData/$1');
+            $routes->get('position_detail/(:any)', 'AppSetup\Position\PositionController::getPosition/$1');
             $routes->get('show/(:any)', 'AppSetup\Position\PositionController::showData/$1');
             $routes->post('update', 'AppSetup\Position\PositionController::updateData', ['filter' => 'ratelimit:3,60']);
             $routes->post('delete', 'AppSetup\Position\PositionController::deleteData', ['filter' => 'ratelimit:3,60']);
@@ -458,13 +459,27 @@
         // Routes untuk employee module
         $routes->group('/employee', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
             $routes->get('', 'MasterData\Employee\EmployeeController::index');
-            $routes->post('new_nik', 'MasterData\Employee\EmployeeController::generateNik');
+            $routes->post('new_nik', 'MasterData\Employee\EmployeeController::generateNik', ['filter' => 'ratelimit:3,60']);
             $routes->get('add', 'MasterData\Employee\EmployeeController::add');
-            $routes->post('save', 'MasterData\Employee\EmployeeController::save');
+            $routes->post('save', 'MasterData\Employee\EmployeeController::save', ['filter' => 'ratelimit:3,60']);
             $routes->get('family/(:any)', 'MasterData\Employee\FamilyController::add/$1');
-            $routes->post('family/save', 'MasterData\Employee\FamilyController::save');
+            $routes->post('family/save', 'MasterData\Employee\FamilyController::save', ['filter' => 'ratelimit:3,60']);
             $routes->get('education/(:any)', 'MasterData\Employee\EducationController::add/$1');
-            $routes->post('education/save', 'MasterData\Employee\EducationController::save');
+            $routes->post('education/save', 'MasterData\Employee\EducationController::save', ['filter' => 'ratelimit:3,60']);
+            $routes->get('job_data/(:any)', 'MasterData\Employee\EmployeeJobDataController::add/$1');
+            $routes->get('job_data/save', 'MasterData\Employee\EmployeeJobDataController::save', ['filter' => 'ratelimit:3,60']);
+        });
+
+        // Route untuk job data action
+        $routes->group('/job_data_action', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+            $routes->get('', 'AppSetup\JobDataAction\JobDataActionController::index');
+        });
+
+
+        // Route untuk job data reason
+        $routes->group('/job_data_reason', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+            $routes->get('', 'AppSetup\JobDataAction\JobDataActionController::index');
+            $routes->get('get_by_action/(:any)', 'AppSetup\JobDataReason\JobDataReasonController::getByAction/$1');
         });
 
         // Route untuk APQP Setup

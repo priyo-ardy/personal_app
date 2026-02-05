@@ -63,25 +63,6 @@
                     <ul class="nav-treeview">
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon bi bi-person-rolodex"></i>
-                                <p>
-                                    Employee
-                                    <i class="nav-arrow bi bi-chevron-right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav-treeview">
-                                <li class="nav-item">
-                                    <a href="<?= base_url() . 'employee' ?>" class="nav-link" onclick="loading()">
-                                        <i class="nav-icon bi bi-arrow-right-circle"></i>
-                                        <p>
-                                            List of Employee
-                                        </p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
                                 <i class="bi bi-diagram-3 nav-icon"></i>
                                 <p>
                                     Organization
@@ -238,6 +219,33 @@
                                             </a>
                                         </li>
                                     </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon bi bi-briefcase"></i>
+                                <p>
+                                    Job Data Setup
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav-treeview">
+                                <li class="nav-item">
+                                    <a href="<?= base_url() . 'job_data_action' ?>" class="nav-link" onclick="loading()">
+                                        <i class="nav-icon bi bi-arrow-right-circle"></i>
+                                        <p>
+                                            Job Data Action
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="<?= base_url() . 'job_data_reason' ?>" class="nav-link" onclick="loading()">
+                                        <i class="nav-icon bi bi-arrow-right-circle"></i>
+                                        <p>
+                                            Job Data Reason
+                                        </p>
+                                    </a>
                                 </li>
                             </ul>
                         </li>
