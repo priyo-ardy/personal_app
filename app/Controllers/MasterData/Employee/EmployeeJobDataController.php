@@ -10,6 +10,8 @@ use App\Services\JobDataAction\JobDataActionService;
 use App\Repositories\JobDataAction\JobDataActionRepository;
 use App\Services\PositionService;
 use App\Repositories\PositionRepository;
+use App\Services\Employee\EmployeeJobDataService;
+use App\Repositories\Employee\EmployeeJobDataRepository;
 use App\Traits\KalkulasiTrait;
 
 class EmployeeJobDataController extends BaseController
@@ -17,12 +19,14 @@ class EmployeeJobDataController extends BaseController
     protected $employee;
     protected $action;
     protected $position;
+    protected $job_data;
 
     public function __construct()
     {
         $this->employee = new EmployeeService(new EmployeeRepository());
         $this->action = new JobDataActionService(new JobDataActionRepository());
         $this->position = new PositionService(new PositionRepository());
+        $this->job_data = new EmployeeJobDataService(new EmployeeJobDataRepository());
     }
     public function index()
     {
@@ -58,6 +62,10 @@ class EmployeeJobDataController extends BaseController
 
         try {
             $postData = $this->request->getPost();
+
+            if ($this->job_data->saveData($postData)) {
+                return pesan(ResponseInterface::HTTP_OK, "Data saved successfully");
+            }
         } catch (\Exception $e) {
             $code = $e->getCode() ?? ResponseInterface::HTTP_INTERNAL_SERVER_ERROR;
             log_message('error', '[EmployeeJobDataController::save] Unexpected error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);

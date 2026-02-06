@@ -79,7 +79,7 @@
                                         <div class="form-group col-12 clearfix" style="display: none;">
                                             <input type="text" name="data_token" id="data_token" class="form-control rounded-0 bg-secondary-subtle" readonly value="<?= $token; ?>">
                                         </div>
-                                        <div class="form-group col-xl-3 col-lg-3 col-md-6 col-sm-12 clearfix">
+                                        <div class="form-group col-xl-2 col-lg-2 col-md-6 col-sm-12 clearfix">
                                             <label class="form-label" for="data_action">Action <strong class="text-danger">*</strong></label>
                                             <select name="data_action" id="data_action" class="form-select select2 select2bs5" required>
                                                 <option value="">-- Choose --</option>
@@ -89,14 +89,14 @@
                                             </select>
                                             <div class="invalid-feedback"></div>
                                         </div>
-                                        <div class="form-group col-xl-3 col-lg-3 col-md-6 col-sm-12 clearfix">
+                                        <div class="form-group col-xl-2 col-lg-2 col-md-6 col-sm-12 clearfix">
                                             <label class="form-label" for="data_reason">Reason <strong class="text-danger">*</strong></label>
                                             <select name="data_reason" id="data_reason" class="form-select select2 select2bs5" required>
                                                 <option value="">-- Choose --</option>
                                             </select>
                                             <div class="invalid-feedback"></div>
                                         </div>
-                                        <div class="form-group col-xl-3 col-lg-3 col-md-6 col-sm-12 clearfix">
+                                        <div class="form-group col-xl-2 col-lg-2 col-md-6 col-sm-12 clearfix">
                                             <label class="form-label" for="data_position">Position <strong class="text-danger">*</strong></label>
                                             <select name="data_position" id="data_position" class="form-select select2 select2bs5" required>
                                                 <option value="">-- Choose --</option>
@@ -106,7 +106,7 @@
                                             </select>
                                             <div class="invalid-feedback"></div>
                                         </div>
-                                        <div class="form-group col-xl-3 col-lg-3 col-md-6 col-sm-12 clearfix">
+                                        <div class="form-group col-xl-2 col-lg-2 col-md-6 col-sm-12 clearfix">
                                             <label class="form-label" for="data_hubungan_kerja">Work Relationship <strong class="text-danger">*</strong></label>
                                             <select name="data_hubungan_kerja" id="data_hubungan_kerja" class="form-select select2 select2bs5" required>
                                                 <option value="">-- Choose --</option>
@@ -118,19 +118,25 @@
                                             </select>
                                             <div class="invalid-feedback"></div>
                                         </div>
-                                        <div class="form-group col-xl-3 col-lg-3 col-md-6 col-sm-12 clearfix">
+                                        <div class="form-group col-xl-2 col-lg-2 col-md-6 col-sm-12 clearfix">
                                             <label class="form-label" for="effective_date">Effective Date <strong class="text-danger">*</strong></label>
                                             <input type="date" name="effective_date" id="effective_date" class="form-control rounded-0" required autocomplete="off">
                                             <div class="invalid-feedback"></div>
                                         </div>
+                                        <div class="form-group col-xl-2 col-lg-2 col-md-6 col-sm-12 clearfix">
+                                            <label class="form-label" for="data_superior">Superior</label>
+                                            <select name="data_superior" id="data_superior" class="form-select select2 select2bs5">
+                                                <option value="">-- Choose --</option>
+                                            </select>
+                                        </div>
                                         <div class="form-group col-xl-3 col-lg-3 col-md-6 col-sm-12 clearfix">
                                             <label class="form-label" for="data_contract">Contract No. <strong class="text-danger">*</strong></label>
-                                            <input type="text" name="data_contract" id="data_contract" class="form-control rounded-0" minlength="2" maxlength="50" required autocomplete="off">
+                                            <input type="text" name="data_contract" id="data_contract" class="form-control rounded-0" minlength="2" maxlength="50" required autocomplete="off" placeholder="Contract/SK No.">
                                             <div class="invalid-feedback"></div>
                                         </div>
                                         <div class="form-group col-xl-2 col-lg-2 col-md-6 col-sm-12 clearfix">
                                             <label class="form-label" for="data_durasi">Contract Duration <strong class="text-danger">*</strong></label>
-                                            <input type="number" name="data_durasi" id="data_durasi" class="form-control rounded-0" minlength="1" maxlength="3" required autocomplete="off">
+                                            <input type="number" name="data_durasi" id="data_durasi" class="form-control rounded-0" minlength="1" maxlength="3" required autocomplete="off" placeholder="Contract Duration">
                                             <div class="invalid-feedback"></div>
                                         </div>
                                         <div class="form-group col-xl-2 col-lg-2 col-md-6 col-sm-12 clearfix">

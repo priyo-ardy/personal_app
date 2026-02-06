@@ -4,7 +4,9 @@ const reason = document.getElementById("data_reason");
 const position = document.getElementById("data_position");
 const durasi = document.getElementById("data_durasi");
 const tipe_durasi = document.getElementById("data_tipe_durasi");
+const akhir_kontrak = document.getElementById("data_akhir_kontrak");
 const effective_date = document.getElementById("effective_date");
+const hubungan_kerja = document.getElementById("data_hubungan_kerja");
 
 const button = {
   back: document.querySelectorAll(".btnBack"),
@@ -99,6 +101,36 @@ position.onchange = () => {
   }
 };
 
+hubungan_kerja.onchange = () => {
+  const isTetap = hubungan_kerja.value === "Tetap";
+  const isEmpty = hubungan_kerja.value === "";
+
+  if (isEmpty) {
+    effective_date.value = "";
+    durasi.value = "";
+    tipe_durasi.value = "";
+    akhir_kontrak.value = "";
+  } else if (isTetap) {
+    durasi.value = 0;
+    tipe_durasi.value = "";
+    akhir_kontrak.value = "";
+  }
+
+  const shouldReadOnly = isTetap;
+  const shouldRequire = !isTetap && !isEmpty;
+
+  [durasi, tipe_durasi, akhir_kontrak].forEach((el) => {
+    el.readOnly = shouldReadOnly;
+    el.required = shouldRequire;
+
+    if (shouldReadOnly) {
+      el.classList.add("bg-secondary-subtle");
+    } else {
+      el.classList.remove("bg-secondary-subtle");
+    }
+  });
+};
+
 effective_date.addEventListener("change", calculateContactDuration);
 durasi.addEventListener("change", calculateContactDuration);
 tipe_durasi.onchange = calculateContactDuration;
@@ -117,7 +149,10 @@ function saveData() {
         new FormData(formData),
       )
         .then((result) => {
-          hideLoading();
+          pesanSukses(result.message);
+          setTimeout(() => {
+            window.location.replace(baseurl + "/employee");
+          }, 1000);
         })
         .catch((err) => {
           pesanError(err.message);
