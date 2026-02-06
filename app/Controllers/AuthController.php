@@ -20,33 +20,28 @@ class AuthController extends BaseController
     }
     public function index()
     {
-        // echo generate_uuid();
         $data = [
             'title' => "User Authorization",
         ];
 
-        return view('Auth/index');
+        return view('Auth/index', $data);
     }
 
     public function prosesLogin()
     {
-        // Cek request method
         if ($this->request->getMethod() !== 'POST') {
-            log_message('error', 'request method not allowed for authorization process : {method} from {ip}', ['method' => $this->request->getMethod()]); // simpan log
-            return $this->errorResponse('request method not allowed', ResponseInterface::HTTP_METHOD_NOT_ALLOWED, 'error_405'); // tampilkan error
+            log_message('error', 'request method not allowed for authorization process : {method} from {ip}', ['method' => $this->request->getMethod()]);
+            return $this->errorResponse('request method not allowed', ResponseInterface::HTTP_METHOD_NOT_ALLOWED, 'error_405');
         }
 
         try {
-            // Lempar proses login ke services AuthService
             $data = $this->request->getPost();
             if ($this->authService->prosesLogin($data)) {
                 return pesan(ResponseInterface::HTTP_OK, 'Authorization success');
             }
         } catch (\Exception $e) {
-            // Tampikan error
-            $code = $e->getCode() ?? ResponseInterface::HTTP_INTERNAL_SERVER_ERROR; // jika tidak ada kode error di exception, kembalikan error 500
-            log_message('error', "Unexpected error occured : {err} from {ip}", ['err' => $e->getMessage(), 'ip' => $this->request->getIPAddress()]); // simpan log
-            // return $this->errorResponse($e->getMessage(), $code, 'error_500'); // tampilkan error
+            $code = $e->getCode() ?? ResponseInterface::HTTP_INTERNAL_SERVER_ERROR;
+            log_message('error', "Unexpected error occured : {err} from {ip}", ['err' => $e->getMessage(), 'ip' => $this->request->getIPAddress()]);
             return pesan($code, $e->getMessage());
         }
     }
@@ -63,8 +58,8 @@ class AuthController extends BaseController
     public function resetPassword()
     {
         if ($this->request->getMethod() !== 'POST') {
-            log_message('error', 'request method not allowed for authorization process : {method} from {ip}', ['method' => $this->request->getMethod()]); // simpan log
-            return $this->errorResponse('request method not allowed', ResponseInterface::HTTP_METHOD_NOT_ALLOWED, 'error_405'); // tampilkan error
+            log_message('error', 'request method not allowed for authorization process : {method} from {ip}', ['method' => $this->request->getMethod()]);
+            return $this->errorResponse('request method not allowed', ResponseInterface::HTTP_METHOD_NOT_ALLOWED, 'error_405');
         }
 
         try {
@@ -73,10 +68,8 @@ class AuthController extends BaseController
                 return pesan(ResponseInterface::HTTP_OK, 'Your password change request has been successfully processed. Please check your inbox or spam folder in your email.');
             }
         } catch (\Exception $e) {
-            // Tampikan error
-            $code = $e->getCode() ?? ResponseInterface::HTTP_INTERNAL_SERVER_ERROR; // jika tidak ada kode error di exception, kembalikan error 500
-            log_message('error', "Unexpected error occured : {err} from {ip}", ['err' => $e->getMessage(), 'ip' => $this->request->getIPAddress()]); // simpan log
-            // return $this->errorResponse($e->getMessage(), $code, 'error_500'); // tampilkan error
+            $code = $e->getCode() ?? ResponseInterface::HTTP_INTERNAL_SERVER_ERROR;
+            log_message('error', "Unexpected error occured : {err} from {ip}", ['err' => $e->getMessage(), 'ip' => $this->request->getIPAddress()]);
             return pesan($code, $e->getMessage());
         }
     }
