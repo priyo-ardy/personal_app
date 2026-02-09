@@ -337,7 +337,6 @@
                                         <label class="form-label" for="data_bank_address">Bank Address</label>
                                         <input type="text" name="data_bank_address" id="data_bank_address" class="form-control rounded-0" placeholder="Bank Address" autocomplete="off">
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -351,7 +350,7 @@
                             <div class="card-body">
                                 <div class="row g-2">
                                     <div class="form-group col-xl-3 col-lg-3 col-md-6 col-sm-12 clearfix">
-                                        <label class="form-label" for="data_jenis_seragam">Uniform Type</label>
+                                        <label class="form-label" for="data_jenis_seragam">Uniform Type <strong class="text-danger fw-bolder">*</strong></label>
                                         <select name="data_jenis_seragam" id="data_jenis_seragam" class="form-control select2 select2bs5" required>
                                             <option value="">-- Choose --</option>
                                             <?php foreach ($jenis_seragam as $js): ?>
@@ -361,7 +360,7 @@
                                         <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="form-group col-xl-3 col-lg-3 col-md-6 col-sm-12 clearfix">
-                                        <label class="form-label" for="data_ukuran_seragam">Uniform Size</label>
+                                        <label class="form-label" for="data_ukuran_seragam">Uniform Size <strong class="text-danger fw-bolder">*</strong></label>
                                         <select name="data_ukuran_seragam" id="data_ukuran_seragam" class="form-control select2 select2bs5" required>
                                             <option value="">-- Choose --</option>
                                             <?php foreach ($ukuran_seragam as $us): ?>
@@ -371,7 +370,7 @@
                                         <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="form-group col-xl-3 col-lg-3 col-md-6 col-sm-12 clearfix">
-                                        <label class="form-label" for="data_ukuran_sepatu">Shoes Size</label>
+                                        <label class="form-label" for="data_ukuran_sepatu">Shoes Size <strong class="text-danger fw-bolder">*</strong></label>
                                         <select name="data_ukuran_sepatu" id="data_ukuran_sepatu" class="form-control select2 select2bs5" required>
                                             <option value="">-- Choose --</option>
                                             <?php foreach ($ukuran_sepatu as $ss): ?>
@@ -381,7 +380,7 @@
                                         <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="form-group col-xl-3 col-lg-3 col-md-6 col-sm-12 clearfix">
-                                        <label class="form-label" for="data_aksesoris">Accessories</label>
+                                        <label class="form-label" for="data_aksesoris">Accessories <strong class="text-danger fw-bolder">*</strong></label>
                                         <select name="data_aksesoris" id="data_aksesoris" class="form-control select2 select2bs5" required>
                                             <option value="">-- Choose --</option>
                                             <option value="1">Topi Navy</option>
@@ -399,20 +398,16 @@
 
             <div class=" row mb-3">
                 <div class="col-12">
-                    <div class="card rounded-0">
-                        <div class="card-body rounded-0">
-                            <div class="btn-group" role="group" aria-label="tooltip">
-                                <button type="button" class="btn shadow-none rounded-0 btn-light border-0 btnBack" data-bs-toggle="tooltip" data-bs-placement="top" title="Back">
-                                    <i class="bi bi-arrow-left"></i>&ensp;Add
-                                </button>
-                                <button type="button" class="btn shadow-none rounded-0 btn-light border-0 btnSave" data-bs-toggle="tooltip" data-bs-placement="top" title="Save">
-                                    <i class="bi bi-floppy"></i>&ensp;Save
-                                </button>
-                                <button type="button" class="btn shadow-none rounded-0 btn-light border-0 btnCancel" data-bs-toggle="tooltip" data-bs-placement="top" title="Cancel">
-                                    <i class="bi bi-arrow-counterclockwise"></i>&ensp;Cancel
-                                </button>
-                            </div>
-                        </div>
+                    <div class="btn-group" role="group" aria-label="tooltip">
+                        <button type="button" class="btn shadow-none rounded-0 btn-light border-0 btnBack" data-bs-toggle="tooltip" data-bs-placement="top" title="Back">
+                            <i class="bi bi-arrow-left"></i>&ensp;Add
+                        </button>
+                        <button type="button" class="btn shadow-none rounded-0 btn-light border-0 btnSave" data-bs-toggle="tooltip" data-bs-placement="top" title="Save">
+                            <i class="bi bi-floppy"></i>&ensp;Save
+                        </button>
+                        <button type="button" class="btn shadow-none rounded-0 btn-light border-0 btnCancel" data-bs-toggle="tooltip" data-bs-placement="top" title="Cancel">
+                            <i class="bi bi-arrow-counterclockwise"></i>&ensp;Cancel
+                        </button>
                     </div>
                 </div>
             </div>
