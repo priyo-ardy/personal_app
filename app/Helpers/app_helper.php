@@ -81,7 +81,7 @@ if (!function_exists('email_hash')) {
     }
 }
 
-if (!function_exists('phone_hash')) {
+    if (!function_exists('phone_hash')) {
     function phone_hash(string $phone_number)
     {
         $secret_key = getenv('phone_salt') ? getenv('phone_salt') : '*#Ph0n3!!#*';
