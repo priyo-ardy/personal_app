@@ -160,7 +160,7 @@ class EmployeeTable extends Migration
                 'constraint' => 255,
                 'null' => true
             ],
-            'bpjs_keshatan' => [
+            'bpjs_kesehatan' => [
                 'type' => 'TEXT',
                 'null' => true
             ],
@@ -199,6 +199,10 @@ class EmployeeTable extends Migration
             'nama_bank' => [
                 'type' => 'VARCHAR',
                 'constraint' => 150,
+                'null' => true
+            ],
+            'alamat_bank' => [
+                'type' => 'TEXT',
                 'null' => true
             ],
             'nama_rekening' => [

@@ -36,7 +36,7 @@ class UniformSizeController extends BaseController
     public function index()
     {
         $data = [
-            'title' => "Employee Uniform Type Management",
+            'title' => "Employee Uniform Size Management",
             'footer' => [
                 '<script src="' . base_url() . 'js/App/datatable.js' . '"></script>',
                 '<script src="' . base_url() . 'js/App/validasi.js' . '"></script>',
