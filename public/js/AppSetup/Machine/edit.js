@@ -6,6 +6,7 @@ const formData = document.getElementById("formData");
 
 const buttons = {
   back: document.getElementById("btnBack"),
+  add: document.getElementById('btnAdd'),
   edit: document.getElementById("btnEdit"),
   update: document.getElementById("btnUpdate"),
   cancel: document.getElementById("btnCancel"),
@@ -17,6 +18,11 @@ const buttons = {
 buttons.back.addEventListener("click", (e) => {
   loading();
   window.location.replace(baseurl + "/machine");
+});
+
+buttons.add.addEventListener('click', () => {
+  loading();
+  window.location.replace(baseurl + '/machine/add');
 });
 
 buttons.cancel.addEventListener("click", (e) => {

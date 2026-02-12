@@ -247,14 +247,14 @@
 
         // Route untuk UoM module
         $routes->group('/uom', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
-            $routes->get('', 'AppSetup\Uom\UomController::index');
-            $routes->post('table', 'AppSetup\Uom\UomController::loadTable');
-            $routes->post('save', 'AppSetup\Uom\UomController::save', ['filter' => 'ratelimit:3,60']);
-            $routes->get('get/(:any)', 'AppSetup\Uom\UomController::get/$1');
-            $routes->post('update', 'AppSetup\Uom\UomController::update', ['filter' => 'ratelimit:3,60']);
-            $routes->post('delete', 'AppSetup\Uom\UomController::delete', ['filter' => 'ratelimit:3,60']);
-            $routes->get('export', 'AppSetup\Uom\UomController::export', ['filter' => 'ratelimit:3,60']);
-            $routes->get('seed', 'AppSetup\Uom\UomController::seedData');
+            $routes->get('', 'AppSetup\UoM\UomController::index');
+            $routes->post('table', 'AppSetup\UoM\UomController::loadTable');
+            $routes->post('save', 'AppSetup\UoM\UomController::save', ['filter' => 'ratelimit:3,60']);
+            $routes->get('get/(:any)', 'AppSetup\UoM\UomController::get/$1');
+            $routes->post('update', 'AppSetup\UoM\UomController::update', ['filter' => 'ratelimit:3,60']);
+            $routes->post('delete', 'AppSetup\UoM\UomController::delete', ['filter' => 'ratelimit:3,60']);
+            $routes->get('export', 'AppSetup\UoM\UomController::export', ['filter' => 'ratelimit:3,60']);
+            $routes->get('seed', 'AppSetup\UoM\UomController::seedData');
         });
 
         // Route untuk process routes
