@@ -120,7 +120,7 @@ class CustomerService
                 throw new \Exception("Failed to save new customer data, validation error with message <br> $error_to_string", ResponseInterface::HTTP_BAD_REQUEST);
             }
 
-            $id = generate_uuid();
+            $id = uuid_v7();
             $code = $this->repository->generateCode('CUST-', 'code', 6);
 
             $data = [

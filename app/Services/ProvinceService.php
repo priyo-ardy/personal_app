@@ -39,7 +39,7 @@ class ProvinceService
             }
 
             $data = [
-                'id' => generate_uuid(),
+                'id' => uuid_v7(),
                 'code' => $this->provinceRepo->generateCode('PRV-', 'code', 4),
                 'country' => trim($data['data_country']),
                 'name' => ucwords(trim($data['data_name'])),

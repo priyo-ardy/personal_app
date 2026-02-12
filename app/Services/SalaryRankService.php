@@ -87,7 +87,7 @@ class SalaryRankService
             }
 
             $data = [
-                'id' => generate_uuid(),
+                'id' => uuid_v7(),
                 'code' => $this->salaryRepo->getNewCode(),
                 'name' => trim($postData['data_name']),
                 'effective_date' => trim($postData['effective_date']),

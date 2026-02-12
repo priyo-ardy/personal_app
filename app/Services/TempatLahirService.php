@@ -37,7 +37,7 @@ class TempatLahirService
             }
 
             $data = [
-                'id' => generate_uuid(),
+                'id' => uuid_v7(),
                 'code' => $this->tempatLahirRepo->generateCode('TTL-', 'code', 4),
                 'name' => ucwords(trim($data['data_name'])),
                 'description' => trim($data['data_remark']),

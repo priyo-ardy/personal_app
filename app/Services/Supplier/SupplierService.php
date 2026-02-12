@@ -136,7 +136,7 @@ class SupplierService
                 throw new \Exception("Validation error : " . $error_to_string, ResponseInterface::HTTP_BAD_REQUEST);
             }
 
-            $id = generate_uuid();
+            $id = uuid_v7();
             $code = $this->repository->generateCode('SUP-', 'code', 6);
 
             $data = [

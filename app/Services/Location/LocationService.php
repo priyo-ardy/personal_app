@@ -72,7 +72,7 @@ class LocationService
             }
 
             $data = [
-                'id' => generate_uuid(),
+                'id' => uuid_v7(),
                 'code' => $this->repository->generateCode('LCT-', 'code', 4),
                 'factory' => $postData['data_factory'],
                 'name' => ucwords(trim($postData['data_name'])),

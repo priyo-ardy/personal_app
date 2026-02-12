@@ -72,7 +72,7 @@ class PositionService
             $code = $this->positionRepo->generateNewCode();
 
             $data = [
-                'id' => generate_uuid(),
+                'id' => uuid_v7(),
                 'code' => $code,
                 'name' => $data['data_name'],
                 'description' => $data['data_remark'],

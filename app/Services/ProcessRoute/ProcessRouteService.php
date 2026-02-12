@@ -73,7 +73,7 @@ class ProcessRouteService
             }
 
             $data = [
-                'id' => generate_uuid(),
+                'id' => uuid_v7(),
                 'code' => $this->repository->generateCode('PRT-', 'code', 4),
                 'name' => ucwords(trim($data['data_name'])),
                 'process_name' => trim($data['data_route']),

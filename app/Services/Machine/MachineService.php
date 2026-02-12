@@ -104,7 +104,7 @@ class MachineService
             }
 
             $data = [
-                'id' => generate_uuid(),
+                'id' => uuid_v7(),
                 'code' => strtoupper(trim($data['data_code'])),
                 'name' => ucwords(trim($data['data_name'])),
                 'specification' => trim($data['data_spesifikasi']),

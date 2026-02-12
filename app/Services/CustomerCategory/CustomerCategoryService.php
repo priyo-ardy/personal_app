@@ -69,7 +69,7 @@ class CustomerCategoryService
                 throw new \Exception($error_to_sting);
             }
 
-            $id = generate_uuid();
+            $id = uuid_v7();
             $code = $this->repository->generateCode('CTG-', 'code', 4);
 
             $data = [

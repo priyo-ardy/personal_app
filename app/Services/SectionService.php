@@ -47,7 +47,7 @@ class SectionService
             $section_code = $this->sectionRepo->getNewSectionCode();
 
             $data = [
-                'id' => generate_uuid(),
+                'id' => uuid_v7(),
                 'code' => $section_code,
                 'dept' => $data['data_dept'],
                 'name' => ucwords(trim($data['data_name'])),

@@ -45,7 +45,7 @@ class EmployeeModel extends BaseModel
         'kota_orang_tua',
         'alamat_orang_tua',
         'photo',
-        'bpjs_keshatan',
+        'bpjs_kesehatan',
         'bpjs_kesehatan_hash',
         'bpjs_tenaga_kerja',
         'bpjs_tenaga_kerja_hash',

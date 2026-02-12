@@ -153,7 +153,7 @@ class MaterialService
             }
 
             $data = [
-                'id' => generate_uuid(),
+                'id' => uuid_v7(),
                 'code' => strtoupper(trim($requestData['data_code'])),
                 'name' => ucwords(trim($requestData['data_name'])),
                 'specification' => trim($requestData['data_specification']),

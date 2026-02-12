@@ -77,7 +77,7 @@ class TonnageService
             }
 
             $data = [
-                'id' => generate_uuid(),
+                'id' => uuid_v7(),
                 'code' => $this->repository->generateCode('TNG-', 'code', 4),
                 'name' => ucwords(trim($data['data_name'])),
                 'debugging' => (float)$data['data_debugging'],

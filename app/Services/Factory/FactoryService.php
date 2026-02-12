@@ -70,7 +70,7 @@ class FactoryService
             }
 
             $data = [
-                'id' => generate_uuid(),
+                'id' => uuid_v7(),
                 'code' => $this->repository->generateCode('FCT-', 'code', 4),
                 'name' => ucwords(trim($postData['data_name'])),
                 'description' => trim($postData['data_remark']),

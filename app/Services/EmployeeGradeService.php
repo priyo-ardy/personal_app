@@ -42,7 +42,7 @@ class EmployeeGradeService
                 throw new \Exception("Validation failed <br>$error_to_string", ResponseInterface::HTTP_BAD_REQUEST);
             }
 
-            $id = generate_uuid();
+            $id = uuid_v7();
             $code = $this->employeeGradeRepo->getNewEmployeeGradeCode();
 
             $data = [

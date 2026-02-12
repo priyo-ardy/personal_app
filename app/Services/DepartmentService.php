@@ -38,7 +38,7 @@ class DepartmentService
             $dept_code = $this->deptRepo->getNewDeptCode();
 
             $data = [
-                'id' => generate_uuid(),
+                'id' => uuid_v7(),
                 'code' => $dept_code,
                 'name' => ucwords(trim($data['data_name'])),
                 'effective_date' => date("Y-m-d", strtotime(trim($data['effective_date']))),

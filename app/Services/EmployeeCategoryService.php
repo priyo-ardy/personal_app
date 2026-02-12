@@ -78,7 +78,7 @@ class EmployeeCategoryService
             }
 
             $data = [
-                'id' => generate_uuid(),
+                'id' => uuid_v7(),
                 'code' => $this->categoryRepo->getNewCode(),
                 'name' => $data['data_name'],
                 'effective_date' => $data['effective_date'],

@@ -75,7 +75,7 @@ class MaterialCategoryService
             }
 
             $data = [
-                'id' => generate_uuid(),
+                'id' => uuid_v7(),
                 'code' => $this->repository->generateCode('MCTG-', 'code', 4),
                 'name' => ucwords(trim($data['data_name'])),
                 'description' => trim($data['data_remark']),

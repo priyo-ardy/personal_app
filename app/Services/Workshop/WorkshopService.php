@@ -70,7 +70,7 @@ class WorkshopService
             }
 
             $data = [
-                'id' => generate_uuid(),
+                'id' => uuid_v7(),
                 'code' => $this->workshopRepo->generateCode('WRH-', 'code', 4),
                 'name' => ucwords(trim($data['data_name'])),
                 'description' => trim($data['data_remark']),

@@ -74,7 +74,7 @@ class UomService
             }
 
             $data = [
-                'id' => generate_uuid(),
+                'id' => uuid_v7(),
                 'code' => $this->repository->generateCode('UOM-', 'code', 4),
                 'name' => ucwords(trim($data['data_name'])),
                 'symbol' => trim($data['data_symbol']),

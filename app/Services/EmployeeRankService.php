@@ -54,7 +54,7 @@ class EmployeeRankService
             }
 
             $data = [
-                'id' => generate_uuid(),
+                'id' => uuid_v7(),
                 'code' => $this->rankRepo->getNewCode(),
                 'name' => ucwords(trim($data['data_name'])),
                 'effective_date' => trim($data['effective_date']),

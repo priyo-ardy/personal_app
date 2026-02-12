@@ -75,7 +75,7 @@ class EquipmentTypeService
                 throw new \Exception("Validation failed $error_to_string", ResponseInterface::HTTP_BAD_REQUEST);
             }
 
-            $id = generate_uuid();
+            $id = uuid_v7();
 
             $data = [
                 'id' => $id,

@@ -38,7 +38,7 @@ class CityService
             }
 
             $data = [
-                'id' => generate_uuid(),
+                'id' => uuid_v7(),
                 'code' => $this->cityRepo->generateCode('CTY-', 'code', 4),
                 'province' => trim($data['data_province']),
                 'name' => ucwords(trim($data['data_name'])),

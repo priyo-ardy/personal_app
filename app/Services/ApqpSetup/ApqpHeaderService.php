@@ -81,7 +81,7 @@ class ApqpHeaderService
             }
 
             $data = [
-                'id' => generate_uuid(),
+                'id' => uuid_v7(),
                 'sequence' => trim($postData['data_sequence']),
                 'name' => trim($postData['data_name']),
                 'description' => trim($postData['data_remark']),

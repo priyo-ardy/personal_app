@@ -39,7 +39,7 @@ class UsersService
             }
 
             // Inisialisasi data baru
-            $user_id = generate_uuid();
+            $user_id = uuid_v7();
             $user_email = email_hash($data['data_email']);
             $user_phone = phone_hash($data['data_phone']);
 
