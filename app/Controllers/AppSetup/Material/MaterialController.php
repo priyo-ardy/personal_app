@@ -30,6 +30,7 @@ class MaterialController extends BaseController
         $this->workshop = new WorkshopService(new WorkshopRepository());
         $this->uom = new UomService(new UomRepository());
     }
+
     public function index()
     {
         $data = [
@@ -90,9 +91,6 @@ class MaterialController extends BaseController
             $uploadFile = $this->request->getFile('fupload');
 
             $save = $this->material->saveData($data, $uploadFile);
-            // if ($this->material->saveData($data, $uploadFile)) {
-            //     return $this->success(ResponseInterface::HTTP_OK, "Data saved successfully");
-            // }
 
             return $this->success(ResponseInterface::HTTP_OK, "Data saved successfully", $save);
         } catch (\Exception $e) {

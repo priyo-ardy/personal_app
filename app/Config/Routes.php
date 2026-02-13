@@ -16,6 +16,11 @@
         // Routes ke halaman dashboard
         $routes->get('/dashboard', 'Dashboard\DashboardController::index', ['filter' => 'ratelimit:100,60']);
 
+        $routes->group('/spk', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+            $routes->get('', 'Module\Mfg\Spk\SpkController::index', ['filter' => 'ratelimit:3,60']);
+            $routes->get('add', 'Module\Mfg\Spk\SpkController::add');
+        });
+
         // Routes untuk module user management
         $routes->group('/users', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
             $routes->get('', 'AppSetup\Users\UsersController::index');
