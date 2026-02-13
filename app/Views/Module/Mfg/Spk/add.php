@@ -53,7 +53,7 @@
                                             <option value="1">1. SPK for Mold Repair</option>
                                             <option value="2">2. SPK for Machine Repair</option>
                                             <option value="3">3. SPK for Preventive Maintenance</option>
-                                            <option value="3">3. SPK for Equipment Request</option>
+                                            <option value="4">4. SPK for Equipment Request</option>
                                         </select>
                                         <div class="invalid-feedback"></div>
                                     </div>
@@ -61,6 +61,9 @@
                                         <label class="form-label" for="data_location">Location <strong class="text-danger">*</strong></label>
                                         <select name="data_location" id="data_location" class="form-select select2 select2bs5" required>
                                             <option value="">-- Choose --</option>
+                                            <?php foreach ($location as $l): ?>
+                                                <option value="<?= $l->id ?>"><?= $l->name ?></option>
+                                            <?php endforeach; ?>
                                         </select>
                                         <div class="invalid-feedback"></div>
                                     </div>
@@ -68,6 +71,9 @@
                                         <label class="form-label" for="data_dept">Reported Dept <strong class="text-danger">*</strong></label>
                                         <select name="data_dept" id="data_dept" class="form-select select2 select2bs5" required>
                                             <option value="">-- Choose --</option>
+                                            <?php foreach ($dept as $d): ?>
+                                                <option value="<?= $d->id ?>"><?= $d->name ?></option>
+                                            <?php endforeach; ?>
                                         </select>
                                         <div class="invalid-feedback"></div>
                                     </div>
@@ -106,9 +112,12 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-xl2 col-lg-2 col-md-6 col-sm-12 clearfix">
-                                        <label class="form-label" for="data_equipment">Mold/Jig Status</label>
+                                        <label class="form-label" for="data_equipment">Equipment Type</label>
                                         <select name="data_equipment" id="data_equipment" class="form-select select2 select2bs5">
                                             <option value="">-- Choose --</option>
+                                            <?php foreach ($equipment as $e): ?>
+                                                <option value="<?= $e->id ?>"><?= $e->name ?></option>
+                                            <?php endforeach; ?>
                                         </select>
                                     </div>
                                     <div class="form-group col-xl-3 col-lg-3 col-md-6 col-sm-12 clearfix">
@@ -144,6 +153,11 @@
                                         <label class="form-label" for="data_reason">Repair Reasom <strong class="text-danger">*</strong></label>
                                         <select name="data_reason" id="data_reason" class="form-select select2 select2bs5" required>
                                             <option value="">-- Choose --</option>
+                                            <option value="1">1. Internal quality problem</option>
+                                            <option value="2">2. External quality problem</option>
+                                            <option value="3">3. Engineering Change - Initiated by customer</option>
+                                            <option value="4">4. Engineering Change - Initiated by schlemmer</option>
+                                            <option value="5">5. Other</option>
                                         </select>
                                         <div class="invalid-feedback"></div>
                                     </div>
