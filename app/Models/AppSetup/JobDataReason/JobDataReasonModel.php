@@ -18,7 +18,7 @@ class JobDataReasonModel extends BaseModel
         'action',
         'code',
         'name',
-        'remark',
+        'description',
         'created_at',
         'created_by',
         'updated_at',

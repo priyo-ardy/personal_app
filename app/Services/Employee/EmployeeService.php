@@ -213,4 +213,15 @@ class EmployeeService
             throw $e;
         }
     }
+
+    public function generateList()
+    {
+        try {
+            $data = $this->repository->all('nik', 'asc');
+            return $data;
+        } catch (\Exception $e) {
+            log_message('error', "[EmployeeService::generateList] Unexpected error occured : {err} from {ip}", ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            throw $e;
+        }
+    }
 }

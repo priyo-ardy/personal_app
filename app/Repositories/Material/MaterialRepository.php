@@ -54,4 +54,11 @@ class MaterialRepository extends CrudRepository
             ->get()
             ->getResultArray();
     }
+
+    public function getListByCategory(string $category)
+    {
+        return $this->model->where('category', $category)
+            ->get()
+            ->getResultObject();
+    }
 }

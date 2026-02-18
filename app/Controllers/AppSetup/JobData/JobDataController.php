@@ -11,4 +11,6 @@ class JobDataController extends BaseController
     {
         //
     }
+
+    public function register() {}
 }

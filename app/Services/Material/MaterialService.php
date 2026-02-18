@@ -463,4 +463,16 @@ class MaterialService
             throw $e;
         }
     }
+
+    public function getMaterialByCategory(string $category)
+    {
+        try {
+            $get_material = $this->repository->getListByCategory($category);
+
+            return $get_material;
+        } catch (\Exception $e) {
+            log_message('error', '[MaterialService::getMaterialByCategory] Unexpexted error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            throw $e;
+        }
+    }
 }

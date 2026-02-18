@@ -49,6 +49,21 @@ inputForm.type.onchange = (e) => {
 
 function getMaterialList() {
   inputForm.material.innerHTML = '<option value="">-- Choose --</option>';
+  try {
+    fetchData(baseurl + "/material/material_list", "GET")
+      .then((result) => {
+        if (result.data.length > 0) {
+          result.data.forEach((item) => {
+            inputForm.material.innerHTML += `<option value="${item.token}">${item.code} - ${item.name}</option>`;
+          });
+        }
+      })
+      .catch((err) => {
+        pesanError(err.message);
+      });
+  } catch (e) {
+    pesanError(e.message);
+  }
 }
 
 function getMachineList() {

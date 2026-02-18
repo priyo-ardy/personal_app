@@ -76,4 +76,9 @@ class EmployeeRepository extends CrudRepository
     {
         return $this->model->where('no_rekening_hash', $rekening_hash)->first();
     }
+
+    public function generateList()
+    {
+        return $this->model->findAll();
+    }
 }

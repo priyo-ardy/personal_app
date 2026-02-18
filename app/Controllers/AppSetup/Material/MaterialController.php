@@ -338,4 +338,28 @@ class MaterialController extends BaseController
             return pesan($code, $e->getMessage());
         }
     }
+
+    public function getMaterialList()
+    {
+        try {
+            $get = $this->material->getMaterialByCategory('019c50cc-e708-794a-8d29-ceb41ce5b71b');
+
+            $data = [];
+            foreach ($get as $row) {
+                $data[] = [
+                    'token' => $row->id,
+                    'code' => $row->code,
+                    'name' => $row->name,
+                    'model' => $row->specification,
+                    'mold_no' => $row->mold_no
+                ];
+            }
+
+            return pesan(ResponseInterface::HTTP_OK, "Data found", $data);
+        } catch (\Exception $e) {
+            $code = $e->getCode() ?? ResponseInterface::HTTP_INTERNAL_SERVER_ERROR;
+            log_message('error', '[MaterialController::getMaterialList] Unexpexted error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            return pesan($code, $e->getMessage());
+        }
+    }
 }

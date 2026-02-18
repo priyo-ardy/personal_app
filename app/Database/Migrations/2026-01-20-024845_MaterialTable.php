@@ -94,6 +94,11 @@ class MaterialTable extends Migration
                 'constraint' => 11,
                 'default' => 0
             ],
+            'mold_no' => [
+                'type' => "VARCHAR",
+                'constraint' => 100,
+                'null' => true
+            ],
             'image' => [
                 'type' => "VARCHAR",
                 'constraint' => 255,

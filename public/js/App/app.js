@@ -77,7 +77,7 @@ toastTriggerList.forEach((btn) => {
   btn.addEventListener("click", (event) => {
     event.preventDefault();
     const toastEle = document.getElementById(
-      btn.getAttribute("data-bs-target")
+      btn.getAttribute("data-bs-target"),
     );
     const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastEle);
     toastBootstrap.show();
@@ -163,7 +163,7 @@ function hapusData(url, token) {
             })
             .catch((err) => {
               pesanError(err.message);
-            })
+            }),
         );
       }
     });
@@ -207,10 +207,11 @@ function disableData(url, token, urlRedirect = null) {
               } else {
                 refreshTable();
               }
+              return result;
             })
             .catch((err) => {
               pesanError(err.message);
-            })
+            }),
         );
       }
     });

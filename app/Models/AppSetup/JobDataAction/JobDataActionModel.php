@@ -17,7 +17,7 @@ class JobDataActionModel extends BaseModel
         'id',
         'code',
         'name',
-        'remark',
+        'description',
         'created_at',
         'created_by',
         'updated_at',

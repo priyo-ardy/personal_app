@@ -305,6 +305,31 @@
             $routes->post('mass-delete', 'AppSetup\Material\MaterialController::massDelete', ['filter' => 'ratelimit:3,60']);
             $routes->get('export', 'AppSetup\Material\MaterialController::export', ['filter' => 'ratelimit:3,60']);
             $routes->get('seed', 'AppSetup\Material\MaterialController::seedData');
+            $routes->get('material_list', 'AppSetup\Material\MaterialController::getMaterialList');
+        });
+
+        $routes->group('/team_leader', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+            $routes->get('', 'AppSetup\TeamLeader\TeamLeaderController::index');
+            $routes->post('table', 'AppSetup\TeamLeader\TeamLeaderController::loadTable');
+            $routes->post('save', 'AppSetup\TeamLeader\TeamLeaderController::save', ['filter' => 'ratelimit:3,60']);
+            $routes->get('get/(:any)', 'AppSetup\TeamLeader\TeamLeaderController::get/$1');
+            $routes->post('update', 'AppSetup\TeamLeader\TeamLeaderController::update', ['filter' => 'ratelimit:3,60']);
+            $routes->post('delete', 'AppSetup\TeamLeader\TeamLeaderController::delete', ['filter' => 'ratelimit:3,60']);
+            $routes->get('export', 'AppSetup\TeamLeader\TeamLeaderController::export', ['filter' => 'ratelimit:3,60']);
+            $routes->get('seed', 'AppSetup\TeamLeader\TeamLeaderController::seedData');
+            $routes->get('employee_list', 'AppSetup\TeamLeader\TeamLeaderController::generateEmployeeList');
+        });
+
+        $routes->group('/group_leader', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+            $routes->get('', 'AppSetup\GroupLeader\GroupLeaderController::index');
+            $routes->post('table', 'AppSetup\GroupLeader\GroupLeaderController::loadTable');
+            $routes->post('save', 'AppSetup\GroupLeader\GroupLeaderController::save', ['filter' => 'ratelimit:3,60']);
+            $routes->get('get/(:any)', 'AppSetup\GroupLeader\GroupLeaderController::get/$1');
+            $routes->post('update', 'AppSetup\GroupLeader\GroupLeaderController::update', ['filter' => 'ratelimit:3,60']);
+            $routes->post('delete', 'AppSetup\GroupLeader\GroupLeaderController::delete', ['filter' => 'ratelimit:3,60']);
+            $routes->get('export', 'AppSetup\GroupLeader\GroupLeaderController::export', ['filter' => 'ratelimit:3,60']);
+            $routes->get('seed', 'AppSetup\GroupLeader\GroupLeaderController::seedData');
+            $routes->get('employee_list', 'AppSetup\GroupLeader\GroupLeaderController::generateEmployeeList');
         });
 
         // Route untuk customer category module
@@ -478,13 +503,40 @@
         // Route untuk job data action
         $routes->group('/job_data_action', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
             $routes->get('', 'AppSetup\JobDataAction\JobDataActionController::index');
+            $routes->post('save', 'AppSetup\JobDataAction\JobDataActionController::save', ['filter' => 'ratelimit:3,60']);
+            $routes->post('table', 'AppSetup\JobDataAction\JobDataActionController::loadTable', ['filter' => 'ratelimit:3,60']);
+            $routes->get('get/(:any)', 'AppSetup\JobDataAction\JobDataActionController::get/$1');
+            $routes->post('update', 'AppSetup\JobDataAction\JobDataActionController::update', ['filter' => 'ratelimit:3,60']);
+            $routes->post('delete', 'AppSetup\JobDataAction\JobDataActionController::delete', ['filter' => 'ratelimit:3,60']);
+            $routes->get('export', 'AppSetup\JobDataAction\JobDataActionController::export', ['filter' => 'ratelimit:3,60']);
+            $routes->get('seed', 'AppSetup\JobDataAction\JobDataActionController::seedData');
+            $routes->get('list', 'AppSetup\JobDataAction\JobDataActionController::generateList');
         });
 
 
         // Route untuk job data reason
         $routes->group('/job_data_reason', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
-            $routes->get('', 'AppSetup\JobDataAction\JobDataActionController::index');
+            $routes->get('', 'AppSetup\JobDataReason\JobDataReasonController::index');
             $routes->get('get_by_action/(:any)', 'AppSetup\JobDataReason\JobDataReasonController::getByAction/$1');
+            $routes->post('save', 'AppSetup\JobDataReason\JobDataReasonController::save', ['filter' => 'ratelimit:3,60']);
+            $routes->post('table', 'AppSetup\JobDataReason\JobDataReasonController::loadTable', ['filter' => 'ratelimit:3,60']);
+            $routes->get('get/(:any)', 'AppSetup\JobDataReason\JobDataReasonController::get/$1');
+            $routes->post('update', 'AppSetup\JobDataReason\JobDataReasonController::update', ['filter' => 'ratelimit:3,60']);
+            $routes->post('delete', 'AppSetup\JobDataReason\JobDataReasonController::delete', ['filter' => 'ratelimit:3,60']);
+            $routes->get('export', 'AppSetup\JobDataReason\JobDataReasonController::export', ['filter' => 'ratelimit:3,60']);
+            $routes->get('seed', 'AppSetup\JobDataReason\JobDataReasonController::seedData');
+            $routes->get('list', 'AppSetup\JobDataReason\JobDataReasonController::generateList');
+        });
+
+        $routes->group('register_job_data', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+            $routes->get('', 'AppSetup\JobData\JobDataController::register');
+            $routes->post('save', 'AppSetup\JobData\JobDataController::save', ['filter' => 'ratelimit:3,60']);
+            $routes->get('get/(:any)', 'AppSetup\JobData\JobDataController::get/$1');
+            $routes->post('update', 'AppSetup\JobData\JobDataController::update', ['filter' => 'ratelimit:3,60']);
+            $routes->post('delete', 'AppSetup\JobData\JobDataController::delete', ['filter' => 'ratelimit:3,60']);
+            $routes->get('export', 'AppSetup\JobData\JobDataController::export', ['filter' => 'ratelimit:3,60']);
+            $routes->get('seed', 'AppSetup\JobData\JobDataController::seedData');
+            $routes->get('list', 'AppSetup\JobData\JobDataController::generateList');
         });
 
         // Route untuk APQP Setup

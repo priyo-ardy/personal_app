@@ -100,7 +100,7 @@
                                         <input type="text" name="data_model" id="data_model" class="form-control rounded-0 bg-secondary-subtle" readonly placeholder="Material/Machine/Equipment type">
                                     </div>
                                     <div class="form-group col-xl-2 col-lg-2 col-md-6 col-sm-12 clearfix">
-                                        <label class="form-label" for="data_mold">Machine/Mold No. Type <strong class="text-danger">*</strong></label>
+                                        <label class="form-label" for="data_mold">Machine Type/Mold No. <strong class="text-danger">*</strong></label>
                                         <input type="text" name="data_mold" id="data_mold" class="form-control rounded-0 bg-secondary-subtle" readonly placeholder="Machine/Mold No.">
                                     </div>
                                     <div class="form-group col-xl2 col-lg-2 col-md-6 col-sm-12 clearfix">
@@ -150,7 +150,7 @@
                                         <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="form-group col-xl-3 col-lg-3 col-md-6 col-sm-12 clearfix">
-                                        <label class="form-label" for="data_reason">Repair Reasom <strong class="text-danger">*</strong></label>
+                                        <label class="form-label" for="data_reason">Repair Reason <strong class="text-danger">*</strong></label>
                                         <select name="data_reason" id="data_reason" class="form-select select2 select2bs5" required>
                                             <option value="">-- Choose --</option>
                                             <option value="1">1. Internal quality problem</option>

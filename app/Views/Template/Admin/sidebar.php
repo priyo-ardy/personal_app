@@ -49,6 +49,41 @@
                                 </li>
                             </ul>
                         </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon bi bi-arrow-right-circle"></i>
+                                <p>
+                                    Job Data
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav-treeview">
+                                <li class="nav-item">
+                                    <a href="<?= base_url() . 'latest_job_data' ?>" class="nav-link" onclick="loading()">
+                                        <i class="nav-icon bi bi-arrow-return-right"></i>
+                                        <p>
+                                            Latest Job Data
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="<?= base_url() . 'register_job_data' ?>" class="nav-link" onclick="loading()">
+                                        <i class="nav-icon bi bi-arrow-return-right"></i>
+                                        <p>
+                                            Register Job Data
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="<?= base_url() . 'change_job_data' ?>" class="nav-link" onclick="loading()">
+                                        <i class="nav-icon bi bi-arrow-return-right"></i>
+                                        <p>
+                                            Change Job Data
+                                        </p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                     </ul>
                 </li>
                 <li class="nav-item">
@@ -406,26 +441,18 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="<?= base_url() . 'team_leader' ?>" class="nav-link">
                                 <i class="nav-icon bi bi-arrow-right-circle"></i>
                                 <p>
-                                    Leader
+                                    Team Leader
                                 </p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="<?= base_url() . 'group_leader' ?>" class="nav-link">
                                 <i class="nav-icon bi bi-arrow-right-circle"></i>
                                 <p>
                                     Group Leader
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon bi bi-arrow-right-circle"></i>
-                                <p>
-                                    Asst. Group Leader
                                 </p>
                             </a>
                         </li>
