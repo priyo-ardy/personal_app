@@ -384,4 +384,22 @@ class PositionController extends BaseController
             return pesan($code, $e->getMessage());
         }
     }
+
+    public function seedData()
+    {
+        if ($this->request->getMethod() !== 'GET') {
+            log_message('error', "[PositionController::seedData] Request method not allowed for user {NIK} from {ip}", ['NIK' => session()->get('user_name'), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            throw new \Exception("Request not allowed", ResponseInterface::HTTP_METHOD_NOT_ALLOWED);
+        }
+
+        try {
+            $get = $this->positionService->getAllData();
+
+            return $this->success(ResponseInterface::HTTP_OK, "Data retrieved successfully", $get);
+        } catch (\Exception $e) {
+            $code = $e->getCode() ?? ResponseInterface::HTTP_INTERNAL_SERVER_ERROR;
+            log_message('error', '[PositionController::seedData] Unexpected error occured for user {NIK} from {ip} : {err}', ['NIK' => session()->get('user_name'), 'ip' => $_SERVER['REMOTE_ADDR'], 'err' => $e->getMessage()]);
+            return pesan($code, $e->getMessage());
+        }
+    }
 }

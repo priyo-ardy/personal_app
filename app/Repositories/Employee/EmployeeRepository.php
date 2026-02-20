@@ -81,4 +81,21 @@ class EmployeeRepository extends CrudRepository
     {
         return $this->model->findAll();
     }
+
+    public function employeeListUnregisteredJobData()
+    {
+        $db = \Config\Database::connect();
+
+        $sub_query = $db->table('m_job_data')
+            ->select('employee_id')
+            ->getCompiledSelect();
+
+        $builder = $db->table('m_karyawan');
+
+        $builder->select('id, nik, name');
+        $builder->where("id NOT IN ($sub_query)", null, false);
+        $builder->orderBy('nik', 'ASC');
+
+        return $builder->get()->getResultObject();
+    }
 }

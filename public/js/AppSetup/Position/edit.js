@@ -2,6 +2,7 @@ const formData = document.getElementById("formData");
 
 const buttons = {
   back: document.getElementById("btnBack"),
+  add: document.getElementById("btnAdd"),
   edit: document.getElementById("btnEdit"),
   update: document.getElementById("btnUpdate"),
   cancel: document.getElementById("btnCancel"),
@@ -28,6 +29,11 @@ const inputForm = {
   absen: document.getElementById("data_absen"),
   lembur: document.getElementById("data_lembur"),
 };
+
+buttons.add.addEventListener("click", () => {
+  loading();
+  window.location.replace(baseurl + "/position/add");
+});
 
 function bukaForm() {
   const disabledElement = document.querySelectorAll("[disabled]");
@@ -173,11 +179,11 @@ buttons.prev.addEventListener("click", () => {
     fetchData(
       baseurl + "/position/prev/",
       "POST",
-      JSON.stringify({ code: inputForm.code.value })
+      JSON.stringify({ code: inputForm.code.value }),
     )
       .then((result) => {
         window.location.replace(
-          baseurl + "/position/show/" + result.data.token
+          baseurl + "/position/show/" + result.data.token,
         );
       })
       .catch((err) => {
@@ -196,11 +202,11 @@ buttons.next.addEventListener("click", () => {
     fetchData(
       baseurl + "/position/next/",
       "POST",
-      JSON.stringify({ code: inputForm.code.value })
+      JSON.stringify({ code: inputForm.code.value }),
     )
       .then((result) => {
         window.location.replace(
-          baseurl + "/position/show/" + result.data.token
+          baseurl + "/position/show/" + result.data.token,
         );
       })
       .catch((err) => {

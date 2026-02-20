@@ -38,6 +38,7 @@ class EmployeeJobDataService
                 'employee_id' => dekripsi(trim($postData['data_token'])),
                 'action' => trim($postData['data_action']),
                 'reason' => trim($postData['data_reason']),
+                'position' => trim($postData['data_position']),
                 'effective_date' => trim($postData['effective_date']),
                 'work_relationship' => trim($postData['data_hubungan_kerja']),
                 'no_contract' => trim($postData['data_contract']),

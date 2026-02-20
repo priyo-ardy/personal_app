@@ -498,6 +498,7 @@
             $routes->post('education/save', 'MasterData\Employee\EducationController::save', ['filter' => 'ratelimit:3,60']);
             $routes->get('job_data/(:any)', 'MasterData\Employee\EmployeeJobDataController::add/$1');
             $routes->post('job_data/save', 'MasterData\Employee\EmployeeJobDataController::save', ['filter' => 'ratelimit:3,60']);
+            $routes->get('employee_job_data', 'MasterData\Employee\EmployeeController::employeeUnregisteredJobDataList');
         });
 
         // Route untuk job data action
