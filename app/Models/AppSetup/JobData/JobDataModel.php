@@ -18,6 +18,7 @@ class JobDataModel extends BaseModel
         'employee_id',
         'action',
         'reason',
+        'position',
         'effective_date',
         'work_relationship',
         'no_contract',

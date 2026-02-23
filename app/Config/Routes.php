@@ -499,6 +499,7 @@
             $routes->get('job_data/(:any)', 'MasterData\Employee\EmployeeJobDataController::add/$1');
             $routes->post('job_data/save', 'MasterData\Employee\EmployeeJobDataController::save', ['filter' => 'ratelimit:3,60']);
             $routes->get('employee_job_data', 'MasterData\Employee\EmployeeController::employeeUnregisteredJobDataList');
+            $routes->get('employee_registered_job_data', 'MasterData\Employee\EmployeeController::employeeRegisteredJobDataList');
         });
 
         // Route untuk job data action
@@ -529,8 +530,12 @@
             $routes->get('list', 'AppSetup\JobDataReason\JobDataReasonController::generateList');
         });
 
+        $routes->group('/job_data', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+            $routes->get('info/(:any)', 'AppSetup\JobData\JobDataController::getJobDataInfo/$1');
+        });
+
         $routes->group('register_job_data', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
-            $routes->get('', 'AppSetup\JobData\JobDataController::register');
+            $routes->get('', 'AppSetup\JobData\JobDataController::registerJobData');
             $routes->post('save', 'AppSetup\JobData\JobDataController::save', ['filter' => 'ratelimit:3,60']);
             $routes->get('get/(:any)', 'AppSetup\JobData\JobDataController::get/$1');
             $routes->post('update', 'AppSetup\JobData\JobDataController::update', ['filter' => 'ratelimit:3,60']);
@@ -538,6 +543,10 @@
             $routes->get('export', 'AppSetup\JobData\JobDataController::export', ['filter' => 'ratelimit:3,60']);
             $routes->get('seed', 'AppSetup\JobData\JobDataController::seedData');
             $routes->get('list', 'AppSetup\JobData\JobDataController::generateList');
+        });
+
+        $routes->group('/change_job_data', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+            $routes->get('', 'AppSetup\JobData\JobDataController::changeJobData');
         });
 
         // Route untuk APQP Setup

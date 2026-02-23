@@ -236,4 +236,16 @@ class EmployeeService
             throw $e;
         }
     }
+
+    public function registeredJobData()
+    {
+        try {
+            $lists = $this->repository->employeeListRegisteredJobData();
+
+            return $lists;
+        } catch (\Exception $e) {
+            log_message('error', "[EmployeeService::registeredJobData] Unexpected error occured : {err} from {ip}", ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            throw $e;
+        }
+    }
 }

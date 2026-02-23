@@ -2,6 +2,11 @@ window.onload = function () {
   getEmployeeList();
 };
 
+const buttons = {
+  save: document.getElementById("btnSave"),
+  cancel: document.getElementById("btnCancel"),
+};
+
 const inputForm = {
   employee: document.getElementById("data_employee"),
   action: document.getElementById("data_action"),
@@ -14,11 +19,58 @@ const inputForm = {
   hubungan_kerja: document.getElementById("data_hubungan_kerja"),
   durasi: document.getElementById("data_durasi"),
   expired_date: document.getElementById("data_akhir_kontrak"),
+  relasi: document.getElementById("data_relasi"),
 };
 
 inputForm.effective_date.addEventListener("change", calculateContactDuration);
 inputForm.tipe_durasi.onchange = calculateContactDuration;
-durasi.addEventListener("change", calculateContactDuration);
+inputForm.durasi.addEventListener("change", calculateContactDuration);
+
+inputForm.relasi.onchange = () => {
+  // 1. Cek apakah elemen pembantu sudah ada di dokumen
+  let inputTipeDurasi = document.getElementById("data_tipe_durasi_helper");
+
+  if (inputForm.relasi.value === "Tetap") {
+    inputForm.durasi.value = "0";
+    inputForm.tipe_durasi.value = "Tahun";
+    $(inputForm.tipe_durasi).trigger("change");
+    inputForm.expired_date.value = "9999-12-31";
+
+    inputForm.durasi.setAttribute("readonly", true);
+    inputForm.expired_date.setAttribute("readonly", true);
+    inputForm.tipe_durasi.setAttribute("disabled", true);
+
+    inputForm.durasi.classList.add("bg-secondary-subtle");
+    inputForm.expired_date.classList.add("bg-secondary-subtle");
+    inputForm.tipe_durasi.classList.add("bg-secondary-subtle");
+
+    if (!inputTipeDurasi) {
+      inputTipeDurasi = document.createElement("input");
+      inputTipeDurasi.id = "data_tipe_durasi_helper";
+      inputTipeDurasi.name = "data_tipe_durasi";
+      inputTipeDurasi.value = "Tahun";
+      inputTipeDurasi.type = "hidden";
+      formData.appendChild(inputTipeDurasi);
+    }
+  } else {
+    inputForm.durasi.value = "";
+    inputForm.tipe_durasi.value = "";
+    inputForm.expired_date.value = "";
+    $(inputForm.tipe_durasi).trigger("change");
+
+    inputForm.durasi.removeAttribute("readonly");
+    inputForm.expired_date.removeAttribute("readonly");
+    inputForm.tipe_durasi.removeAttribute("disabled");
+
+    inputForm.durasi.classList.remove("bg-secondary-subtle");
+    inputForm.expired_date.classList.remove("bg-secondary-subtle");
+    inputForm.tipe_durasi.classList.remove("bg-secondary-subtle");
+
+    if (inputTipeDurasi) {
+      formData.removeChild(inputTipeDurasi);
+    }
+  }
+};
 
 const formPosition = {
   nbhx_position: document.getElementById("nbhx_position"),
@@ -169,6 +221,45 @@ function calculateContactDuration() {
     const formattedDate = `${year}-${month}-${day}`;
     inputForm.expired_date.value = formattedDate;
   } else {
-    expired_date.value = "";
+    inputForm.expired_date.value = "";
   }
 }
+
+function resetForm() {
+  formData.reset();
+  const selectElement = document.querySelectorAll("select");
+  selectElement.forEach((element) => {
+    element.value = "";
+    $(element).trigger("change");
+  });
+}
+
+buttons.cancel.addEventListener("click", () => {
+  resetForm();
+});
+
+buttons.save.addEventListener("click", () => {
+  if (validasi()) {
+    try {
+      loading();
+      fetchData(
+        baseurl + "/register_job_data/save",
+        "POST",
+        new FormData(formData),
+      )
+        .then((result) => {
+          pesanSukses(result.message);
+          resetForm();
+          getEmployeeList();
+          hideLoading();
+        })
+        .catch((err) => {
+          pesanError(err.message);
+          hideLoading();
+        });
+    } catch (e) {
+      pesanError(e.message);
+      hideLoading();
+    }
+  }
+});

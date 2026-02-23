@@ -10,18 +10,22 @@ use App\Services\PositionService;
 use App\Repositories\PositionRepository;
 use App\Services\Employee\EmployeeService;
 use App\Repositories\Employee\EmployeeRepository;
+use App\Repositories\JobData\JobDataRepository;
+use App\Services\JobData\JobDataService;
 
 class JobDataController extends BaseController
 {
     protected $action;
     protected $position;
     protected $employee;
+    protected $job_data;
 
     public function __construct()
     {
         $this->action = new JobDataActionService(new JobDataActionRepository());
         $this->position = new PositionService(new PositionRepository());
         $this->employee = new EmployeeService(new EmployeeRepository());
+        $this->job_data = new JobDataService(new JobDataRepository());
     }
 
     public function index()
@@ -29,7 +33,7 @@ class JobDataController extends BaseController
         //
     }
 
-    public function register()
+    public function registerJobData()
     {
         $data = [
             'title' => "Register Employee Job Data",
@@ -43,5 +47,58 @@ class JobDataController extends BaseController
         ];
 
         return view('MasterData/JobData/register_job_data', $data);
+    }
+
+    public function save()
+    {
+        if ($this->request->getMethod() !== 'POST') {
+            log_message('error', '[JobDataController::save] Unexpected request method : {method} from {ip}', ['method' => $this->request->getMethod(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            throw new \Exception("Request not allowed", ResponseInterface::HTTP_METHOD_NOT_ALLOWED);
+        }
+
+        try {
+            $postData = $this->request->getPost();
+
+            if ($this->job_data->saveData($postData)) {
+                return pesan(ResponseInterface::HTTP_OK, "Data saved successfully");
+            }
+        } catch (\Exception $e) {
+            $code = $e->getCode() ?? ResponseInterface::HTTP_INTERNAL_SERVER_ERROR;
+            log_message('error', '[JobDataController::save] Unexpected error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            return pesan($code, $e->getMessage());
+        }
+    }
+
+    public function changeJobData()
+    {
+        $data = [
+            'title' => "Job Data Change",
+            'action' => $this->action->getAllData(),
+            'position' => $this->position->getAllData(),
+            'footer' => [
+                '<script src="' . base_url() . 'js/App/validasi.js' . '"></script>',
+                '<script src="' . base_url() . 'js/MasterData/JobData/job_data_change.js' . '"></script>'
+            ]
+        ];
+
+        return view('MasterData/JobData/job_data_change', $data);
+    }
+
+    public function getJobDataInfo(string $id)
+    {
+        if ($this->request->getMethod() !== 'GET') {
+            log_message('error', '[JobDataController::getJobDataInfo] Unexpected request method : {method} from {ip}', ['method' => $this->request->getMethod(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            throw new \Exception("Request not allowed", ResponseInterface::HTTP_METHOD_NOT_ALLOWED);
+        }
+
+        try {
+            $result = $this->job_data->getJobDataInfo($id);
+
+            return pesan(ResponseInterface::HTTP_OK, "Data loaded successfully", $result);
+        } catch (\Exception $e) {
+            $code = $e->getCode() ?? ResponseInterface::HTTP_INTERNAL_SERVER_ERROR;
+            log_message('error', '[JobDataController::getJobDataInfo] Unexpected error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            return pesan($code, $e->getMessage());
+        }
     }
 }

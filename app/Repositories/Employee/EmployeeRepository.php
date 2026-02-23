@@ -98,4 +98,29 @@ class EmployeeRepository extends CrudRepository
 
         return $builder->get()->getResultObject();
     }
+
+    public function employeeListRegisteredJobData()
+    {
+        $db = \Config\Database::connect();
+        $builder = $db->table('m_job_data j');
+
+        // 1. Ambil kolom yang dibutuhkan
+        $builder->select('DISTINCT ON (j.employee_id) j.id as job_id, k.nik, k.name');
+
+        // 2. Hubungkan ke tabel karyawan
+        $builder->join('m_karyawan k', 'k.id = j.employee_id');
+
+        // 3. FILTER KRUSIAL: Status aktif DAN Tanggal Efektif sudah lewat atau hari ini
+        $builder->where('j.status', '1');
+        $builder->where('j.effective_date <=', date('Y-m-d')); // Menggunakan tanggal hari ini dari server PHP
+
+        // 4. PENGURUTAN: Ambil yang terbaru dari grup yang lolos filter di atas
+        $builder->orderBy('j.employee_id');
+        $builder->orderBy('j.effective_date', 'DESC');
+        $builder->orderBy('j.created_at', 'DESC'); // Backup jika ada 2 record di tanggal yang sama
+
+        $result = $builder->get()->getResultArray();
+
+        return $result;
+    }
 }

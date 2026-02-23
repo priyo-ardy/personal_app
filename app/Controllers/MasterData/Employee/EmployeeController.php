@@ -143,4 +143,24 @@ class EmployeeController extends BaseController
             return pesan($code, $e->getMessage());
         }
     }
+
+    public function employeeRegisteredJobDataList()
+    {
+        if ($this->request->getMethod() !== 'GET') {
+            log_message('error', "[EmployeeController::employeeRegisteredJobDataList] Request method not valid, request method : {method}", ['method' => $this->request->getMethod()]);
+            throw new \Exception("Request method not valid", ResponseInterface::HTTP_METHOD_NOT_ALLOWED);
+        }
+
+        try {
+            $result = $this->employee->registeredJobData();
+
+            if ($result) {
+                return pesan(ResponseInterface::HTTP_OK, "Data found", $result);
+            }
+        } catch (\Exception $e) {
+            $code = $e->getCode() ?? ResponseInterface::HTTP_INTERNAL_SERVER_ERROR;
+            log_message('error', "[EmployeeController::employeeRegisteredJobDataList] Unexpected error occured : {err} from {ip}", ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            return pesan($code, $e->getMessage());
+        }
+    }
 }
