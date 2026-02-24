@@ -61,6 +61,13 @@ class JobDataValidation
                     'max_length' => '{field} cannot exceed {param} characters.'
                 ]
             ],
+            'data_superior' => [
+                'label' => 'Superior',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '{field} is required.'
+                ]
+            ],
             // Bagian Kondisional di bawah ini menggunakan 'required_if'
             'data_durasi' => [
                 'label'  => 'Contract duration',

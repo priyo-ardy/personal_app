@@ -48,12 +48,29 @@ class EmployeeController extends BaseController
         $this->pekerjaan = new FamilyOccupationService(new FamilyOccupationRepository());
     }
 
+    public function loadTable()
+    {
+        try {
+            if ($this->request->isAJAX()) {
+                $postData = $this->request->getPost();
+
+                $output = $this->employee->loadTable($postData);
+
+                return $this->response->setJSON($output, JSON_PRETTY_PRINT);
+            }
+        } catch (\Exception $e) {
+            $code = $e->getCode() ?? ResponseInterface::HTTP_INTERNAL_SERVER_ERROR;
+            log_message('error', "[EmployeeController::loadTable] Unexpected error occured : {err} from {ip}", ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            return pesan($code, $e->getMessage());
+        }
+    }
+
     public function index()
     {
         $data = [
             'title' => "Employee Management",
             'footer' => [
-                '<script src="' . base_url() . 'js/AppSetup/datatable.js"></script>',
+                '<script src="' . base_url() . 'js/App/datatable.js"></script>',
                 '<script src="' . base_url() . 'js/MasterData/Employee/employee.js' . '"></script>'
             ]
         ];
@@ -134,9 +151,7 @@ class EmployeeController extends BaseController
         try {
             $result = $this->employee->unRegisteredJobData();
 
-            if ($result) {
-                return pesan(ResponseInterface::HTTP_OK, "Data found", $result);
-            }
+            return pesan(ResponseInterface::HTTP_OK, "Data found", $result);
         } catch (\Exception $e) {
             $code = $e->getCode() ?? ResponseInterface::HTTP_INTERNAL_SERVER_ERROR;
             log_message('error', "[EmployeeController::employeeUnregisteredJobDataList] Unexpected error occured : {err} from {ip}", ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
@@ -160,6 +175,24 @@ class EmployeeController extends BaseController
         } catch (\Exception $e) {
             $code = $e->getCode() ?? ResponseInterface::HTTP_INTERNAL_SERVER_ERROR;
             log_message('error', "[EmployeeController::employeeRegisteredJobDataList] Unexpected error occured : {err} from {ip}", ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            return pesan($code, $e->getMessage());
+        }
+    }
+
+    public function emloyeeActive()
+    {
+        if ($this->request->getMethod() !== 'GET') {
+            log_message('error', "[EmployeeController::emloyeeActive] Request method not valid, request method : {method}", ['method' => $this->request->getMethod()]);
+            throw new \Exception("Request method not valid", ResponseInterface::HTTP_METHOD_NOT_ALLOWED);
+        }
+
+        try {
+            $result = $this->employee->employeeActiveList();
+
+            return pesan(ResponseInterface::HTTP_OK, "Data found", $result);
+        } catch (\Exception $e) {
+            $code = $e->getCode() ?? ResponseInterface::HTTP_INTERNAL_SERVER_ERROR;
+            log_message('error', "[EmployeeController::emloyeeActive] Unexpected error occured : {err} from {ip}", ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
             return pesan($code, $e->getMessage());
         }
     }

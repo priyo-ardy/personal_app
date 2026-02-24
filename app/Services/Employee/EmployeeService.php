@@ -2,9 +2,11 @@
 
 namespace App\Services\Employee;
 
+use App\Models\MasterData\Employee\EmployeeActiveModel;
 use App\Repositories\Employee\EmployeeRepository;
 use App\Repositories\DataTableRepository;
 use App\Services\UploadImage\UploadImageService;
+use App\Traits\KalkulasiTrait;
 use App\Validation\Employee\EmployeeValidation;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Database;
@@ -14,6 +16,7 @@ use Faker\Core\Uuid;
 
 class EmployeeService
 {
+    use KalkulasiTrait;
     protected $db;
     protected $validation;
     protected $repository;
@@ -34,6 +37,45 @@ class EmployeeService
             return $nik;
         } catch (\Exception $e) {
             log_message('error', "[EmployeeService::newNik] Unexpected error occured : {err} from {ip}", ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            throw $e;
+        }
+    }
+
+    public function loadTable(array $postData)
+    {
+        try {
+            $model = new EmployeeActiveModel();
+            $builder = $model->builder();
+
+            $column_search = ['nik', 'name', 'position_name', 'dept_name', 'section_name', 'category_name', 'work_relationship'];
+            $column_order = ['nik', 'name', 'position_name', 'dept_name', 'section_name', 'category_name', 'work_relationship', 'tgl_masuk_kerja'];
+            $default_order = array('nik' => 'asc');
+
+            $dataTable = new DataTableRepository($builder, $column_search, $column_order, $default_order, [], 'deleted_at');
+
+            $result = $dataTable->proses($postData);
+            $formattedData = [];
+
+            foreach ($result['data'] as $row) {
+                $formattedData[] = [
+                    enkripsi($row->id),
+                    '<a href="#" class="text-primary fw-bolder text-decoration-none" title="Click to edit" onclick="getData(`' . enkripsi($row->id) . '`)">' . $row->nik . '</a>',
+                    $row->name,
+                    $row->position_name,
+                    $row->dept_name,
+                    $row->section_name,
+                    $row->category_name,
+                    $row->work_relationship,
+                    $row->tgl_masuk_kerja,
+                    $this->date_duration($row->tgl_masuk_kerja, date('Y-m-d')),
+                ];
+            }
+
+            $result['data'] = $formattedData;
+
+            return $result;
+        } catch (\Exception $e) {
+            log_message('error', "[EmployeeService::loadTable] Unexpected error occured : {err} from {ip}", ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
             throw $e;
         }
     }
@@ -245,6 +287,23 @@ class EmployeeService
             return $lists;
         } catch (\Exception $e) {
             log_message('error', "[EmployeeService::registeredJobData] Unexpected error occured : {err} from {ip}", ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            throw $e;
+        }
+    }
+
+    public function employeeActiveList()
+    {
+        try {
+            $lists = $this->repository->getEmployeeActive();
+
+            if (!$lists) {
+                log_message('error', "[EmployeeService::employeeActiveList] Data not found from {ip}", ['ip' => $_SERVER['REMOTE_ADDR']]);
+                throw new \Exception("Data not found", ResponseInterface::HTTP_NOT_FOUND);
+            }
+
+            return $lists;
+        } catch (\Exception $e) {
+            log_message('error', "[EmployeeService::employeeActiveList] Unexpected error occured : {err} from {ip}", ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
             throw $e;
         }
     }

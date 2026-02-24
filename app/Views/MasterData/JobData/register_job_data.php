@@ -96,7 +96,7 @@
                                     </div>
                                     <div class="form-group col-xl-3 col-lg-3 col-md-6 col-sm-12 clearfix">
                                         <label class="form-label" for="data_superior">Superior <strong class="text-danger">*</strong></label>
-                                        <select name="data_superior" id="data_superior" class="form-select select2 select2bs5">
+                                        <select name="data_superior" id="data_superior" class="form-select select2 select2bs5" required>
                                             <option value="">-- Choose --</option>
                                         </select>
                                         <div class="invalid-feedback"></div>

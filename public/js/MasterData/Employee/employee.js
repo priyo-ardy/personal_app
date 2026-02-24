@@ -1,3 +1,7 @@
+window.onload = () => {
+  loadTable("dataTable", "/employee/table");
+};
+
 const buttons = {
   add: document.getElementById("btnAdd"),
   filter: document.getElementById("btnFilter"),
@@ -6,7 +10,15 @@ const buttons = {
   export: document.getElementById("btnExport"),
 };
 
+buttons.refresh.addEventListener("click", () => {
+  refreshTable();
+});
+
 buttons.add.addEventListener("click", () => {
   loading();
   window.location.replace(baseurl + "/employee/add");
 });
+
+function getData(token) {
+  alert(token);
+}

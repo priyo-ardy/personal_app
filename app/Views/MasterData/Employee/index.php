@@ -56,16 +56,15 @@
                                             <th class="align-middle text-center bg-secondary-subtle">
                                                 <input type="checkbox" id="select-all" class="form-check-input rounded-0 border-1 border-primary">
                                             </th>
-                                            <th class="align-middle text-center bg-secondary-subtle">Code</th>
+                                            <th class="align-middle text-center bg-secondary-subtle">NIK</th>
+                                            <th class="align-middle text-center bg-secondary-subtle">Employee Name</th>
+                                            <th class="align-middle text-center bg-secondary-subtle">Position</th>
+                                            <th class="align-middle text-center bg-secondary-subtle">Department</th>
+                                            <th class="align-middle text-center bg-secondary-subtle">Section</th>
                                             <th class="align-middle text-center bg-secondary-subtle">Category</th>
-                                            <th class="align-middle text-center bg-secondary-subtle">Name</th>
-                                            <th class="align-middle text-center bg-secondary-subtle">Address</th>
-                                            <th class="align-middle text-center bg-secondary-subtle">Email</th>
-                                            <th class="align-middle text-center bg-secondary-subtle">Phone</th>
-                                            <th class="align-middle text-center bg-secondary-subtle">P.I.C Name</th>
-                                            <th class="align-middle text-center bg-secondary-subtle">P.I.C Email</th>
-                                            <th class="align-middle text-center bg-secondary-subtle">P.I.C Phone</th>
-                                            <th class="align-middle text-center bg-secondary-subtle">description</th>
+                                            <th class="align-middle text-center bg-secondary-subtle">Employee Status</th>
+                                            <th class="align-middle text-center bg-secondary-subtle">Join Date</th>
+                                            <th class="align-middle text-center bg-secondary-subtle">Length of service</th>
                                         </tr>
                                     </thead>
                                     <tbody></tbody>

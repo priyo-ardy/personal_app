@@ -3,6 +3,7 @@
 namespace App\Repositories\Employee;
 
 use App\Models\MasterData\Employee\EmployeeModel;
+use App\Models\MasterData\Employee\EmployeeActiveModel;
 
 use App\Repositories\CrudRepository;
 
@@ -122,5 +123,12 @@ class EmployeeRepository extends CrudRepository
         $result = $builder->get()->getResultArray();
 
         return $result;
+    }
+
+    public function getEmployeeActive()
+    {
+        $model = new EmployeeActiveModel();
+
+        return $model->orderBy('nik', 'ASC')->findAll();
     }
 }

@@ -490,6 +490,7 @@
         $routes->group('/employee', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
             $routes->get('', 'MasterData\Employee\EmployeeController::index');
             $routes->post('new_nik', 'MasterData\Employee\EmployeeController::generateNik', ['filter' => 'ratelimit:3,60']);
+            $routes->post('table', 'MasterData\Employee\EmployeeController::loadTable');
             $routes->get('add', 'MasterData\Employee\EmployeeController::add');
             $routes->post('save', 'MasterData\Employee\EmployeeController::save', ['filter' => 'ratelimit:3,60']);
             $routes->get('family/(:any)', 'MasterData\Employee\FamilyController::add/$1');
@@ -500,6 +501,7 @@
             $routes->post('job_data/save', 'MasterData\Employee\EmployeeJobDataController::save', ['filter' => 'ratelimit:3,60']);
             $routes->get('employee_job_data', 'MasterData\Employee\EmployeeController::employeeUnregisteredJobDataList');
             $routes->get('employee_registered_job_data', 'MasterData\Employee\EmployeeController::employeeRegisteredJobDataList');
+            $routes->get('active_employee', 'MasterData\Employee\EmployeeController::emloyeeActive');
         });
 
         // Route untuk job data action

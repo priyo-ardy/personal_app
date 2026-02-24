@@ -1,5 +1,6 @@
 window.onload = function () {
   getEmployeeList();
+  getSuperiorList();
 };
 
 const buttons = {
@@ -20,6 +21,7 @@ const inputForm = {
   durasi: document.getElementById("data_durasi"),
   expired_date: document.getElementById("data_akhir_kontrak"),
   relasi: document.getElementById("data_relasi"),
+  superior: document.getElementById("data_superior"),
 };
 
 inputForm.effective_date.addEventListener("change", calculateContactDuration);
@@ -72,6 +74,25 @@ inputForm.relasi.onchange = () => {
   }
 };
 
+function getSuperiorList() {
+  try {
+    inputForm.superior.innerHTML = '<option value="">-- Choose --</option>';
+    fetchData(baseurl + "/employee/active_employee", "GET")
+      .then((result) => {
+        if (result.data.length > 0) {
+          result.data.forEach((item) => {
+            inputForm.superior.innerHTML += `<option value="${item.id}">${item.nik} - ${item.name}</option>`;
+          });
+        }
+      })
+      .catch((err) => {
+        pesanError(err.message);
+      });
+  } catch (e) {
+    pesanError(e.message);
+  }
+}
+
 const formPosition = {
   nbhx_position: document.getElementById("nbhx_position"),
   position_status: document.getElementById("position_status"),
@@ -83,6 +104,7 @@ const formPosition = {
   data_dept: document.getElementById("data_dept"),
   data_section: document.getElementById("data_section"),
   data_report_to: document.getElementById("data_report_to"),
+  superior: document.getElementById("data_superior"),
 };
 
 function kosongPosisi() {
