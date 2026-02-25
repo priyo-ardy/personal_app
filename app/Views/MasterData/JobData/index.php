@@ -27,11 +27,20 @@
             <div class="row mb-3">
                 <div class="col-12">
                     <div class="btn-group" role="group" aria-label="tooltip">
-                        <button type="button" class="btn shadow-none rounded-0 btn-light border-0" id="btnSave" data-bs-toggle=" tooltip" data-bs-placement="top" title="Save">
-                            <i class="bi bi-floppy"></i>&ensp;Save
+                        <button type="button" class="btn shadow-none rounded-0 btn-light border-0" id="btnAdd" data-bs-toggle=" tooltip" data-bs-placement="top" title="Save">
+                            <i class="bi bi-file-earmark-plus"></i>&ensp;Register Job Data
                         </button>
-                        <button type="button" class="btn shadow-none rounded-0 btn-light-order-0" id="btnCancel" data-bs-toggle=" tooltip" data-bs-placement="top" title="Cancel">
-                            <i class="bi bi-arrow-counterclockwise"></i>&ensp;Cancel
+                        <button type="button" class="btn shadow-none rounded-0 btn-light-order-0" id="btnFilter" data-bs-toggle=" tooltip" data-bs-placement="top" title="Cancel">
+                            <i class="bi bi-funnel"></i>&ensp;Filter
+                        </button>
+                        <button type="button" class="btn shadow-none rounded-0 btn-light-order-0" id="btnRefresh" data-bs-toggle=" tooltip" data-bs-placement="top" title="Cancel">
+                            <i class="bi bi-arrow-repeat"></i>&ensp;Refresh
+                        </button>
+                        <button type="button" class="btn shadow-none rounded-0 btn-light-order-0" id="btnDelete" data-bs-toggle=" tooltip" data-bs-placement="top" title="Cancel">
+                            <i class="bi bi-trash3"></i>&ensp;Delete
+                        </button>
+                        <button type="button" class="btn shadow-none rounded-0 btn-light-order-0" id="btnExport" data-bs-toggle=" tooltip" data-bs-placement="top" title="Cancel">
+                            <i class="bi bi-download"></i>&ensp;Export
                         </button>
                     </div>
                 </div>
