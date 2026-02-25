@@ -106,7 +106,7 @@ class EmployeeRepository extends CrudRepository
         $builder = $db->table('m_job_data j');
 
         // 1. Ambil kolom yang dibutuhkan
-        $builder->select('DISTINCT ON (j.employee_id) j.id as job_id, k.nik, k.name');
+        $builder->select('DISTINCT ON (k.nik) j.id as job_id, k.nik, k.name');
 
         // 2. Hubungkan ke tabel karyawan
         $builder->join('m_karyawan k', 'k.id = j.employee_id');
@@ -116,7 +116,7 @@ class EmployeeRepository extends CrudRepository
         $builder->where('j.effective_date <=', date('Y-m-d')); // Menggunakan tanggal hari ini dari server PHP
 
         // 4. PENGURUTAN: Ambil yang terbaru dari grup yang lolos filter di atas
-        $builder->orderBy('j.employee_id');
+        $builder->orderBy('k.nik');
         $builder->orderBy('j.effective_date', 'DESC');
         $builder->orderBy('j.created_at', 'DESC'); // Backup jika ada 2 record di tanggal yang sama
 
@@ -130,5 +130,73 @@ class EmployeeRepository extends CrudRepository
         $model = new EmployeeActiveModel();
 
         return $model->orderBy('nik', 'ASC')->findAll();
+    }
+
+    public function getemployeeByDate(string $date)
+    {
+        $cacheKey = 'employees_list_' . $date;
+
+        if ($found = cache($cacheKey)) {
+            return $found;
+        }
+
+        $query = "
+        SELECT 
+            JD.id AS job_data_id,
+            K.id AS employee_id,
+            K.NIK,
+            K.name AS employee_name,
+            JD.position,
+            P.name AS position_name,
+            D.name AS dept_name,
+            S.name AS section_name,
+            NP.name AS nbhx_position_name,
+            P1.name AS report_to_position,
+            G.name AS grade_name,
+            ER.name AS rank_name,
+            C.name AS category_name,
+            CN.name AS nbhx_category_name,
+            JD.effective_date AS on_job_position,
+            JDA.name AS action_name,
+            JDR.name AS reason_name,
+            K1.name as superior_name,
+            K.tgl_masuk_kerja,
+            JD.work_relationship,
+            JD.no_contract,
+            JD.durasi_kontrak,
+            JD.tipe_durasi,
+            JD.akhir_kontrak,
+            JD.remark,
+            K.deleted_at
+        FROM m_karyawan AS K
+        LEFT JOIN (
+            -- Mengambil satu baris terbaru per karyawan sekaligus
+            SELECT DISTINCT ON (employee_id) *
+            FROM m_job_data
+            WHERE effective_date <= ?
+            ORDER BY employee_id, effective_date DESC, id DESC
+        ) AS JD ON JD.employee_id = K.id
+        LEFT JOIN m_position AS P ON JD.position = P.id
+        LEFT JOIN m_department AS D ON P.dept = D.id
+        LEFT JOIN m_section AS S ON P.section = S.id
+        LEFT JOIN m_nbhx_position AS NP ON P.nbhx_position = NP.id
+        LEFT JOIN m_position AS P1 ON P.report_to = P1.id
+        LEFT JOIN m_grade AS G ON P.grade = G.id
+        LEFT JOIN m_employee_rank AS ER ON P.rank = ER.id
+        LEFT JOIN m_employee_category AS C ON P.category = C.id
+        LEFT JOIN m_class_nbhx AS CN ON P.nbhx_category = CN.id
+        LEFT JOIN m_job_data_action AS JDA ON JD.action = JDA.id
+        LEFT JOIN m_job_data_reason AS JDR ON JD.reason = JDR.id
+        LEFT JOIN m_karyawan AS K1 ON JD.superior = K1.id
+        WHERE (JDA.code IS NULL OR JDA.code <> 'JDA-005') 
+        ORDER BY K.NIK ASC
+    ";
+
+        $result = $this->model->query($query, [$date])->getResultObject();
+
+        // Simpan cache (1 jam)
+        cache()->save($cacheKey, $result, 3600);
+
+        return $result;
     }
 }

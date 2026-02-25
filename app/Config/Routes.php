@@ -533,7 +533,9 @@
         });
 
         $routes->group('/job_data', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+            $routes->get('', 'AppSetup\JobData\JobDataController::index');
             $routes->get('info/(:any)', 'AppSetup\JobData\JobDataController::getJobDataInfo/$1');
+            $routes->post('table', 'AppSetup\JobData\JobDataController::loadTable');
         });
 
         $routes->group('register_job_data', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
@@ -545,10 +547,6 @@
             $routes->get('export', 'AppSetup\JobData\JobDataController::export', ['filter' => 'ratelimit:3,60']);
             $routes->get('seed', 'AppSetup\JobData\JobDataController::seedData');
             $routes->get('list', 'AppSetup\JobData\JobDataController::generateList');
-        });
-
-        $routes->group('/change_job_data', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
-            $routes->get('', 'AppSetup\JobData\JobDataController::changeJobData');
         });
 
         // Route untuk APQP Setup

@@ -59,7 +59,7 @@
                             </a>
                             <ul class="nav-treeview">
                                 <li class="nav-item">
-                                    <a href="<?= base_url() . 'latest_job_data' ?>" class="nav-link" onclick="loading()">
+                                    <a href="<?= base_url() . 'job_data' ?>" class="nav-link" onclick="loading()">
                                         <i class="nav-icon bi bi-arrow-return-right"></i>
                                         <p>
                                             Latest Job Data
@@ -67,18 +67,10 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="<?= base_url() . 'register_job_data' ?>" class="nav-link" onclick="loading()">
+                                    <a href="<?= base_url() . 'register_job_data' ?>" class="nav-link text-wrap" onclick="loading()">
                                         <i class="nav-icon bi bi-arrow-return-right"></i>
                                         <p>
-                                            Register Job Data
-                                        </p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="<?= base_url() . 'change_job_data' ?>" class="nav-link" onclick="loading()">
-                                        <i class="nav-icon bi bi-arrow-return-right"></i>
-                                        <p>
-                                            Change Job Data
+                                            Register/Change Job Data
                                         </p>
                                     </a>
                                 </li>

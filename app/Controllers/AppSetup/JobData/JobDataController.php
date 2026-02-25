@@ -12,6 +12,8 @@ use App\Services\Employee\EmployeeService;
 use App\Repositories\Employee\EmployeeRepository;
 use App\Repositories\JobData\JobDataRepository;
 use App\Services\JobData\JobDataService;
+use App\Services\JobDataReason\JobDataReasonService;
+use App\Repositories\JobDataReason\JobDataReasonRepository;
 
 class JobDataController extends BaseController
 {
@@ -19,6 +21,7 @@ class JobDataController extends BaseController
     protected $position;
     protected $employee;
     protected $job_data;
+    protected $reason;
 
     public function __construct()
     {
@@ -26,11 +29,37 @@ class JobDataController extends BaseController
         $this->position = new PositionService(new PositionRepository());
         $this->employee = new EmployeeService(new EmployeeRepository());
         $this->job_data = new JobDataService(new JobDataRepository());
+        $this->reason = new JobDataReasonService(new JobDataReasonRepository());
     }
 
     public function index()
     {
-        //
+        $data = [
+            'title' => "Latest Job Data",
+            'footer' => [
+                '<script src="' . base_url() . 'js/App/datatable.js' . '"></script>',
+                '<script src="' . base_url() . 'js/MasterData/JobData/job_data.js' . '"></script>',
+            ]
+        ];
+
+        return view('MasterData/JobData/index', $data);
+    }
+
+    public function loadTable()
+    {
+        try {
+            if ($this->request->isAJAX()) {
+                $postData = $this->request->getPost();
+
+                $output = $this->job_data->loadTable($postData);
+
+                return $this->response->setJSON($output, JSON_PRETTY_PRINT);
+            }
+        } catch (\Exception $e) {
+            $code = $e->getCode() ?? ResponseInterface::HTTP_INTERNAL_SERVER_ERROR;
+            log_message('error', '[JobDataController::loadTable] Unexpected error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            return pesan($code, $e->getMessage());
+        }
     }
 
     public function registerJobData()
@@ -65,39 +94,6 @@ class JobDataController extends BaseController
         } catch (\Exception $e) {
             $code = $e->getCode() ?? ResponseInterface::HTTP_INTERNAL_SERVER_ERROR;
             log_message('error', '[JobDataController::save] Unexpected error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
-            return pesan($code, $e->getMessage());
-        }
-    }
-
-    public function changeJobData()
-    {
-        $data = [
-            'title' => "Job Data Change",
-            'action' => $this->action->getAllData(),
-            'position' => $this->position->getAllData(),
-            'footer' => [
-                '<script src="' . base_url() . 'js/App/validasi.js' . '"></script>',
-                '<script src="' . base_url() . 'js/MasterData/JobData/job_data_change.js' . '"></script>'
-            ]
-        ];
-
-        return view('MasterData/JobData/job_data_change', $data);
-    }
-
-    public function getJobDataInfo(string $id)
-    {
-        if ($this->request->getMethod() !== 'GET') {
-            log_message('error', '[JobDataController::getJobDataInfo] Unexpected request method : {method} from {ip}', ['method' => $this->request->getMethod(), 'ip' => $_SERVER['REMOTE_ADDR']]);
-            throw new \Exception("Request not allowed", ResponseInterface::HTTP_METHOD_NOT_ALLOWED);
-        }
-
-        try {
-            $result = $this->job_data->getJobDataInfo($id);
-
-            return pesan(ResponseInterface::HTTP_OK, "Data loaded successfully", $result);
-        } catch (\Exception $e) {
-            $code = $e->getCode() ?? ResponseInterface::HTTP_INTERNAL_SERVER_ERROR;
-            log_message('error', '[JobDataController::getJobDataInfo] Unexpected error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
             return pesan($code, $e->getMessage());
         }
     }
