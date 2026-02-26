@@ -66,14 +66,6 @@
                                         </p>
                                     </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a href="<?= base_url() . 'register_job_data' ?>" class="nav-link text-wrap" onclick="loading()">
-                                        <i class="nav-icon bi bi-arrow-return-right"></i>
-                                        <p>
-                                            Register/Change Job Data
-                                        </p>
-                                    </a>
-                                </li>
                             </ul>
                         </li>
                     </ul>

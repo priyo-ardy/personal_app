@@ -536,17 +536,13 @@
             $routes->get('', 'AppSetup\JobData\JobDataController::index');
             $routes->get('info/(:any)', 'AppSetup\JobData\JobDataController::getJobDataInfo/$1');
             $routes->post('table', 'AppSetup\JobData\JobDataController::loadTable');
-        });
-
-        $routes->group('register_job_data', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
-            $routes->get('', 'AppSetup\JobData\JobDataController::registerJobData');
-            $routes->post('save', 'AppSetup\JobData\JobDataController::save', ['filter' => 'ratelimit:3,60']);
+            $routes->get('register', 'AppSetup\JobData\JobDataController::registerJobData');
+            $routes->post('mass-delete', 'AppSetup\JobData\JobDataController::massDelete');
+            $routes->get('export', 'AppSetup\JobData\JobDataController::export');
             $routes->get('get/(:any)', 'AppSetup\JobData\JobDataController::get/$1');
-            $routes->post('update', 'AppSetup\JobData\JobDataController::update', ['filter' => 'ratelimit:3,60']);
-            $routes->post('delete', 'AppSetup\JobData\JobDataController::delete', ['filter' => 'ratelimit:3,60']);
-            $routes->get('export', 'AppSetup\JobData\JobDataController::export', ['filter' => 'ratelimit:3,60']);
-            $routes->get('seed', 'AppSetup\JobData\JobDataController::seedData');
-            $routes->get('list', 'AppSetup\JobData\JobDataController::generateList');
+            $routes->get('show/(:any)', 'AppSetup\JobData\JobDataController::show/$1');
+            $routes->post('update', 'AppSetup\JobData\JobDataController::update');
+            $routes->post('delete', 'AppSetup\JobData\JobDataController::delete');
         });
 
         // Route untuk APQP Setup

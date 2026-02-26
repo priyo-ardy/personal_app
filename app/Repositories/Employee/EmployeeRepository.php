@@ -106,7 +106,7 @@ class EmployeeRepository extends CrudRepository
         $builder = $db->table('m_job_data j');
 
         // 1. Ambil kolom yang dibutuhkan
-        $builder->select('DISTINCT ON (k.nik) j.id as job_id, k.nik, k.name');
+        $builder->select('DISTINCT ON (k.nik) j.id as job_id, k.id as employee_id, k.nik, k.name');
 
         // 2. Hubungkan ke tabel karyawan
         $builder->join('m_karyawan k', 'k.id = j.employee_id');
@@ -188,7 +188,9 @@ class EmployeeRepository extends CrudRepository
         LEFT JOIN m_job_data_action AS JDA ON JD.action = JDA.id
         LEFT JOIN m_job_data_reason AS JDR ON JD.reason = JDR.id
         LEFT JOIN m_karyawan AS K1 ON JD.superior = K1.id
-        WHERE (JDA.code IS NULL OR JDA.code <> 'JDA-005') 
+        WHERE 
+            (JDA.code IS NULL OR JDA.code <> 'JDA-005') AND
+            JD.deleted_at IS NULL
         ORDER BY K.NIK ASC
     ";
 

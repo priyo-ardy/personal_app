@@ -1,15 +1,18 @@
-window.onload = function () {
-  getEmployeeList();
-  getSuperiorList();
+window.onload = () => {
+  $(".summernote").summernote("disable");
 };
 
 const buttons = {
   back: document.getElementById("btnBack"),
-  save: document.getElementById("btnSave"),
+  edit: document.getElementById("btnEdit"),
+  update: document.getElementById("btnUpdate"),
   cancel: document.getElementById("btnCancel"),
+  add: document.getElementById("btnAdd"),
+  delete: document.getElementById("btnDelete"),
 };
 
 const inputForm = {
+  token: document.getElementById("data_token"),
   employee: document.getElementById("data_employee"),
   action: document.getElementById("data_action"),
   reason: document.getElementById("data_reason"),
@@ -25,14 +28,73 @@ const inputForm = {
   superior: document.getElementById("data_superior"),
 };
 
-buttons.back.addEventListener("click", () => {
+inputForm.effective_date.addEventListener("change", calculateContactDuration);
+inputForm.tipe_durasi.onchange = calculateContactDuration;
+inputForm.durasi.addEventListener("change", calculateContactDuration);
+
+buttons.back.addEventListener("click", (e) => {
   loading();
   window.location.replace(baseurl + "/job_data");
 });
 
-inputForm.effective_date.addEventListener("change", calculateContactDuration);
-inputForm.tipe_durasi.onchange = calculateContactDuration;
-inputForm.durasi.addEventListener("change", calculateContactDuration);
+buttons.cancel.addEventListener("click", (e) => {
+  loading();
+  window.location.reload();
+});
+
+buttons.add.addEventListener("click", () => {
+  loading();
+  window.location.replace(baseurl + "/job_data/register");
+});
+
+buttons.edit.addEventListener("click", () => {
+  const disabledElement = document.querySelectorAll("[disabled]");
+
+  if (disabledElement.length > 0) {
+    disabledElement.forEach((item) => {
+      item.removeAttribute("disabled");
+    });
+  }
+
+  $(".summernote").summernote("enable");
+
+  buttons.update.removeAttribute("hidden");
+  buttons.cancel.removeAttribute("hidden");
+
+  buttons.back.setAttribute("hidden", true);
+  buttons.edit.setAttribute("hidden", true);
+  buttons.add.setAttribute("hidden", true);
+  buttons.delete.setAttribute("hidden", true);
+  buttons.prev.setAttribute("hidden", true);
+  buttons.next.setAttribute("hidden", true);
+});
+
+buttons.update.addEventListener("click", () => {
+  if (validasi()) {
+    try {
+      loading();
+      fetchData(baseurl + "/job_data/update", "POST", new FormData(formData))
+        .then((result) => {
+          pesanSukses(result.message);
+          setTimeout(() => {
+            window.location.reload();
+          }, 1500);
+        })
+        .catch((err) => {
+          pesanError(err.message);
+          hideLoading();
+        });
+    } catch (e) {
+      pesanError(e.message);
+      hideLoading();
+    }
+  }
+});
+
+buttons.delete.addEventListener("click", () => {
+  const token = document.getElementById("data_token");
+  disableData("/job_data/delete", token.value, "/job_data");
+});
 
 inputForm.relasi.onchange = () => {
   // 1. Cek apakah elemen pembantu sudah ada di dokumen
@@ -79,25 +141,6 @@ inputForm.relasi.onchange = () => {
     }
   }
 };
-
-function getSuperiorList() {
-  try {
-    inputForm.superior.innerHTML = '<option value="">-- Choose --</option>';
-    fetchData(baseurl + "/employee/active_employee", "GET")
-      .then((result) => {
-        if (result.data.length > 0) {
-          result.data.forEach((item) => {
-            inputForm.superior.innerHTML += `<option value="${item.id}">${item.nik} - ${item.name}</option>`;
-          });
-        }
-      })
-      .catch((err) => {
-        pesanError(err.message);
-      });
-  } catch (e) {
-    pesanError(e.message);
-  }
-}
 
 const formPosition = {
   nbhx_position: document.getElementById("nbhx_position"),
@@ -190,25 +233,6 @@ inputForm.position.onchange = () => {
   }
 };
 
-function getEmployeeList() {
-  try {
-    fetchData(baseurl + "/employee/employee_job_data", "GET")
-      .then((result) => {
-        inputForm.employee.innerHTML = "<option value=''>-- Choose --</option>";
-        if (result.data.length > 0) {
-          result.data.forEach((item) => {
-            inputForm.employee.innerHTML += `<option value="${item.id}">${item.nik} - ${item.name}</option>`;
-          });
-        }
-      })
-      .catch((err) => {
-        pesanError(err.message);
-      });
-  } catch (e) {
-    console.log(e);
-  }
-}
-
 function calculateContactDuration() {
   const hasDate = inputForm.effective_date.value !== "";
   const hasDuration =
@@ -252,42 +276,3 @@ function calculateContactDuration() {
     inputForm.expired_date.value = "";
   }
 }
-
-function resetForm() {
-  formData.reset();
-  const selectElement = document.querySelectorAll("select");
-  selectElement.forEach((element) => {
-    element.value = "";
-    $(element).trigger("change");
-  });
-}
-
-buttons.cancel.addEventListener("click", () => {
-  resetForm();
-});
-
-buttons.save.addEventListener("click", () => {
-  if (validasi()) {
-    try {
-      loading();
-      fetchData(
-        baseurl + "/register_job_data/save",
-        "POST",
-        new FormData(formData),
-      )
-        .then((result) => {
-          pesanSukses(result.message);
-          resetForm();
-          getEmployeeList();
-          hideLoading();
-        })
-        .catch((err) => {
-          pesanError(err.message);
-          hideLoading();
-        });
-    } catch (e) {
-      pesanError(e.message);
-      hideLoading();
-    }
-  }
-});

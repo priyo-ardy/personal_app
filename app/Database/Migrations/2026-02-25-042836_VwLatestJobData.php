@@ -66,7 +66,7 @@ class VwLatestJobData extends Migration
                     LEFT JOIN m_job_data_action AS JDA ON JD.action = JDA.id
                     LEFT JOIN m_job_data_reason AS JDR ON JD.reason = JDR.id
                     LEFT JOIN m_karyawan AS K1 ON JD.superior = K1.id
-                WHERE JDA.code <> 'JDA-005'
+                WHERE JDA.code <> 'JDA-005' AND JD.deleted_at IS NULL
                 ORDER BY K.NIK ASC
             "
         );

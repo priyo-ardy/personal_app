@@ -307,4 +307,15 @@ class EmployeeService
             throw $e;
         }
     }
+
+    public function listEmployeeByDate(string $date)
+    {
+        try {
+            $data = $this->repository->getemployeeByDate($date);
+            return $data;
+        } catch (\Exception $e) {
+            log_message('error', "[EmployeeService::listEmployeeByDate] Unexpected error occured : {err} from {ip}", ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            throw $e;
+        }
+    }
 }
