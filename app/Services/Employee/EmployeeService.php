@@ -2,6 +2,7 @@
 
 namespace App\Services\Employee;
 
+use App\Models\AppSetup\JobData\LatestJobDataModel;
 use App\Models\MasterData\Employee\EmployeeActiveModel;
 use App\Repositories\Employee\EmployeeRepository;
 use App\Repositories\DataTableRepository;
@@ -44,11 +45,11 @@ class EmployeeService
     public function loadTable(array $postData)
     {
         try {
-            $model = new EmployeeActiveModel();
+            $model = new LatestJobDataModel();
             $builder = $model->builder();
 
-            $column_search = ['nik', 'name', 'position_name', 'dept_name', 'section_name', 'category_name', 'work_relationship'];
-            $column_order = ['nik', 'name', 'position_name', 'dept_name', 'section_name', 'category_name', 'work_relationship', 'tgl_masuk_kerja'];
+            $column_search = ['nik', 'employee_name', 'position_name', 'dept_name', 'section_name', 'category_name', 'work_relationship'];
+            $column_order = ['nik', 'employee_name', 'position_name', 'dept_name', 'section_name', 'category_name', 'work_relationship', 'tgl_masuk_kerja'];
             $default_order = array('nik' => 'asc');
 
             $dataTable = new DataTableRepository($builder, $column_search, $column_order, $default_order, [], 'deleted_at');
@@ -58,9 +59,9 @@ class EmployeeService
 
             foreach ($result['data'] as $row) {
                 $formattedData[] = [
-                    enkripsi($row->id),
-                    '<a href="#" class="text-primary fw-bolder text-decoration-none" title="Click to edit" onclick="getData(`' . enkripsi($row->id) . '`)">' . $row->nik . '</a>',
-                    $row->name,
+                    enkripsi($row->employee_id),
+                    '<a href="#" class="text-primary fw-bolder text-decoration-none" title="Click to edit" onclick="getData(`' . enkripsi($row->employee_id) . '`)">' . $row->nik . '</a>',
+                    $row->employee_name,
                     $row->position_name,
                     $row->dept_name,
                     $row->section_name,

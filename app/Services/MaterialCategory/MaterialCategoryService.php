@@ -34,7 +34,8 @@ class MaterialCategoryService
             $column_order = [
                 '0' => 'code',
                 '1' => 'name',
-                '2' => 'description'
+                '2' => 'prefix',
+                '3' => 'description'
             ];
 
             $defaultOrder = ['code' => 'asc'];
@@ -50,6 +51,7 @@ class MaterialCategoryService
                     enkripsi($row->id),
                     '<a href="#" class="text-primary fw-bolder text-decoration-none" title="Click to edit" onclick="getData(`' . enkripsi($row->id) . '`)">' . $row->code . '</a>',
                     $row->name,
+                    $row->prefix,
                     $row->description
                 ];
             }
@@ -78,6 +80,7 @@ class MaterialCategoryService
                 'id' => uuid_v7(),
                 'code' => $this->repository->generateCode('MCTG-', 'code', 4),
                 'name' => ucwords(trim($data['data_name'])),
+                'prefix' => trim($data['data_prefix']),
                 'description' => trim($data['data_remark']),
                 'created_by' => session()->get('user_name'),
             ];
@@ -112,6 +115,7 @@ class MaterialCategoryService
                 'token' => enkripsi($getData->id),
                 'code' => $getData->code,
                 'name' => $getData->name,
+                'prefix' => $getData->prefix,
                 'description' => $getData->description
             ];
         } catch (\Exception $e) {
@@ -136,6 +140,7 @@ class MaterialCategoryService
             $data = [
                 'name' => ucwords(trim($data['data_name'])),
                 'description' => trim($data['data_remark']),
+                'prefix' => trim($data['data_prefix']),
                 'updated_by' => session()->get('user_name')
             ];
 

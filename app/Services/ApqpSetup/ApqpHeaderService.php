@@ -10,6 +10,8 @@ use Config\Database;
 use Config\Services;
 use App\Traits\ResponseTrait;
 use App\Validation\ApqpSetup\ApqpHeaderValidation;
+use App\Repositories\ApqpSetup\ApqpDocumentRepository;
+use App\Repositories\ApqpSetup\ApqpApproverRepository;
 use CodeIgniter\HTTP\Response;
 
 class ApqpHeaderService
@@ -17,6 +19,8 @@ class ApqpHeaderService
     protected $db;
     protected $validation;
     protected $repository;
+    protected $document;
+    protected $approver;
     use ResponseTrait;
 
     public function __construct(ApqpHeaderRepository $repo)
@@ -24,6 +28,8 @@ class ApqpHeaderService
         $this->db = Database::connect();
         $this->validation = Services::validation();
         $this->repository = $repo;
+        $this->document = new ApqpDocumentRepository();
+        $this->approver = new ApqpApproverRepository();
     }
 
     public function loadTable(array $requestedData)
@@ -47,13 +53,13 @@ class ApqpHeaderService
                     $row->sequence,
                     '<a href="#" class="text-primary fw-bolder text-decoration-none" title="Click to edit" onclick="getData(`' . enkripsi($row->id) . '`)">' . $row->name . '</a>',
                     '
-                        <button type="button" class="btn btn-primary rounded-0 btn-sm d-block col-12" onclick="getApprover(`' . enkripsi($row->id) . '`)" title="View approver">
-                            <i class="bi bi-diagram-3"></i>&ensp; Show Approver
+                        <button type="button" class="btn btn-primary rounded-0 btn-sm d-block col-12" onclick="getDocument(`' . enkripsi($row->id) . '`)" title="View approver">
+                            <i class="bi bi-file-earmark-text"></i>&ensp; Show Document List
                         </button>
                     ',
                     '
-                        <button type="button" class="btn btn-primary rounded-0 btn-sm d-block col-12" onclick="getDocument(`' . enkripsi($row->id) . '`)" title="View approver">
-                            <i class="bi bi-file-earmark-text"></i>&ensp; Show Document List
+                        <button type="button" class="btn btn-primary rounded-0 btn-sm d-block col-12" onclick="getApprover(`' . enkripsi($row->id) . '`)" title="View approver">
+                            <i class="bi bi-diagram-3"></i>&ensp; Show Approver
                         </button>
                     ',
                     $row->remark
@@ -183,6 +189,18 @@ class ApqpHeaderService
             return true;
         } catch (\Exception $e) {
             log_message('error', '[ApqpHeaderService::deleteData] Unexpexted error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            throw $e;
+        }
+    }
+
+    public function getApqpDocumentList(string $apqp)
+    {
+        try {
+            $get_document_lists = $this->document->getDocumentByApqp($apqp);
+
+            return $get_document_lists;
+        } catch (\Exception $e) {
+            log_message('error', '[ApqpHeaderService::getApqpDocumentList] Unexpexted error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
             throw $e;
         }
     }

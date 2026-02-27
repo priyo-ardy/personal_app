@@ -78,8 +78,8 @@
                                             </th>
                                             <th class="align-middle text-center bg-secondary-subtle col-1">Sequence</th>
                                             <th class="align-middle text-center bg-secondary-subtle col-3">APQP Name</th>
+                                            <th class="align-middle text-center bg-secondary-subtle col-2">APQP Document</th>
                                             <th class="align-middle text-center bg-secondary-subtle col-2">APQP Approver</th>
-                                            <th class="align-middle text-center bg-secondary-subtle col-2">APQP Item</th>
                                             <th class="align-middle text-center bg-secondary-subtle col-3">Remark</th>
                                         </tr>
                                     </thead>
@@ -88,6 +88,12 @@
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div id="listEmployee" style="display: none;">
+                <?php foreach ($employee as $e): ?>
+                    <option value="<?= $e->employee_id ?>"><?= "$e->nik - $e->employee_name" ?></option>
+                <?php endforeach; ?>
             </div>
         </div>
     </div>

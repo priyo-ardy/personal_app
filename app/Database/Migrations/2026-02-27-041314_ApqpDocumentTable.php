@@ -4,30 +4,38 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class ApqpApproverTable extends Migration
+class ApqpDocumentTable extends Migration
 {
     public function up()
     {
         $this->forge->addField([
             'id' => [
-                'type' => "VARCHAR",
+                'type' => 'UUID',
+                'null' => false
+            ],
+            'apqp_id' => [
+                'type' => 'VARCHAR',
                 'constraint' => 50,
                 'null' => false
             ],
-            'id_apqp' => [
-                'type' => "VARCHAR",
-                'constraint' => 50,
-                'null' => false
-            ],
-            'approver' => [
-                'type' => "VARCHAR",
-                'constraint' => 50,
-                'null' => false
-            ],
-            'row_no' => [
-                'type' => "INT",
+            'baris' => [
+                'type' => 'INT',
                 'null' => false,
                 'default' => 1
+            ],
+            'document_level' => [
+                'type' => 'INT',
+                'null' => false,
+                'default' => 1
+            ],
+            'document_name' => [
+                'type' => 'VARCHAR',
+                'constraint' => 150,
+                'null' => false
+            ],
+            'uploader' => [
+                'type' => 'UUID',
+                'null' => false
             ],
             'created_at' => [
                 'type' => 'TIMESTAMPTZ',
@@ -57,16 +65,18 @@ class ApqpApproverTable extends Migration
         ]);
 
         $this->forge->addKey('id', true, true);
-        $this->forge->addKey('id_apqp');
-        $this->forge->addKey('approver');
-        $this->forge->addForeignKey('id_apqp', 'm_apqp_header', 'id', 'CASCADE', 'CASCADE');
-        $this->forge->addForeignKey('approver',  'm_karyawan', 'id', 'RESTRICT', 'RESTRICT');
+        $this->forge->addKey('apqp_id');
+        $this->forge->addKey('document_name');
+        $this->forge->addKey('uploader');
 
-        $this->forge->createTable('m_apqp_approver');
+        $this->forge->addForeignKey('apqp_id', 'm_apqp_header', 'id', 'RESTRICT', 'RESTRICT');
+        $this->forge->addForeignKey('uploader', 'm_karyawan', 'id', 'RESTRICT', 'RESTRICT');
+
+        $this->forge->createTable('m_apqp_document', true);
     }
 
     public function down()
     {
-        $this->forge->dropTable('m_apqp_approver', true);
+        $this->forge->dropTable('m_apqp_document', true);
     }
 }

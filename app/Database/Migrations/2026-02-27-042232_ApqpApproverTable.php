@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class MaterialCategoryTable extends Migration
+class ApqpApproverTable extends Migration
 {
     public function up()
     {
@@ -14,24 +14,19 @@ class MaterialCategoryTable extends Migration
                 'constraint' => 50,
                 'null' => false
             ],
-            'code' => [
+            'id_apqp' => [
                 'type' => "VARCHAR",
-                'constraint' => 20,
+                'constraint' => 50,
                 'null' => false
             ],
-            'name' => [
-                'type' => "VARCHAR",
-                'constraint' => 150,
+            'approver' => [
+                'type' => "UUID",
                 'null' => false
             ],
-            'prefix' => [
-                'type' => "VARCHAR",
-                'constraint' => 5,
-                'null' => true
-            ],
-            'description' => [
-                'type' => "TEXT",
-                'null' => true
+            'row_no' => [
+                'type' => "INT",
+                'null' => false,
+                'default' => 1
             ],
             'created_at' => [
                 'type' => 'TIMESTAMPTZ',
@@ -61,13 +56,16 @@ class MaterialCategoryTable extends Migration
         ]);
 
         $this->forge->addKey('id', true, true);
-        $this->forge->addKey('code', false, true);
+        $this->forge->addKey('id_apqp');
+        $this->forge->addKey('approver');
+        $this->forge->addForeignKey('id_apqp', 'm_apqp_header', 'id', 'CASCADE', 'CASCADE');
+        $this->forge->addForeignKey('approver',  'm_karyawan', 'id', 'RESTRICT', 'RESTRICT');
 
-        $this->forge->createTable('m_material_category', true);
+        $this->forge->createTable('m_apqp_approver');
     }
 
     public function down()
     {
-        $this->forge->dropTable('m_material_category', true);
+        $this->forge->dropTable('m_apqp_approver', true);
     }
 }

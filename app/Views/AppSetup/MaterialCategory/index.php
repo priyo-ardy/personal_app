@@ -43,6 +43,11 @@
                                     <input type="text" name="data_name" id="data_name" class="form-control rounded-0" placeholder="Enter name" maxlength="150" required autofocus autocomplete="off">
                                     <div class="invalid-feedback"></div>
                                 </div>
+                                <div class="form-group mb-3 clearfix">
+                                    <label class="form-label" for="data_prefix">Prefix<strong class="text-danger fw-bolder">*</strong></label>
+                                    <input type="number" name="data_prefix" id="data_prefix" class="form-control rounded-0" placeholder="Material Category Prefix" min="1" max="5" maxlength="5" required autofocus autocomplete="off">
+                                    <div class="invalid-feedback"></div>
+                                </div>
                                 <div class="form-group clearfix">
                                     <label class="form-label" for="data_remark">Remark</label>
                                     <textarea name="data_remark" id="data_remark" class="form-control rounded-0" placeholder="Write additional information here ..."></textarea>
@@ -78,6 +83,7 @@
                                             </th>
                                             <th class="align-middle text-center bg-secondary-subtle">Code</th>
                                             <th class="align-middle text-center bg-secondary-subtle">Name</th>
+                                            <th class="align-middle text-center bg-secondary-subtle">Prefix</th>
                                             <th class="align-middle text-center bg-secondary-subtle">Description</th>
                                         </tr>
                                     </thead>

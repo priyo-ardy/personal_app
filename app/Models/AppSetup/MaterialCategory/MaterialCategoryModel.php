@@ -17,6 +17,7 @@ class MaterialCategoryModel extends BaseModel
         'id',
         'code',
         'name',
+        'prefix',
         'description',
         'created_at',
         'created_by',

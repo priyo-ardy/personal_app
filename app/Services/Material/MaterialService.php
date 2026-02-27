@@ -12,6 +12,7 @@ use App\Repositories\Workshop\WorkshopRepository;
 use App\Repositories\UoM\UomRepository;
 use CodeIgniter\HTTP\ResponseInterface;
 use App\Services\UploadImage\UploadImageService;
+use App\Services\MaterialCategory\MaterialCategoryService;
 use Config\Services;
 use Config\Database;
 use Exception;
@@ -152,9 +153,12 @@ class MaterialService
                 }
             }
 
+            $get_prefix = $this->category->find(trim($requestData['data_category']));
+            $prefix = $get_prefix->prefix;
+
             $data = [
                 'id' => uuid_v7(),
-                'code' => strtoupper(trim($requestData['data_code'])),
+                'code' => $prefix . "." . strtoupper(trim($requestData['data_code'])),
                 'name' => ucwords(trim($requestData['data_name'])),
                 'specification' => trim($requestData['data_specification']),
                 'category' => $requestData['data_category'],
@@ -172,6 +176,8 @@ class MaterialService
                 'cavity' => ($requestData['data_cavity']) ? trim($requestData['data_cavity']) : 0,
                 'image' => ($imageFile !== null) ? $imageFile : null,
                 'description' => trim($requestData['data_description']),
+                'mold_no' => (trim($requestData['data_mold'])) ? trim($requestData['data_mold']) : null,
+                'process_route' => (trim($requestData['data_route'])) ? trim($requestData['data_route']) : null,
                 'created_by' => session()->get('user_name'),
             ];
 
@@ -226,6 +232,8 @@ class MaterialService
                 'cavity' => $get_data->cavity,
                 'image' => $get_data->image,
                 'description' => $get_data->description,
+                'process_route' => $get_data->process_route,
+                'mold_no' => $get_data->mold_no
             ];
         } catch (\Exception $e) {
             log_message('error', '[MaterialService::getData] Unexpected error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
@@ -266,7 +274,7 @@ class MaterialService
                     $getCategory = $this->category->find($requestData['data_category']);
                     $categoryName = $getCategory->name ?? 'Unknown'; // Fallback jika kategori tidak ketemu
 
-                    log_message('error', '[MaterialService::saveData] Material code {code} already exist from {ip}', ['code' => $requestData['data_code'], 'ip' => $_SERVER['REMOTE_ADDR']]);
+                    log_message('error', '[MaterialService::updateData] Material code {code} already exist from {ip}', ['code' => $requestData['data_code'], 'ip' => $_SERVER['REMOTE_ADDR']]);
 
                     throw new \Exception("Material code " . $requestData['data_code'] . " already exist in material category " . $categoryName, ResponseInterface::HTTP_BAD_REQUEST);
                 }
@@ -277,7 +285,7 @@ class MaterialService
                     $uploadResult = $uploadService->upload_single_image('material', $uploadFile);
                     $imageFile = $uploadResult['file_name'];
                 } catch (\Exception $e) {
-                    log_message('error', '[MaterialService::saveData] Error when upload image : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+                    log_message('error', '[MaterialService::updateData] Error when upload image : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
                     throw $e;
                 }
             }
@@ -300,6 +308,8 @@ class MaterialService
                 'gross_weight'   => trim($requestData['data_gross_weight'] ?? 0),
                 'cavity'         => trim($requestData['data_cavity'] ?? 0),
                 'description'    => trim($requestData['data_description']),
+                'mold_no' => (trim($requestData['data_mold'])) ? trim($requestData['data_mold']) : null,
+                'process_route' => (trim($requestData['data_route'])) ? trim($requestData['data_route']) : null,
                 'updated_by'     => session()->get('user_name'),
             ];
 

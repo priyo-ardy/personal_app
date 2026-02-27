@@ -162,6 +162,19 @@
                                         <label class="form-label" for="fupload">Material Image</label>
                                         <input type="file" name="fupload" id="fupload" class="form-control rounded-0 form-control-file" placeholder="Material Image" autocomplete="off" accept="image/*" disabled>
                                     </div>
+                                    <div class="form-group col-xl-3 col-lg-3 col-md-6 col-sm-12 clearfix">
+                                        <label class="form-label" for="data_mold">Mold Number</label>
+                                        <input type="text" name="data_mold" id="data_mold" class="form-control rounded-0" disabled placeholder="Mold Number" maxlength="100" autocomplete="off" value="<?= ($material['mold_no']) ? $material['mold_no'] : '' ?>">
+                                    </div>
+                                    <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12 clearfix">
+                                        <label class="form-label" for="data_route">Process Routes</label>
+                                        <select name="data_route" id="data_route" class="form-control select2 select2bs5" disabled>
+                                            <option value="">-- Choose --</option>
+                                            <?php foreach ($route as $rt): ?>
+                                                <option <?= ($material['process_route'] == $rt->id) ? 'selected' : '' ?> value="<?= $rt->id ?>"><?= $rt->process_name ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
                                     <div class="form-group col-12 clearfix">
                                         <label class="form-label" for="data_description">Remark</label>
                                         <textarea name="data_description" id="data_description" class=" form-control rounded-0" placeholder="Additional information" disabled><?= $material['description'] ?></textarea>

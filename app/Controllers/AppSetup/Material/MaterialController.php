@@ -13,6 +13,8 @@ use App\Services\Workshop\WorkshopService;
 use App\Repositories\Workshop\WorkshopRepository;
 use App\Services\UoM\UomService;
 use App\Repositories\UoM\UomRepository;
+use App\Services\ProcessRoute\ProcessRouteService;
+use App\Repositories\ProcessRoute\ProcessRouteRepository;
 use App\Traits\ResponseTrait;
 
 class MaterialController extends BaseController
@@ -22,6 +24,7 @@ class MaterialController extends BaseController
     protected $category;
     protected $workshop;
     protected $uom;
+    protected $route;
 
     public function __construct()
     {
@@ -29,6 +32,7 @@ class MaterialController extends BaseController
         $this->category = new MaterialCategoryService(new MaterialCategoryRepository());
         $this->workshop = new WorkshopService(new WorkshopRepository());
         $this->uom = new UomService(new UomRepository());
+        $this->route = new ProcessRouteService(new ProcessRouteRepository());
     }
 
     public function index()
@@ -52,6 +56,7 @@ class MaterialController extends BaseController
             'category' => $this->category->loadAllData(),
             'workshop' => $this->workshop->generateList(),
             'uom' => $this->uom->getAllData(),
+            'route' => $this->route->getAllData(),
             'footer' => [
                 '<script src="' . base_url() . 'js/App/datatable.js' . '"></script>',
                 '<script src="' . base_url() . 'js/App/validasi.js' . '"></script>',
@@ -136,6 +141,7 @@ class MaterialController extends BaseController
                 'category' => $this->category->loadAllData(),
                 'workshop' => $this->workshop->generateList(),
                 'uom' => $this->uom->getAllData(),
+                'route' => $this->route->getAllData(),
                 'footer' => [
                     '<script src="' . base_url() . 'js/App/datatable.js' . '"></script>',
                     '<script src="' . base_url() . 'js/App/validasi.js' . '"></script>',

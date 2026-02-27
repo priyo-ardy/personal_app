@@ -14,6 +14,15 @@ class MaterialCategoryValidation
                 'min_length' => '{field} must be at least {param} characters in length',
                 'max_length' => '{field} must not exceed {param} characters in length'
             ]
+        ],
+        'data_prefix' => [
+            'label' => "Material category prefix",
+            'rules' => 'required|is_unique[m_material_category.prefix]|min_length[1]|max_length[5]',
+            'errors' => [
+                'required' => '{field} is required',
+                'min_length' => '{field} must be at least {param} characters in length',
+                'max_length' => '{field} must not exceed {param} characters in length'
+            ]
         ]
     ];
 

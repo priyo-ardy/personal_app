@@ -99,6 +99,11 @@ class MaterialTable extends Migration
                 'constraint' => 100,
                 'null' => true
             ],
+            'process_route' => [
+                'type' => 'VARCHAR',
+                'constraint' => 50,
+                'null' => true
+            ],
             'image' => [
                 'type' => "VARCHAR",
                 'constraint' => 255,
@@ -140,6 +145,7 @@ class MaterialTable extends Migration
         $this->forge->addForeignKey('category', 'm_material_category', 'id', '', 'RESTRICT');
         $this->forge->addForeignKey('workshop', 'm_workshop', 'id', '', 'RESTRICT');
         $this->forge->addForeignKey('uom', 'm_uom', 'id', '', 'RESTRICT');
+        $this->forge->addForeignKey('process_route', 'm_route', 'id', '', 'RESTRICT');
 
         $this->forge->createTable('m_material', true);
     }

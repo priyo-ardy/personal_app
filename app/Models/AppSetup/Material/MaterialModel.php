@@ -32,6 +32,8 @@ class MaterialModel extends BaseModel
         'gross_weight',
         'cavity',
         'image',
+        'mold_no',
+        'process_route',
         'description',
         'created_at',
         'created_by',

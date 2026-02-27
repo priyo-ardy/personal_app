@@ -6,16 +6,20 @@ use App\Controllers\BaseController;
 use App\Repositories\ApqpSetup\ApqpHeaderRepository;
 use App\Services\ApqpSetup\ApqpHeaderService;
 use CodeIgniter\HTTP\ResponseInterface;
+use App\Services\Employee\EmployeeService;
+use App\Repositories\Employee\EmployeeRepository;
 use App\Traits\ResponseTrait;
 
 class ApqpHeaderController extends BaseController
 {
     use ResponseTrait;
     protected $header;
+    protected $employee;
 
     public function __construct()
     {
         $this->header = new ApqpHeaderService(new ApqpHeaderRepository());
+        $this->employee = new EmployeeService(new EmployeeRepository());
     }
 
     public function loadTable()
@@ -39,6 +43,7 @@ class ApqpHeaderController extends BaseController
     {
         $data = [
             'title' => "Apqp Header Management",
+            'employee' => $this->employee->listEmployeeByDate(date('Y-m-d')),
             'footer' => [
                 '<script src="' . base_url() . 'js/App/datatable.js' . '"></script>',
                 '<script src="' . base_url() . 'js/App/validasi.js' . '"></script>',
@@ -140,6 +145,26 @@ class ApqpHeaderController extends BaseController
         } catch (\Exception $e) {
             $code = $e->getCode() ?? ResponseInterface::HTTP_INTERNAL_SERVER_ERROR;
             log_message('error', '[ApqpHeaderController::delete] Unexpexted error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            return pesan($code, $e->getMessage());
+        }
+    }
+
+    public function documentList($token)
+    {
+        if ($this->request->getMethod() !== 'GET') {
+            log_message('error', '[ApqpHeaderController::documentList] Method not allowed from {ip}', ['ip' => $_SERVER['REMOTE_ADDR']]);
+            throw new \Exception("Method not allowed", ResponseInterface::HTTP_METHOD_NOT_ALLOWED);
+        }
+
+        try {
+            $apqp = dekripsi($token);
+
+            $get = $this->header->getApqpDocumentList($apqp);
+
+            return pesan(ResponseInterface::HTTP_OK, "Data found", $get);
+        } catch (\Exception $e) {
+            $code = $e->getCode() ?? ResponseInterface::HTTP_INTERNAL_SERVER_ERROR;
+            log_message('error', '[ApqpHeaderController::documentList] Unexpexted error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
             return pesan($code, $e->getMessage());
         }
     }

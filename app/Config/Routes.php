@@ -553,6 +553,7 @@
             $routes->get('get/(:any)', 'AppSetup\ApqpSetup\ApqpHeaderController::get/$1');
             $routes->post('update', 'AppSetup\ApqpSetup\ApqpHeaderController::update');
             $routes->post('delete', 'AppSetup\ApqpSetup\ApqpHeaderController::delete');
+            $routes->get('document_list/(:any)', 'AppSetup\ApqpSetup\ApqpHeaderController::documentList/$1');
         });
 
         // Site Setting
