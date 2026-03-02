@@ -3,8 +3,9 @@
 namespace App\Repositories\ApqpSetup;
 
 use App\Models\AppSetup\ApqpSetup\ApqpDocumentModel;
+use App\Repositories\CrudRepository;
 
-class ApqpDocumentRepository
+class ApqpDocumentRepository extends CrudRepository
 {
     protected $model;
     public function __construct()
@@ -14,6 +15,8 @@ class ApqpDocumentRepository
 
     public function getDocumentByApqp(string $apqp)
     {
-        return $this->model->where('apqp_id', $apqp)->orderBy('baris', 'asc')->findAll();
+        return $this->model->select('m_apqp_document.*, m_karyawan.nik, m_karyawan.name')
+            ->join('m_karyawan', 'm_apqp_document.uploader = m_karyawan.id', 'left')
+            ->where('apqp_id', $apqp)->orderBy('baris', 'asc')->findAll();
     }
 }

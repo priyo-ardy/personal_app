@@ -1,31 +1,3 @@
-// function validasi() {
-//   let isValid = true;
-
-//   const requiredElements = document.querySelectorAll("[required]");
-
-//   requiredElements.forEach((element) => {
-//     const feedbackElement =
-//       element.parentNode.querySelector(".invalid-feedback");
-
-//     if (element.value.trim() === "") {
-//       isValid = false;
-//       element.classList.add("is-invalid");
-
-//       if (feedbackElement) {
-//         feedbackElement.textContent = "This field is required";
-//       }
-//     } else {
-//       element.classList.remove("is-invalid");
-
-//       if (feedbackElement) {
-//         feedbackElement.textContent = "";
-//       }
-//     }
-//   });
-
-//   return isValid;
-// }
-
 function validasi() {
   let isValid = true;
   const requiredElements = document.querySelectorAll("[required]");
@@ -233,4 +205,20 @@ function validateSingleField(element) {
       feedbackElement.textContent = errorMessage;
     }
   }
+}
+
+function validasiTable(tableName) {
+  const table = document.getElementById(tableName);
+  const requiredElements = table.querySelectorAll("[required]");
+  let isValid = true;
+  requiredElements.forEach((element) => {
+    if (element.value.trim() === "") {
+      isValid = false;
+      element.classList.add("is-invalid");
+    } else {
+      element.classList.remove("is-invalid");
+    }
+  });
+
+  return isValid;
 }

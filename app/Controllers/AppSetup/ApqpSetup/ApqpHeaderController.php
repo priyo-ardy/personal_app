@@ -168,4 +168,92 @@ class ApqpHeaderController extends BaseController
             return pesan($code, $e->getMessage());
         }
     }
+
+    public function saveDocument()
+    {
+        if ($this->request->getMethod() !== 'POST') {
+            log_message('error', '[ApqpHeaderController::saveDocument] Method not allowed from {ip}', ['ip' => $_SERVER['REMOTE_ADDR']]);
+            throw new \Exception("Method not allowed", ResponseInterface::HTTP_METHOD_NOT_ALLOWED);
+        }
+
+        try {
+            $postData = $this->request->getPost();
+
+            $this->header->saveApqpDocument($postData);
+
+            return pesan(ResponseInterface::HTTP_OK, "Data saved successfully");
+        } catch (\Exception $e) {
+            $code = $e->getCode() ?? ResponseInterface::HTTP_INTERNAL_SERVER_ERROR;
+            log_message('error', '[ApqpHeaderController::saveDocument] Unexpexted error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            return pesan($code, $e->getMessage());
+        }
+    }
+
+    public function updateDocument()
+    {
+        if ($this->request->getMethod() !== 'POST') {
+            log_message('error', '[ApqpHeaderController::updateDocument] Method not allowed from {ip}', ['ip' => $_SERVER['REMOTE_ADDR']]);
+            throw new \Exception("Method not allowed", ResponseInterface::HTTP_METHOD_NOT_ALLOWED);
+        }
+
+        try {
+            $json_data = $this->request->getJSON(true);
+
+            if (!is_array($json_data)) {
+                throw new \Exception("Invalid JSON data", ResponseInterface::HTTP_BAD_REQUEST);
+            }
+
+            $token = $json_data['token'];
+            $id = dekripsi($token);
+            $document_name = trim($json_data['document_name']);
+            $uploader = trim($json_data['uploader']);
+            $document_level = trim($json_data['document_level']);
+
+            $data = [
+                'document_name' => $document_name,
+                'uploader' => $uploader,
+                'document_level' => $document_level,
+                'updated_by' => session()->get('id')
+            ];
+
+            $update = $this->header->updateApqpDocument($id, $data);
+
+            return $this->success(ResponseInterface::HTTP_OK, "Data updated successfully", $update);
+        } catch (\Exception $e) {
+            $code = $e->getCode() ?? ResponseInterface::HTTP_INTERNAL_SERVER_ERROR;
+            log_message('error', '[ApqpHeaderController::updateDocument] Unexpexted error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            return pesan($code, $e->getMessage());
+        }
+    }
+
+    public function deleteDocument()
+    {
+        if ($this->request->getMethod() !== 'POST') {
+            log_message('error', '[ApqpHeaderController::deleteDocument] Method not allowed from {ip}', ['ip' => $_SERVER['REMOTE_ADDR']]);
+            throw new \Exception("Method not allowed", ResponseInterface::HTTP_METHOD_NOT_ALLOWED);
+        }
+
+        try {
+            $json_data = $this->request->getJSON(true);
+
+            if (!is_array($json_data)) {
+                throw new \Exception("Request not valid", ResponseInterface::HTTP_BAD_REQUEST);
+            }
+
+            if (!isset($json_data['token'])) {
+                throw new \Exception("Request not valid", ResponseInterface::HTTP_BAD_REQUEST);
+            }
+
+            $token = $json_data['token'];
+            $id = dekripsi($token);
+
+            $delete = $this->header->deleteApqpDocument($id);
+
+            return $this->success(ResponseInterface::HTTP_OK, "Data deleted successfully", $delete);
+        } catch (\Exception $e) {
+            $code = $e->getCode() ?? ResponseInterface::HTTP_INTERNAL_SERVER_ERROR;
+            log_message('error', '[ApqpHeaderController::deleteDocument] Unexpexted error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            return pesan($code, $e->getMessage());
+        }
+    }
 }

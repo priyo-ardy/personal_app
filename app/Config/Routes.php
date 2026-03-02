@@ -554,6 +554,9 @@
             $routes->post('update', 'AppSetup\ApqpSetup\ApqpHeaderController::update');
             $routes->post('delete', 'AppSetup\ApqpSetup\ApqpHeaderController::delete');
             $routes->get('document_list/(:any)', 'AppSetup\ApqpSetup\ApqpHeaderController::documentList/$1');
+            $routes->post('save_document', 'AppSetup\ApqpSetup\ApqpHeaderController::saveDocument');
+            $routes->post('update_document', 'AppSetup\ApqpSetup\ApqpHeaderController::updateDocument');
+            $routes->post('delete_document', 'AppSetup\ApqpSetup\ApqpHeaderController::deleteDocument');
         });
 
         // Site Setting

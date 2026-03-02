@@ -196,11 +196,110 @@ class ApqpHeaderService
     public function getApqpDocumentList(string $apqp)
     {
         try {
+            $get_header = $this->repository->find($apqp);
             $get_document_lists = $this->document->getDocumentByApqp($apqp);
 
-            return $get_document_lists;
+            $details = [];
+            foreach ($get_document_lists as $row) {
+                $details[] = [
+                    'token' => enkripsi($row->id),
+                    'document_name' => $row->document_name,
+                    'document_level' => $row->document_level,
+                    'uploader' => $row->uploader,
+                    'row_number' => $row->baris,
+                    'uploader' => $row->nik . ' - ' . $row->name
+                ];
+            }
+
+            $data = [
+                'token' => enkripsi($get_header->id),
+                'header' => $get_header->name,
+                'details' => $details
+            ];
+
+            return $data;
         } catch (\Exception $e) {
             log_message('error', '[ApqpHeaderService::getApqpDocumentList] Unexpexted error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            throw $e;
+        }
+    }
+
+    public function  saveApqpDocument(array $postData)
+    {
+        try {
+            $data = [];
+            $baris = 1;
+            for ($i = 0; $i < count($postData['document_name']); $i++) {
+                $data[] = [
+                    'id' => uuid_v7(),
+                    'apqp_id' => dekripsi($postData['data_apqp_token']),
+                    'baris' => $baris,
+                    'document_level' => trim($postData['document_level'][$i]),
+                    'document_name' => trim($postData['document_name'][$i]),
+                    'uploader' => trim($postData['uploader'][$i]),
+                    'created_by' => session()->get('user_name')
+                ];
+
+                $baris++;
+            }
+
+            $this->db->transStart();
+            $this->document->massSave($data);
+            $this->db->transComplete();
+
+            if ($this->db->transStatus() === false) {
+                $this->db->transRollback();
+                log_message('error', '[ApqpHeaderService::saveApqpDocument] Failed to save apqp document data by {NIK} : {err}', ['NIK' => session()->get('user_name'), 'err' => $this->db->error()]);
+                throw new \Exception($this->db->error()['message'], ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
+            }
+
+            log_message('info', '[ApqpHeaderService::saveApqpDocument] Apqp Document data was saved by {NIK} for apqp_id {apqp_id}', ['NIK' => session()->get('user_name'), 'apqp_id' => dekripsi($postData['data_apqp_token'])]);
+            return true;
+        } catch (\Exception $e) {
+            log_message('error', '[ApqpHeaderService::saveApqpDocument] Unexpexted error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            throw $e;
+        }
+    }
+
+    public function updateApqpDocument(string $id, array $data)
+    {
+        try {
+            $this->db->transStart();
+            $this->document->update($id, $data);
+            $this->db->transComplete();
+
+            if ($this->db->transStatus() === false) {
+                $this->db->transRollback();
+                log_message('error', '[ApqpHeaderService::updateApqpDocument] Failed to update apqp document data by {NIK} : {err}', ['NIK' => session()->get('user_name'), 'err' => $this->db->error()]);
+                throw new \Exception($this->db->error()['message'], ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
+            }
+
+            log_message('info', '[ApqpHeaderService::updateApqpDocument] Apqp Document data was updated by {NIK} for apqp_id {apqp_id}', ['NIK' => session()->get('user_name'), 'apqp_id' => $id]);
+            $list = $this->document->find($id);
+            return $list;
+        } catch (\Exception $e) {
+            log_message('error', '[ApqpHeaderService::updateApqpDocument] Unexpexted error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            throw $e;
+        }
+    }
+
+    public function deleteApqpDocument(string $id)
+    {
+        try {
+            $this->db->transStart();
+            $this->document->delete($id);
+            $this->db->transComplete();
+
+            if ($this->db->transStatus() === false) {
+                $this->db->transRollback();
+                log_message('error', '[ApqpHeaderService::deleteApqpDocument] Failed to delete apqp document data by {NIK} : {err}', ['NIK' => session()->get('user_name'), 'err' => $this->db->error()]);
+                throw new \Exception($this->db->error()['message'], ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
+            }
+
+            log_message('info', '[ApqpHeaderService::deleteApqpDocument] Apqp Document data was deleted by {NIK} for apqp_id {apqp_id}', ['NIK' => session()->get('user_name'), 'apqp_id' => $id]);
+            return true;
+        } catch (\Exception $e) {
+            log_message('error', '[ApqpHeaderService::deleteApqpDocument] Unexpexted error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
             throw $e;
         }
     }
