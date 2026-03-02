@@ -13,6 +13,7 @@ use App\Validation\ApqpSetup\ApqpHeaderValidation;
 use App\Repositories\ApqpSetup\ApqpDocumentRepository;
 use App\Repositories\ApqpSetup\ApqpApproverRepository;
 use CodeIgniter\HTTP\Response;
+use Ramsey\Uuid\Uuid;
 
 class ApqpHeaderService
 {
@@ -286,6 +287,7 @@ class ApqpHeaderService
     public function deleteApqpDocument(string $id)
     {
         try {
+            $id = Uuid::uuid7()->toString();
             $this->db->transStart();
             $this->document->delete($id);
             $this->db->transComplete();

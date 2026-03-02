@@ -4,9 +4,9 @@ namespace App\Models\MasterData\JobData;
 
 use CodeIgniter\Model;
 
-class JobDataModel.php extends Model
+class JobDataModel extends Model
 {
-    protected $table            = 'jobdatamodel.phps';
+    protected $table            = 'm_job_data';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
