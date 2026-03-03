@@ -256,4 +256,39 @@ class ApqpHeaderController extends BaseController
             return pesan($code, $e->getMessage());
         }
     }
+
+    public function getApprover(string $token)
+    {
+        if ($this->request->getMethod() !== 'GET') {
+            log_message('error', '[ApqpHeaderController::getApprover] Method not allowed from {ip}', ['ip' => $_SERVER['REMOTE_ADDR']]);
+            throw new \Exception("Method not allowed", ResponseInterface::HTTP_METHOD_NOT_ALLOWED);
+        }
+
+        try {
+            $apqp_id = dekripsi($token);
+
+            $get_data = $this->header->getApprover($apqp_id);
+
+            return pesan(ResponseInterface::HTTP_OK, "Data found", $get_data);
+        } catch (\Exception $e) {
+            $code = $e->getCode() ?? ResponseInterface::HTTP_INTERNAL_SERVER_ERROR;
+            log_message('error', '[ApqpHeaderController::getApprover] Unexpexted error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            return pesan($code, $e->getMessage());
+        }
+    }
+
+    public function saveApprover()
+    {
+        if ($this->request->getMethod() !== 'POST') {
+            log_message('error', '[ApqpHeaderController::saveApprover] Method not allowed from {ip}', ['ip' => $_SERVER['REMOTE_ADDR']]);
+            throw new \Exception("Method not allowed", ResponseInterface::HTTP_METHOD_NOT_ALLOWED);
+        }
+
+        try {
+        } catch (\Exception $e) {
+            $code = $e->getCode() ?? ResponseInterface::HTTP_INTERNAL_SERVER_ERROR;
+            log_message('error', '[ApqpHeaderController::saveApprover] Unexpexted error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            return pesan($code, $e->getMessage());
+        }
+    }
 }

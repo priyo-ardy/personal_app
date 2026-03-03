@@ -19,6 +19,7 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 const formData = document.getElementById("formData");
+const formApprover = document.getElementById("formApprover");
 const formDocument = document.getElementById("formDocument");
 const tBody = document.getElementById("tbodyDocument");
 const modalDocumentHeader = document.getElementById("apqp_name");
@@ -491,10 +492,6 @@ function cancelDocument(btn) {
   row.removeAttribute("data-original-values");
 }
 
-function getApprover(token) {
-  // $("#modalApprover").modal("show");
-}
-
 function updateDocument(button, token) {
   const row = button.closest("tr");
   const namaDocument = row.querySelector("input[name='document_name[]']");
@@ -588,4 +585,145 @@ function deleteDocument(button, token) {
         );
       }
     });
+}
+
+function getApprover(token) {
+  try {
+    loading();
+    fetchData(baseurl + "/apqp_setup/get_approver/" + token, "GET")
+      .then((result) => {
+        document.getElementById("approver_token").value = result.data.token;
+        document.getElementById("approver_title").innerText =
+          result.data.header;
+        if (result.data.details.length > 0) {
+          result.data.details.forEach((item) => {
+            const row = `
+              <tr>
+                <td>${item.apporver}</td>
+                <td>
+                    <button type="button" class="btn btn-sm btn-success rounded-0 btn-add" onclick="addApproverRow()"><i class="bi bi-plus-circle"></i>&ensp;Add</button>
+                    <button type="button" class="btn btn-sm btn-warning rounded-0 btn-edit" onclick="editApprover(this)"><i class="bi bi-pencil-square"></i>&ensp;Edit</button>
+                    <button type="button" class="btn btn-sm btn-danger rounded-0 btn-delete" onclick="deleteApprover(this, '${item.token}')"><i class="bi bi-dash-circle"></i>&ensp;Delete</button>
+                    <button hidden type="button" class="btn btn-update btn-primary rounded-0 btn-sm btn-update" onclick="updateApprover(this, '${item.token}')"><i class="bi bi-floppy"></i>&ensp;Update</button>
+                    <button hidden type="button" class="btn btn-cancel btn-warning rounded-0 btn-sm btn-cancel" onclick="cancelApprover(this)"><i class="bi bi-arrow-counterclockwise"></i>&ensp;Cancel</button>
+                </td>
+              </tr>
+            `;
+          });
+        } else {
+          firsRowApprover();
+        }
+
+        $("#modalApprover").modal("show");
+        hideLoading();
+      })
+      .catch((err) => {
+        pesanError(err.message);
+        hideLoading();
+      });
+  } catch (e) {
+    pesanError(e.message);
+    hideLoading();
+  }
+}
+
+function firsRowApprover() {
+  const tbody = document.getElementById("approverList");
+  const row =
+    `
+    <tr>
+      <td class="align-middle">
+        <select name="approver[]" class="form-control select2 select2bs5" required>
+          <option value="">-- Choose --</option>
+          ` +
+    document.getElementById("listEmployee").innerHTML +
+    `
+        </select>
+      </td>
+      <td class="align-middle">
+        <button type="button" class="btn btn-success btn-sm rounded-0" onclick="addApproverRow()"><i class="bi bi-plus-circle"></i>&ensp;Add</button>
+      </td>
+    </tr>
+  `;
+
+  tbody.insertAdjacentHTML("beforeend", row);
+
+  $(".select2bs5").select2({
+    dropdownParent: $("#modalApprover"),
+    theme: "bootstrap-5",
+    dropdownCssClass: "rounded-0",
+    selectionCssClass: "rounded-0",
+  });
+}
+
+function addApproverRow() {
+  const tbody = document.getElementById("approverList");
+  const row =
+    `
+    <tr>
+      <td class="align-middle">
+        <select name="approver[]" class="form-control select2 select2bs5" required>
+          <option value="">-- Choose --</option>
+          ` +
+    document.getElementById("listEmployee").innerHTML +
+    `
+        </select>
+      </td>
+      <td class="align-middle">
+        <button type="button" class="btn btn-success btn-sm rounded-0" onclick="addApproverRow()"><i class="bi bi-plus-circle"></i>&ensp;Add</button>
+        <button type="button" class="btn btn-danger btn-sm rounded-0" onclick="removeDocumentRow(this)"><i class="bi bi-dash-circle"></i>&ensp;Delete</button>
+      </td>
+    </tr>
+  `;
+
+  tbody.insertAdjacentHTML("beforeend", row);
+
+  $(".select2bs5").select2({
+    dropdownParent: $("#modalApprover"),
+    theme: "bootstrap-5",
+    dropdownCssClass: "rounded-0",
+    selectionCssClass: "rounded-0",
+  });
+}
+
+document.getElementById("btnSaveApprover").addEventListener("click", () => {
+  if (validasiTable("tableApprover")) {
+    try {
+      loading();
+      fetchData(
+        baseurl + "/apqp_setup/save_approver",
+        "POST",
+        new FormData(formApprover),
+      )
+        .then((result) => {
+          getApprover(document.getElementById("approver_token").value);
+          hideLoading();
+        })
+        .catch((err) => {
+          pesanError(err.message);
+          hideLoading();
+        });
+    } catch (e) {
+      pesanError(e.message);
+      hideLoading();
+    }
+  }
+});
+
+function removeRowApprover(button) {}
+
+function editApprover(button) {}
+
+function deleteApprover(button, token) {}
+
+function updateApprover(button, token) {}
+
+function cancelApprover(button) {}
+
+function closeModalApprover(btn) {
+  const tbody = document.getElementById("approverList");
+  tbody.innerHTML = "";
+  document.getElementById("approver_token").value = "";
+
+  $("#modalApprover").modal("hide");
 }

@@ -557,6 +557,8 @@
             $routes->post('save_document', 'AppSetup\ApqpSetup\ApqpHeaderController::saveDocument');
             $routes->post('update_document', 'AppSetup\ApqpSetup\ApqpHeaderController::updateDocument');
             $routes->post('delete_document', 'AppSetup\ApqpSetup\ApqpHeaderController::deleteDocument');
+            $routes->get('get_approver/(:any)', 'AppSetup\ApqpSetup\ApqpHeaderController::getApprover/$1');
+            $routes->post('save_approver', 'AppSetup\ApqpSetup\ApqpHeaderController::saveApprover');
         });
 
         // Site Setting

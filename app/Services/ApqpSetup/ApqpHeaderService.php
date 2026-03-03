@@ -305,4 +305,32 @@ class ApqpHeaderService
             throw $e;
         }
     }
+
+    public function getApprover(string $apqp_id)
+    {
+        try {
+            $get = $this->approver->getApproverByApqp($apqp_id);
+            $header = $this->repository->find($apqp_id);
+
+            $details = [];
+
+            foreach ($get as $row) {
+                $details[] = [
+                    'token' => enkripsi($row->id),
+                    'approver' => "$row->nik - $row->name",
+                ];
+            }
+
+            $data = [
+                'token' => enkripsi($header->id),
+                'header' => $header->name,
+                'details' => $details
+            ];
+
+            return $data;
+        } catch (\Exception $e) {
+            log_message('error', '[ApqpHeaderService::getApprover] Unexpexted error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            throw $e;
+        }
+    }
 }

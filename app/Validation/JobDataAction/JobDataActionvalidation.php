@@ -4,7 +4,7 @@
 namespace App\Validation\JobDataAction;
 
 
-class JobDataActionValidation
+class JobDataActionvalidation
 {
     public static $save = [
         'data_name' => [
