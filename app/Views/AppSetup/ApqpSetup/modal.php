@@ -43,7 +43,7 @@
             <div class="modal-body">
                 <form id="formApprover">
                     <div class="row g-2 mb-3">
-                        <input type="text" name="approver_token" id="approver_token" class="form-control rounded-0 bg-secondary-subtle" readonly>
+                        <input type="hidden" name="approver_token" id="approver_token" class="form-control rounded-0 bg-secondary-subtle" readonly>
                     </div>
                     <div class="row g-2">
                         <div class="table-responsive">

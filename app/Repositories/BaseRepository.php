@@ -47,4 +47,9 @@ class BaseRepository
     {
         return $this->model->update($id, ['deleted_at' => date('Y-m-d H:i:sP')]);
     }
+
+    public function massSave(array $data)
+    {
+        return $this->model->insertBatch($data);
+    }
 }

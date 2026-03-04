@@ -285,9 +285,42 @@ class ApqpHeaderController extends BaseController
         }
 
         try {
+            $postData = $this->request->getPost();
+
+            $save = $this->header->saveApprover($postData);
+
+            return pesan(ResponseInterface::HTTP_OK, "Data saved successfully", $save);
         } catch (\Exception $e) {
             $code = $e->getCode() ?? ResponseInterface::HTTP_INTERNAL_SERVER_ERROR;
             log_message('error', '[ApqpHeaderController::saveApprover] Unexpexted error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            return pesan($code, $e->getMessage());
+        }
+    }
+
+    public function updateApprover()
+    {
+        if ($this->request->getMethod() !== 'POST') {
+            log_message('error', '[ApqpHeaderController::updateApprover] Method not allowed from {ip}', ['ip' => $_SERVER['REMOTE_ADDR']]);
+            throw new \Exception("Method not allowed", ResponseInterface::HTTP_METHOD_NOT_ALLOWED);
+        }
+
+        try {
+            $json_data = $this->request->getJSON(true);
+
+            if (!is_array($json_data)) {
+                throw new \Exception("Invalid JSON data", ResponseInterface::HTTP_BAD_REQUEST);
+            }
+
+            $token = $json_data['token'];
+            $id = dekripsi($token);
+            $approver = trim($json_data['approver']);
+
+            $update = $this->header->updateApprover($id, $approver);
+
+            return $this->success(ResponseInterface::HTTP_OK, "Data updated successfully", $update);
+        } catch (\Exception $e) {
+            $code = $e->getCode() ?? ResponseInterface::HTTP_INTERNAL_SERVER_ERROR;
+            log_message('error', '[ApqpHeaderController::updateApprover] Unexpexted error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
             return pesan($code, $e->getMessage());
         }
     }

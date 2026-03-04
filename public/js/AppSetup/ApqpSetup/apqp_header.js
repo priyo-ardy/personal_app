@@ -595,11 +595,13 @@ function getApprover(token) {
         document.getElementById("approver_token").value = result.data.token;
         document.getElementById("approver_title").innerText =
           result.data.header;
+        const approverTable = document.getElementById("approverList");
+        approverTable.innerHTML = "";
         if (result.data.details.length > 0) {
           result.data.details.forEach((item) => {
             const row = `
               <tr>
-                <td>${item.apporver}</td>
+                <td class="editableApprover">${item.approver}</td>
                 <td>
                     <button type="button" class="btn btn-sm btn-success rounded-0 btn-add" onclick="addApproverRow()"><i class="bi bi-plus-circle"></i>&ensp;Add</button>
                     <button type="button" class="btn btn-sm btn-warning rounded-0 btn-edit" onclick="editApprover(this)"><i class="bi bi-pencil-square"></i>&ensp;Edit</button>
@@ -609,6 +611,8 @@ function getApprover(token) {
                 </td>
               </tr>
             `;
+
+            approverTable.insertAdjacentHTML("beforeend", row);
           });
         } else {
           firsRowApprover();
@@ -632,7 +636,7 @@ function firsRowApprover() {
   const row =
     `
     <tr>
-      <td class="align-middle">
+      <td>
         <select name="approver[]" class="form-control select2 select2bs5" required>
           <option value="">-- Choose --</option>
           ` +
@@ -687,7 +691,7 @@ function addApproverRow() {
 }
 
 document.getElementById("btnSaveApprover").addEventListener("click", () => {
-  if (validasiTable("tableApprover")) {
+  if (validasiApprover()) {
     try {
       loading();
       fetchData(
@@ -696,7 +700,8 @@ document.getElementById("btnSaveApprover").addEventListener("click", () => {
         new FormData(formApprover),
       )
         .then((result) => {
-          getApprover(document.getElementById("approver_token").value);
+          pesanSukses(result.message);
+          closeModalApprover();
           hideLoading();
         })
         .catch((err) => {
@@ -712,13 +717,183 @@ document.getElementById("btnSaveApprover").addEventListener("click", () => {
 
 function removeRowApprover(button) {}
 
-function editApprover(button) {}
+function editApprover(button) {
+  const row = button.closest("tr");
+  const editableCell = row.querySelectorAll(".editableApprover");
 
-function deleteApprover(button, token) {}
+  let originalValue = [];
+  editableCell.forEach(cell => {
+    originalValue.push(cell.textContent);
+  });
 
-function updateApprover(button, token) {}
+  row.setAttribute("data-original-value", originalValue.join("|||"));
 
-function cancelApprover(button) {}
+  editableCell.forEach((cell, index) => {
+    const currentValue = cell.textContent.trim();
+    cell.innerHTML = '';
+    const selectElement = document.createElement("select");
+    selectElement.className = "form-control select2 select2bs5";
+    selectElement.innerHTML = document.getElementById("listEmployee").innerHTML;
+    
+    for (let i = 0; i < selectElement.options.length; i++) {
+      if (selectElement.options[i].text.trim() === currentValue) {
+        selectElement.options[i].selected = true;
+        break;
+      }
+    }
+
+    cell.appendChild(selectElement);
+  });
+
+    $(".select2bs5").select2({
+    dropdownParent: $("#modalApprover"),
+    theme: "bootstrap-5",
+    dropdownCssClass: "rounded-0",
+    selectionCssClass: "rounded-0",
+  });
+
+  row.querySelectorAll(".btn-edit").forEach((btn) => {
+    btn.setAttribute("hidden", true);
+  });
+  row.querySelectorAll(".btn-add").forEach((btn) => {
+    btn.setAttribute("hidden", true);
+  });
+  row.querySelectorAll(".btn-delete").forEach((btn) => {
+    btn.setAttribute("hidden", true);
+  });
+  row.querySelectorAll(".btn-update").forEach((btn) => {
+    btn.removeAttribute("hidden");
+  });
+  row.querySelectorAll(".btn-cancel").forEach((btn) => {
+    btn.removeAttribute("hidden");
+  });
+}
+
+function cancelApprover(btn) {
+  const row = btn.closest("tr");
+  const editableCells = row.querySelectorAll(".editableApprover");
+  const originalValuesString = row.getAttribute("data-original-value");
+
+  if (!originalValuesString) return;
+
+  const originalValues = originalValuesString.split("|||");
+
+  editableCells.forEach((cell, index) => {
+    cell.innerHTML = originalValues[index]; // Kembalikan ke teks asli
+  });
+
+  row.querySelectorAll(".btn-edit").forEach((btn) => {
+    btn.removeAttribute("hidden");
+  });
+  row.querySelectorAll(".btn-add").forEach((btn) => {
+    btn.removeAttribute("hidden");
+  });
+  row.querySelectorAll(".btn-delete").forEach((btn) => {
+    btn.removeAttribute("hidden");
+  });
+  row.querySelectorAll(".btn-update").forEach((btn) => {
+    btn.setAttribute("hidden", true);
+  });
+  row.querySelectorAll(".btn-cancel").forEach((btn) => {
+    btn.setAttribute("hidden", true);
+  });
+
+  row.removeAttribute("data-original-values");
+}
+
+function updateApprover(btn, token) {
+  const row = btn.closest("tr");
+  const editableCells = row.querySelectorAll(".editableApprover");
+
+  editableCells.forEach((cell) => {
+    const selectElement = cell.querySelectorAll(".select2bs5");
+    if (selectElement.length > 0) {
+      row.removeAttribute("data-original-values");
+      try {
+        loading();
+        fetchData(
+          baseurl + "/apqp_setup/update_approver/",
+          "POST",
+          JSON.stringify({ token: token, approver: selectElement[0].value })
+        )
+          .then((result) => {
+            cell.innerHTML = result.data.approver;
+            row.querySelectorAll(".btn-edit").forEach((btn) => {
+              btn.removeAttribute("hidden");
+            });
+            row.querySelectorAll(".btn-add").forEach((btn) => {
+              btn.removeAttribute("hidden");
+            });
+            row.querySelectorAll(".btn-delete").forEach((btn) => {
+              btn.removeAttribute("hidden");
+            });
+            row.querySelectorAll(".btn-update").forEach((btn) => {
+              btn.setAttribute("hidden", true);
+            });
+            row.querySelectorAll(".btn-cancel").forEach((btn) => {
+              btn.setAttribute("hidden", true);
+            });
+
+            hideLoading();
+          })
+          .catch((err) => {
+            pesanError(err.message);
+            hideLoading();
+          });
+      } catch (e) {
+        pesanError(e.message);
+        hideLoading();
+      }
+    }
+  });
+}
+
+function deleteApprover(btn, token) {
+  const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+      confirmButton: "btn btn-primary rounded-0",
+      cancelButton: "btn btn-secondary rounded-0",
+    },
+  });
+
+  swalWithBootstrapButtons
+    .fire({
+      title: "Warning !",
+      text: "Deleted data cannot be recovered",
+      icon: "warning",
+      showCancelButton: true,
+      cancelButtonColor: "#d33",
+      confirmButtonText: '<i class="bi bi-check"></i>&ensp;Yes',
+      cancelButtonText: '<i class="bi bi-x"></i>&ensp;Cancel',
+      reverseButtons: true,
+    })
+    .then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Please wait...",
+          timerProgressBar: true,
+          allowEscapeKey: false,
+          allowOutsideClick: false,
+          didOpen: () => {
+            swal.showLoading();
+          },
+        }).then(
+          fetchData(
+            baseurl + "/apqp_setup/delete_approver",
+            "POST",
+            JSON.stringify({ token: token }),
+          )
+            .then((result) => {
+              pesanSukses(result.message);
+              removeDocumentRow(btn);
+            })
+            .catch((err) => {
+              pesanError(err.message);
+            }),
+        );
+      }
+    });
+}
 
 function closeModalApprover(btn) {
   const tbody = document.getElementById("approverList");
@@ -726,4 +901,64 @@ function closeModalApprover(btn) {
   document.getElementById("approver_token").value = "";
 
   $("#modalApprover").modal("hide");
+}
+
+function validasiApprover(){
+  const approverList = document.querySelectorAll("select[name='approver[]']");
+
+  let valuesMap = [];
+  let hasDuplicate = false;
+  let isValid = true;
+
+  approverList.forEach(select => {
+    $(select).removeClass("is-invalid");
+    $(select)
+      .next(".select2-container")
+      .find(".select2-selection")
+      .removeClass("border border-danger");
+    const feedback = select.parentElement.querySelector(".invalid-feedback");
+    if (feedback) feedback.style.display = "none";  
+  });
+
+  approverList.forEach(select => {
+    const value = select.value;
+    if (value !== "") {
+      if (valuesMap[value]) {
+        valuesMap[value].push(select);
+        hasDuplicate = true;
+      } else {
+        valuesMap[value] = [select];
+      }
+    } else {
+      if (select.hasAttribute("required")) {
+        isValid = false;
+        markError(select, "Approver is required");
+      }
+    }
+  });
+
+  if (hasDuplicate) {
+    for (const [val, elements] of Object.entries(valuesMap)) {
+      if (elements.length > 1) {
+        elements.forEach(el => {
+          markError(el, "Approver already exists");
+        });
+      }
+    }
+    return false;
+  }
+
+  if (!isValid) return false;
+
+  return true;
+}
+
+function markError(select, message){
+  $(select).addClass("is-invalid");
+  $(select)
+    .next(".select2-container")
+    .find(".select2-selection")
+    .addClass("border border-danger");
+  const feedback = select.parentElement.querySelector(".invalid-feedback");
+  if (feedback) feedback.style.display = "block";
 }

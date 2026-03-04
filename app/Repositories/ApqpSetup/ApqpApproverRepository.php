@@ -3,8 +3,9 @@
 namespace App\Repositories\ApqpSetup;
 
 use App\Models\AppSetup\ApqpSetup\ApqpApproverModel;
+use App\Repositories\BaseRepository;
 
-class ApqpApproverRepository
+class ApqpApproverRepository extends BaseRepository
 {
     protected $model;
     public function __construct()
@@ -17,5 +18,12 @@ class ApqpApproverRepository
         return $this->model->select('m_apqp_approver.*, m_karyawan.nik, m_karyawan.name')
             ->join('m_karyawan', 'm_apqp_approver.approver = m_karyawan.id', 'left')
             ->where('m_apqp_approver.id_apqp', $apqp_id)->orderBy('row_no', 'asc')->findAll();
+    }
+
+    public function getApproverById(string $id)
+    {
+        return $this->model->select('m_apqp_approver.*, m_karyawan.nik, m_karyawan.name')
+            ->join('m_karyawan', 'm_apqp_approver.approver = m_karyawan.id', 'left')
+            ->where('m_apqp_approver.id', $id)->first();
     }
 }

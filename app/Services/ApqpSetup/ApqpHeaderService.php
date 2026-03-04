@@ -12,6 +12,7 @@ use App\Traits\ResponseTrait;
 use App\Validation\ApqpSetup\ApqpHeaderValidation;
 use App\Repositories\ApqpSetup\ApqpDocumentRepository;
 use App\Repositories\ApqpSetup\ApqpApproverRepository;
+use App\Validation\ApqpSetup\ApqpApproverValidation;
 use CodeIgniter\HTTP\Response;
 use Ramsey\Uuid\Uuid;
 
@@ -330,6 +331,94 @@ class ApqpHeaderService
             return $data;
         } catch (\Exception $e) {
             log_message('error', '[ApqpHeaderService::getApprover] Unexpexted error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            throw $e;
+        }
+    }
+
+    public function saveApprover(array $postData)
+    {
+        $this->validation->setRules(ApqpApproverValidation::$save);
+
+        if ($this->validation->run($postData) === false) {
+            $error_to_string = implode(', ', $this->validation->getErrors());
+            log_message('error', '[ApqpHeaderService::saveApprover] Validation failed : {err} from {ip}', ['err' => $error_to_string, 'ip' => $_SERVER['REMOTE_ADDR']]);
+            throw new \Exception($error_to_string, ResponseInterface::HTTP_BAD_REQUEST);
+        }
+
+        $token = $postData['approver_token'];
+        $apqp_id = dekripsi($token);
+
+        try {
+            try {
+                // Ensure array_unique is applied to an array of strings, not array of arrays.
+                $approver_unique = array_unique($postData['approver']);
+                $approver_data = array_values($approver_unique);
+            } catch (\Exception $e) {
+                log_message('error', '[ApqpHeaderService::saveApprover] Unexpexted error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+                throw $e;
+            }
+
+            $baris = 1;
+            $data = [];
+            for ($i = 0; $i < count($approver_data); $i++) {
+                $data[] = [
+                    'id' => Uuid::uuid7()->toString(),
+                    'id_apqp' => $apqp_id,
+                    'approver' => $approver_data[$i],
+                    'row_no' => $baris,
+                    'created_by' => session()->get('user_name')
+                ];
+
+                $baris++;
+            }
+
+            $this->db->transStart();
+            $this->approver->massSave($data);
+            $this->db->transComplete();
+
+            if ($this->db->transStatus() === false) {
+                $this->db->transRollback();
+                log_message('error', '[ApqpHeaderService::saveApprover] Failed to save apqp approver data by {NIK} : {err}', ['NIK' => session()->get('user_name'), 'err' => $this->db->getLastQuery()]);
+                throw new \Exception($this->db->error()['message'], ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
+            }
+
+            log_message('info', '[ApqpHeaderService::saveApprover] Apqp Approver data was saved by {NIK} for apqp_id {apqp_id}', ['NIK' => session()->get('user_name'), 'apqp_id' => $apqp_id]);
+            return true;
+        } catch (\Exception $e) {
+            log_message('error', '[ApqpHeaderService::saveApprover] Unexpexted error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            throw $e;
+        }
+    }
+
+    public function updateApprover(string $id, string $approver)
+    {
+        try {
+            $data = [
+                'approver' => $approver,
+                'updated_by' => session()->get('user_name')
+            ];
+
+            $this->db->transStart();
+            $this->approver->update($id, $data);
+            $this->db->transComplete();
+
+            if ($this->db->transStatus() === false) {
+                $this->db->transRollback();
+                log_message('error', '[ApqpHeaderService::updateApprover] Failed to update apqp approver data by {NIK} : {err}', ['NIK' => session()->get('user_name'), 'err' => $this->db->error()]);
+                throw new \Exception($this->db->error()['message'], ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
+            }
+
+            $get = $this->approver->getApproverById($id);
+
+            $approver_data = [
+                'token' => enkripsi($get->id),
+                'approver' => "$get->nik - $get->name"
+            ];
+
+            log_message('info', '[ApqpHeaderService::updateApprover] Apqp Approver data was updated by {NIK} for apqp_id {apqp_id}', ['NIK' => session()->get('user_name'), 'apqp_id' => $id]);
+            return $approver_data;
+        } catch (\Exception $e) {
+            log_message('error', '[ApqpHeaderService::updateApprover] Unexpexted error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
             throw $e;
         }
     }
