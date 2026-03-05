@@ -1,147 +1,108 @@
-const formAllPeriod = document.getElementById("formAllPeriod");
-const formMyPeriod = document.getElementById("formMyPeriod");
-
-const buttons = {
-  all: document.getElementById("btnAll"),
-  my: document.getElementById("btnPeriod"),
-};
-
-buttons.all.addEventListener("click", () => {
-  if (validasiForm(formAllPeriod)) {
-    try {
-      const swalWithBootstrapButtons = Swal.mixin({
-        customClass: {
-          confirmButton: "btn btn-primary rounded-0",
-          cancelButton: "btn btn-secondary rounded-0",
-        },
-      });
-
-      swalWithBootstrapButtons
-        .fire({
-          title: "Warning !",
-          html: "Are you sure to change <strong class='text-danger fw-bolder'>All Period Setup</strong> ?",
-          icon: "warning",
-          showCancelButton: true,
-          cancelButtonColor: "#d33",
-          confirmButtonText: '<i class="bi bi-check"></i>&ensp;Yes',
-          cancelButtonText: '<i class="bi bi-x"></i>&ensp;Cancel',
-          reverseButtons: true,
-        })
-        .then((result) => {
-          if (result.isConfirmed) {
-            Swal.fire({
-              title: "Please wait...",
-              timerProgressBar: true,
-              allowEscapeKey: false,
-              allowOutsideClick: false,
-              didOpen: () => {
-                swal.showLoading();
-              },
-            }).then(
-              fetchData(
-                baseurl + "/period_setup/save",
-                "POST",
-                new FormData(formAllPeriod),
-              )
-                .then((result) => {
-                  pesanSukses(result.message);
-                  setTimeout(() => {
-                    window.location.reload();
-                  }, 1000);
-                })
-                .catch((err) => {
-                  pesanError(err.message);
-                }),
-            );
-          }
-        });
-    } catch (e) {
-      pesanError(e.message);
-      hideLoading();
-    }
-  }
+/**
+ * Konfigurasi Global Swal untuk konsistensi UI
+ */
+const swalConfig = Swal.mixin({
+  customClass: {
+    confirmButton: "btn btn-primary rounded-0",
+    cancelButton: "btn btn-secondary rounded-0",
+  },
+  buttonsStyling: true, // Ubah ke true atau hapus baris ini
+  confirmButtonColor: "#0d6efd", // Warna primary Bootstrap
+  cancelButtonColor: "#6c757d", // Warna secondary Bootstrap
 });
 
-buttons.my.addEventListener("click", () => {
-  if (validasiForm(formMyPeriod)) {
-    try {
-      const swalWithBootstrapButtons = Swal.mixin({
-        customClass: {
-          confirmButton: "btn btn-primary rounded-0",
-          cancelButton: "btn btn-secondary rounded-0",
-        },
-      });
+/**
+ * Fungsi Utama untuk Menangani Submit Form
+ * @param {HTMLFormElement} form - Elemen form yang akan dikirim
+ * @param {string} periodName - Nama periode untuk pesan konfirmasi
+ */
+async function handlePeriodSubmit(form, periodName) {
+  if (!validasiForm(form)) return;
 
-      swalWithBootstrapButtons
-        .fire({
-          title: "Warning !",
-          html: "Are you sure to change <strong class='text-danger fw-bolder'>My Period Setup</strong> ?",
-          icon: "warning",
-          showCancelButton: true,
-          cancelButtonColor: "#d33",
-          confirmButtonText: '<i class="bi bi-check"></i>&ensp;Yes',
-          cancelButtonText: '<i class="bi bi-x"></i>&ensp;Cancel',
-          reverseButtons: true,
-        })
-        .then((result) => {
-          if (result.isConfirmed) {
-            Swal.fire({
-              title: "Please wait...",
-              timerProgressBar: true,
-              allowEscapeKey: false,
-              allowOutsideClick: false,
-              didOpen: () => {
-                swal.showLoading();
-              },
-            }).then(
-              fetchData(
-                baseurl + "/period_setup/save",
-                "POST",
-                new FormData(formMyPeriod),
-              )
-                .then((result) => {
-                  pesanSukses(result.message);
-                  setTimeout(() => {
-                    window.location.reload();
-                  }, 1000);
-                })
-                .catch((err) => {
-                  pesanError(err.message);
-                }),
-            );
-          }
-        });
-    } catch (e) {
-      pesanError(e.message);
-      hideLoading();
-    }
-  }
-});
-
-function validasiForm(formElement) {
-  const requiredInputs = formElement.querySelectorAll("[required]");
-
-  const tgl_awal = formElement.querySelector('[name="data_tgl_awal"]');
-  const tgl_akhir = formElement.querySelector('[name="data_tgl_akhir"]');
-
-  let isValid = true;
-
-  formElement.querySelectorAll(".is-invalid").forEach((el) => {
-    el.classList.remove("is-invalid");
+  const result = await swalConfig.fire({
+    title: "Warning !",
+    html: `Are you sure to change <strong class='text-danger fw-bolder'>${periodName}</strong> ?`,
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonText: '<i class="bi bi-check"></i>&ensp;Yes',
+    cancelButtonText: '<i class="bi bi-x"></i>&ensp;Cancel',
+    reverseButtons: true,
   });
 
-  requiredInputs.forEach((input) => {
-    if (input.value.trim() === "") {
+  if (result.isConfirmed) {
+    // Tampilkan Loading
+    Swal.fire({
+      title: "Please wait...",
+      allowOutsideClick: false,
+      didOpen: () => Swal.showLoading(),
+    });
+
+    try {
+      const response = await fetchData(
+        `${baseurl}/period_setup/save`,
+        "POST",
+        new FormData(form),
+      );
+
+      pesanSukses(response.message);
+      setTimeout(() => window.location.reload(), 1000);
+    } catch (err) {
+      pesanError(err.message || "An error occurred");
+    } finally {
+      // Pastikan loading tertutup jika terjadi error
+      if (typeof hideLoading === "function") hideLoading();
+    }
+  }
+}
+
+/**
+ * Event Listeners dengan pengecekan eksistensi elemen
+ */
+const btnAll = document.getElementById("btnAll");
+const btnMy = document.getElementById("btnPeriod");
+const formAll = document.getElementById("formAllPeriod");
+const formMy = document.getElementById("formMyPeriod");
+
+if (btnAll && formAll) {
+  btnAll.addEventListener("click", () =>
+    handlePeriodSubmit(formAll, "All Period Setup"),
+  );
+}
+
+if (btnMy && formMy) {
+  btnMy.addEventListener("click", () =>
+    handlePeriodSubmit(formMy, "My Period Setup"),
+  );
+}
+
+/**
+ * Fungsi Validasi yang telah dioptimasi
+ */
+function validasiForm(formElement) {
+  const inputs = formElement.querySelectorAll("[required]");
+  const tglAwal = formElement.querySelector('[name="data_tgl_awal"]');
+  const tglAkhir = formElement.querySelector('[name="data_tgl_akhir"]');
+  let isValid = true;
+
+  // Bersihkan error sebelumnya
+  formElement
+    .querySelectorAll(".is-invalid")
+    .forEach((el) => el.classList.remove("is-invalid"));
+
+  // Validasi Required
+  inputs.forEach((input) => {
+    if (!input.value.trim()) {
       isValid = false;
       showError(input, "Field ini wajib diisi");
     }
   });
 
-  if (tgl_awal && tgl_akhir && tgl_awal.value && tgl_akhir.value) {
-    if (new Date(tgl_awal.value) > new Date(tgl_akhir.value)) {
+  // Validasi Logika Tanggal
+  if (isValid && tglAwal?.value && tglAkhir?.value) {
+    if (new Date(tglAwal.value) > new Date(tglAkhir.value)) {
       isValid = false;
-      showError(tgl_awal, "Start date must be less than end date");
-      showError(tgl_akhir, "End date must be greater than start date");
+      showError(tglAwal, "Start date must be less than end date");
+      showError(tglAkhir, "End date must be greater than start date");
     }
   }
 
@@ -151,7 +112,5 @@ function validasiForm(formElement) {
 function showError(input, message) {
   input.classList.add("is-invalid");
   const feedback = input.parentNode.querySelector(".invalid-feedback");
-  if (feedback) {
-    feedback.innerText = message;
-  }
+  if (feedback) feedback.innerText = message;
 }
