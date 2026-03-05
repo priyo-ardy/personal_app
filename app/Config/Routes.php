@@ -570,6 +570,12 @@
             $routes->get('', '');
         });
 
+        // Routes untuk period setup
+        $routes->group('/period_setup', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+            $routes->get('', 'AppSetup\PeriodSetup\PeriodController::index');
+            $routes->post('save', 'AppSetup\PeriodSetup\PeriodController::saveDefault', ['filter' => 'ratelimit:3,60']);
+        });
+
         // Site Setting
         $routes->get('/site-setting', 'SiteSetting\SiteSettingController::index', ['filter' => ['role:superadmin,admin', 'ratelimit:100,60']]);
     });
