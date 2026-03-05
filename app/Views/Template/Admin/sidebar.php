@@ -100,6 +100,25 @@
                         </li>
                     </ul>
                 </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon bi bi-boxes"></i>
+                        <p>
+                            R&D
+                            <i class="nav-arrow bi bi-chevron-right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav-treeview">
+                        <li class="nav-item">
+                            <a href="<?= base_url() . 'project_setup' ?>" class="nav-link">
+                                <i class="bi bi-arrow-right-circle nav-icon"></i>
+                                <p>
+                                    Project Setup
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="nav-header">APP SETUP</li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
@@ -464,6 +483,14 @@
                                 <i class="nav-icon bi bi-arrow-right-circle"></i>
                                 <p>
                                     APQP Setup
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="<?= base_url() . 'document_flow' ?>" class="nav-link" onclick="loading()">
+                                <i class="nav-icon bi bi-arrow-right-circle"></i>
+                                <p>
+                                    Document Flow
                                 </p>
                             </a>
                         </li>

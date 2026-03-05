@@ -562,6 +562,14 @@
             $routes->post('update_approver', 'AppSetup\ApqpSetup\ApqpHeaderController::updateApprover');
         });
 
+        // Route untuk document flow
+        $routes->group('/document_flow', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {});
+
+        // Route buat project setup
+        $routes->group('/project_setup', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+            $routes->get('', '');
+        });
+
         // Site Setting
         $routes->get('/site-setting', 'SiteSetting\SiteSettingController::index', ['filter' => ['role:superadmin,admin', 'ratelimit:100,60']]);
     });
