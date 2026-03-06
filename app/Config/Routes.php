@@ -576,6 +576,30 @@
             $routes->post('save', 'AppSetup\PeriodSetup\PeriodController::saveDefault', ['filter' => 'ratelimit:3,60']);
         });
 
+        // Routes untuk status absensi
+        $routes->group('/absence_status', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+            $routes->get('', 'AppSetup\AbsenceStatus\AbsenceStatusController::index');
+            $routes->post('save', 'AppSetup\AbsenceStatus\AbsenceStatusController::save');
+            $routes->post('table', 'AppSetup\AbsenceStatus\AbsenceStatusController::loadTable');
+            $routes->get('get/(:any)', 'AppSetup\AbsenceStatus\AbsenceStatusController::get/$1');
+            $routes->post('update', 'AppSetup\AbsenceStatus\AbsenceStatusController::update');
+            $routes->post('delete', 'AppSetup\AbsenceStatus\AbsenceStatusController::delete');
+            $routes->get('export', 'AppSetup\AbsenceStatus\AbsenceStatusController::export');
+            $routes->get('seed', 'AppSetup\AbsenceStatus\AbsenceStatusController::seedData');
+        });
+
+        // Routes untuk overtime setup
+        $routes->group('/overtime_setup', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+            $routes->get('', 'AppSetup\OvertimeSetup\OvertimeSetupController::index');
+            $routes->post('save', 'AppSetup\OvertimeSetup\OvertimeSetupController::save');
+            $routes->post('table', 'AppSetup\OvertimeSetup\OvertimeSetupController::loadTable');
+            $routes->get('get/(:any)', 'AppSetup\OvertimeSetup\OvertimeSetupController::get/$1');
+            $routes->post('update', 'AppSetup\OvertimeSetup\OvertimeSetupController::update');
+            $routes->post('delete', 'AppSetup\OvertimeSetup\OvertimeSetupController::delete');
+            $routes->get('export', 'AppSetup\OvertimeSetup\OvertimeSetupController::export');
+            $routes->get('seed', 'AppSetup\OvertimeSetup\OvertimeSetupController::seedData');
+        });
+
         // Site Setting
         $routes->get('/site-setting', 'SiteSetting\SiteSettingController::index', ['filter' => ['role:superadmin,admin', 'ratelimit:100,60']]);
     });
