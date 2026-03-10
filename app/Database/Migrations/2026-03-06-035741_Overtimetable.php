@@ -33,6 +33,11 @@ class Overtimetable extends Migration
                 'null' => false,
                 'comment' => '0: Work Day, 1: Holiday (Office), 2: Holiday (Off)'
             ],
+            'total_row' => [
+                'type' => 'INT',
+                'null' => false,
+                'default' => 0
+            ],
             'description' => [
                 'type' => 'TEXT',
                 'null' => true

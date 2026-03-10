@@ -65,7 +65,11 @@
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <button type="button" class="btn btn-primary rounded-0 d-block col-12" title="Generate Rate" id="btnRate"><i class="bi bi-gear-wide"></i>&ensp;Generate Overtime Rate</button>
+                                <button type="button" id="btnRate" class="btn btn-success rounded-0 col-12" title="Generate Rate"><i class="bi bi-gear"></i>&ensp;Generate Overtime Rate</button>
+                                <button type="button" id="btnCancel" hidden class="btn btn-secondary rounded-0" title="Cancel"><i class="bi bi-arrow-counterclockwise me-2"></i>Cancel</button>
+                                <div class="d-block float-end">
+                                    <button type="button" hidden id="btnUpdateData" class="btn rounded-0 btn-primary" title="Update"><i class="bi bi-floppy me-2"></i>Update</button>
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -85,12 +89,13 @@
                                 <table class="table table-striped table-hover" id="dataTable">
                                     <thead>
                                         <tr>
-                                            <th class="align-middle text-center bg-secondary-subtle">
+                                            <th class="align-middle text-center bg-secondary-subtle col-1">
                                                 <input type="checkbox" id="select-all" class="form-check-input border-1 border-primary rounded-0">
                                             </th>
                                             <th class="align-middle text-center bg-secondary-subtle">Code</th>
                                             <th class="align-middle text-center bg-secondary-subtle">Name</th>
                                             <th class="align-middle text-center bg-secondary-subtle">Overtime Rate</th>
+                                            <th class="align-middle text-center bg-secondary-subtle">Type of Working Hour</th>
                                             <th class="align-middle text-center bg-secondary-subtle">Description</th>
                                         </tr>
                                     </thead>

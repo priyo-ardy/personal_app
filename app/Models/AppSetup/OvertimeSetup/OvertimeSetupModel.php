@@ -19,6 +19,7 @@ class OvertimeSetupModel extends BaseModel
         'name',
         'rate',
         'day_type',
+        'total_row',
         'description',
         'created_at',
         'created_by',

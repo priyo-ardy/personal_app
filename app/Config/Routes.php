@@ -591,10 +591,12 @@
         // Routes untuk overtime setup
         $routes->group('/overtime_setup', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
             $routes->get('', 'AppSetup\OvertimeSetup\OvertimeSetupController::index');
-            $routes->post('save', 'AppSetup\OvertimeSetup\OvertimeSetupController::save');
+            $routes->post('save', 'AppSetup\OvertimeSetup\OvertimeSetupController::save', ['filter' => 'ratelimit:3,60']);
             $routes->post('table', 'AppSetup\OvertimeSetup\OvertimeSetupController::loadTable');
+            $routes->get('get_rate/(:any)', 'AppSetup\OvertimeSetup\OvertimeSetupController::getRate/$1');
             $routes->get('get/(:any)', 'AppSetup\OvertimeSetup\OvertimeSetupController::get/$1');
-            $routes->post('update', 'AppSetup\OvertimeSetup\OvertimeSetupController::update');
+            $routes->post('update_rate', 'AppSetup\OvertimeSetup\OvertimeSetupController::updateRate', ['filter' => 'ratelimit:3,60']);
+            $routes->post('update', 'AppSetup\OvertimeSetup\OvertimeSetupController::update', ['filter' => 'ratelimit:3,60']);
             $routes->post('delete', 'AppSetup\OvertimeSetup\OvertimeSetupController::delete');
             $routes->get('export', 'AppSetup\OvertimeSetup\OvertimeSetupController::export');
             $routes->get('seed', 'AppSetup\OvertimeSetup\OvertimeSetupController::seedData');
