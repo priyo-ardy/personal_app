@@ -602,6 +602,14 @@
             $routes->get('seed', 'AppSetup\OvertimeSetup\OvertimeSetupController::seedData');
         });
 
+        // Routes untuk shift setup
+        $routes->group('/shift_setup', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+            $routes->get('', 'AppSetup\ShiftSetup\ShiftController::index');
+            $routes->get('add', 'AppSetup\ShiftSetup\ShiftController::add');
+            $routes->post('jam_kerja', 'AppSetup\ShiftSetup\ShiftController::calculateJamKerja');
+            $routes->post('hitung_lembur', 'AppSetup\ShiftSetup\ShiftController::calculateOvertime');
+        });
+
         // Site Setting
         $routes->get('/site-setting', 'SiteSetting\SiteSettingController::index', ['filter' => ['role:superadmin,admin', 'ratelimit:100,60']]);
     });

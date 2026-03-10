@@ -287,5 +287,15 @@ class OvertimeSetupService
         }
     }
 
-    public function getAllData() {}
+    public function getAllData()
+    {
+        try {
+            $get = $this->repository->all('code', 'asc');
+
+            return $get;
+        } catch (\Exception $e) {
+            log_message('error', '[OvertimeSetupService::getAllData] Unexpected error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            throw $e;
+        }
+    }
 }
