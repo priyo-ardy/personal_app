@@ -606,8 +606,8 @@
         $routes->group('/shift_setup', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
             $routes->get('', 'AppSetup\ShiftSetup\ShiftController::index');
             $routes->get('add', 'AppSetup\ShiftSetup\ShiftController::add');
-            $routes->post('jam_kerja', 'AppSetup\ShiftSetup\ShiftController::calculateJamKerja');
-            $routes->post('hitung_lembur', 'AppSetup\ShiftSetup\ShiftController::calculateOvertime');
+            $routes->post('hitung_lembur', 'AppSetup\ShiftSetup\ShiftController::calculateOvertime', ['filter' => 'ratelimit:3,60']);
+            $routes->post('save', 'AppSetup\ShiftSetup\ShiftController::save', ['filter' => 'ratelimit:3,60']);
         });
 
         // Site Setting

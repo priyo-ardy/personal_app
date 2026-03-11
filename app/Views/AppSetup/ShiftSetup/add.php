@@ -100,12 +100,12 @@
                                 </div>
                                 <div class="form-group col-xl-2 col-lg-2 col-md-6 col-sm-12 clearfix">
                                     <label class="form-label" for="std_in">Std. Clock In <strong class="text-danger">*</strong></label>
-                                    <input type="time" name="std_in" id="std_in" class="form-control rounded-0" placeholder="Std. Clock In" autocomplete="off" required>
+                                    <input type="time" name="std_in" id="std_in" class="form-control rounded-0" placeholder="Std. Clock In" autocomplete="off" required lang="id-ID">
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="form-group col-xl-2 col-lg-2 col-md-6 col-sm-12 clearfix">
                                     <label class="form-label" for="std_out">Std. Clock Out <strong class="text-danger">*</strong></label>
-                                    <input type="time" name="std_out" id="std_out" class="form-control rounded-0" placeholder="Std. Clock Out" autocomplete="off" required>
+                                    <input type="time" name="std_out" id="std_out" class="form-control rounded-0" placeholder="Std. Clock Out" autocomplete="off" required lang="id-ID">
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="form-group col-xl-2 col-lg-2 col-md-6 col-sm-12 clearfix">
@@ -123,7 +123,7 @@
                                     <select name="absent_status" id="absent_status" class="form-control select2 select2bs5" required>
                                         <option value="">-- Choose --</option>
                                         <?php foreach ($absence as $row): ?>
-                                            <option value="<?= $row->id ?>"><?= $row->name ?></option>
+                                            <option value="<?= $row->id ?>"><?= "$row->code - $row->name" ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                     <div class="invalid-feedback"></div>
@@ -161,12 +161,12 @@
                                     </div>
                                     <div class="form-group col-xl-2 col-lg-2 col-md-6 col-sm-12 clearfix">
                                         <label class="col-form-label">Overtime Start</label>
-                                        <input type="time" name="lembur_mulai" id="lembur_mulai" class="form-control rounded-0" placeholder="00.00" maxlenght="5" step="any">
+                                        <input type="time" name="lembur_mulai" id="lembur_mulai" class="form-control rounded-0" placeholder="00.00" maxlenght="5" step="any" lang="id-ID">
                                         <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="form-group col-xl-2 col-lg-2 col-md-6 col-sm-12 clearfix">
                                         <label class="col-form-label">Overtime Finish</label>
-                                        <input type="time" name="lembur_selesai" id="lembur_selesai" class="form-control rounded-0" placeholder="00.00" maxlenght="5" step="any">
+                                        <input type="time" name="lembur_selesai" id="lembur_selesai" class="form-control rounded-0" placeholder="00.00" maxlenght="5" step="any" lang="id-ID">
                                         <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="form-group col-xl-2 col-lg-2 col-md-6 col-sm-12 clearfix">

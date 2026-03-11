@@ -1,6 +1,11 @@
 const autoLembur = document.getElementById("form-auto-lembur");
+const formData = document.getElementById('formData');
 
-const buttons = {};
+const buttons = {
+  back: document.getElementById('btnBack'),
+  save: document.getElementById('btnSave'),
+  cancel: document.getElementById('btnCancel')
+};
 
 const inputForm = {
   switch: document.getElementById("flexSwitchCheckDefault"),
@@ -8,7 +13,50 @@ const inputForm = {
   jam_pulang: document.getElementById("std_out"),
   istirahat: document.getElementById("istirahat"),
   jam_kerja: document.getElementById("jam_kerja"),
+  overtime_type: document.getElementById('overtime_type'),
+  lembur_mulai: document.getElementById('lembur_mulai'),
+  lembur_selesai: document.getElementById('lembur_selesai'),
+  working_hour: document.getElementById('working_hour_type'),
+  min_ot: document.getElementById('min_overtime')
 };
+
+const overtime = {
+  lama_lembur: document.getElementById('lama_lembur'),
+  istirahat: document.getElementById('lama_istirahat'),
+  rate: document.getElementById('rate_lembur'),
+  x15: document.getElementById('lembur_x15'),
+  x20: document.getElementById('lembur_x20'),
+  x30: document.getElementById('lembur_x30'),
+  x40: document.getElementById('lembur_x40'),
+};
+
+function resetForm() { }
+
+buttons.back.addEventListener('click', () => {
+  loading();
+  window.location.replace(baseurl + '/shift_setup');
+});
+
+buttons.save.addEventListener('click', () => {
+  if (validasi()) {
+    try {
+      loading();
+      fetchData(baseurl + '/shift_setup/save', 'POST', new FormData(formData))
+        .then(result => {
+          pesanSukses(result.message);
+          resetForm();
+          hideLoading();
+        })
+        .catch(err => {
+          pesanError(err.message);
+          hideLoading();
+        })
+    } catch (e) {
+      pesanError(e.message);
+      hideLoading();
+    }
+  }
+})
 
 inputForm.switch.addEventListener("change", () => {
   if (inputForm.switch.checked) {
@@ -21,6 +69,10 @@ inputForm.switch.addEventListener("change", () => {
 inputForm.jam_masuk.addEventListener("change", kalkulasiJamKerja);
 inputForm.jam_pulang.addEventListener("change", kalkulasiJamKerja);
 inputForm.istirahat.addEventListener("change", kalkulasiJamKerja);
+inputForm.overtime_type.addEventListener('change', kalkulasiOvertime);
+inputForm.working_hour.addEventListener('change', kalkulasiOvertime);
+inputForm.lembur_mulai.addEventListener('change', kalkulasiOvertime);
+inputForm.lembur_selesai.addEventListener('change', kalkulasiOvertime);
 
 function kalkulasiJamKerja() {
   const masuk = inputForm.jam_masuk.value;
@@ -40,7 +92,6 @@ function kalkulasiJamKerja() {
   }
 
   let selisihMs = datePulang - dateMasuk;
-
   let totalMenitKerja = selisihMs / (1000 * 60) - istirahatMenit;
 
   if (totalMenitKerja < 0) {
@@ -50,14 +101,14 @@ function kalkulasiJamKerja() {
     resetValidation();
   }
 
-  const jam = Math.floor(totalMenitKerja / 60);
-  const sisaMenit = totalMenitKerja % 60;
-
-  const hasilString = `${jam}.${sisaMenit.toString().padStart(2, "0")}`;
-  //   console.log("Hasil Kalkulasi:", hasilString);
+  // --- BAGIAN PERUBAHAN ---
+  // Bagi total menit dengan 60 untuk mendapatkan desimal
+  // toFixed(2) digunakan agar hasilnya konsisten 2 angka di belakang koma (misal 8.50)
+  const hasilDesimal = (totalMenitKerja / 60).toFixed(2);
 
   if (inputForm.jam_kerja) {
-    inputForm.jam_kerja.value = hasilString;
+    // Gunakan parseFloat untuk menghilangkan nol tidak berguna di ujung (misal 8.50 jadi 8.5)
+    inputForm.jam_kerja.value = parseFloat(hasilDesimal);
   }
 }
 
@@ -73,4 +124,30 @@ function resetValidation() {
   [inputForm.jam_masuk, inputForm.jam_pulang].forEach((el) => {
     el.classList.remove("is-invalid");
   });
+}
+
+function kalkulasiOvertime() {
+  try {
+    if (inputForm.overtime_type.value !== '' && inputForm.lembur_mulai.value !== '' && inputForm.lembur_selesai.value !== '') {
+      loading();
+      fetchData(baseurl + '/shift_setup/hitung_lembur', 'POST', JSON.stringify({ overtime_type: inputForm.overtime_type.value, lembur_mulai: inputForm.lembur_mulai.value, lembur_selesai: inputForm.lembur_selesai.value, working_hour: inputForm.working_hour.value, min_ot: inputForm.min_ot.value }))
+        .then(result => {
+          overtime.lama_lembur.value = result.lama_lembur;
+          overtime.istirahat.value = result.lama_istirahat;
+          overtime.rate.value = result.rate_lembur;
+          overtime.x15.value = result.x15;
+          overtime.x20.value = result.x20;
+          overtime.x30.value = result.x30;
+          overtime.x40.value = result.x40;
+          hideLoading();
+        })
+        .catch(err => {
+          pesanError(err.message);
+          hideLoading();
+        })
+    }
+  } catch (e) {
+    pesanError(e.message);
+    hideLoading();
+  }
 }

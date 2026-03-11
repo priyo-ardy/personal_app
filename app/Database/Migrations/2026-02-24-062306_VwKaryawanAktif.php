@@ -13,7 +13,25 @@ class VwKaryawanAktif extends Migration
             CREATE VIEW vw_karyawan_aktif AS
             WITH LatestJobData AS (
                 SELECT 
-                    *,
+                    id,
+                    employee_id,
+                    action,
+                    reason,
+                    position,
+                    effective_date,
+                    work_relationship,
+                    no_contract,
+                    durasi_kontrak,
+                    tipe_durasi,
+                    akhir_kontrak,
+                    superior,
+                    status,
+                    remark,
+                    created_at,
+                    created_by,
+                    updated_at,
+                    updated_by,
+                    deleted_at,
                     ROW_NUMBER() OVER(
                         PARTITION BY employee_id
                         ORDER BY effective_date DESC

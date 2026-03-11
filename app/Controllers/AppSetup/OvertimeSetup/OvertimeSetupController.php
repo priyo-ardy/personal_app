@@ -34,11 +34,11 @@ class OvertimeSetupController extends BaseController
             'footer' => [
                 '<script src="' . base_url() . 'js/App/datatable.js' . '"></script>',
                 '<script src="' . base_url() . 'js/App/validasi.js' . '"></script>',
-                '<script src="' . base_url() . 'js/AppSetup/Overtimesetup/overtime_setup.js' . '"></script>'
+                '<script src="' . base_url() . 'js/AppSetup/OvertimeSetup/overtime_setup.js' . '"></script>'
             ]
         ];
 
-        return view('AppSetup/Overtimesetup/index', $data);
+        return view('AppSetup/OvertimeSetup/index', $data);
     }
 
     public function save()

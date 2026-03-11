@@ -97,7 +97,7 @@ class OvertimeSetupService
 
             if ($this->db->transStatus() === false) {
                 $this->db->transRollback();
-                log_message('error', '[OvertimeSetupService::saveData] Failed to create data : {err} from {ip}', ['err' => $this->db->error(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+                log_message('error', '[OvertimeSetupService::saveData] Failed to create data : {err} from {ip}', ['err' => $this->db->getLastQuery(), 'ip' => $_SERVER['REMOTE_ADDR']]);
                 throw new \Exception('Failed to create data', ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
             }
 
@@ -193,6 +193,7 @@ class OvertimeSetupService
                 'day_type' => $get->day_type,
                 'total_row' => $get->total_row,
                 'description' => $get->description,
+                'rate' => $get->rate
             ];
 
             return $data;

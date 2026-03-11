@@ -134,6 +134,7 @@ button.save.addEventListener("click", () => {
         pesanSukses(result.message);
         closeModalRate();
         resetForm();
+        refreshTable();
         hideLoading();
       })
       .catch((err) => {

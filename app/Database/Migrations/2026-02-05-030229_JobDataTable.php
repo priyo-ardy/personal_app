@@ -25,6 +25,11 @@ class JobDataTable extends Migration
                 'type' => 'UUID',
                 'null' => false
             ],
+            'position' => [
+                'type' => 'VARCHAR',
+                'constraint' => 50,
+                'null' => false
+            ],
             'effective_date' => [
                 'type' => 'DATE',
                 'null' => false
@@ -45,13 +50,24 @@ class JobDataTable extends Migration
                 'null' => false,
                 'default' => 0
             ],
+            'tipe_durasi' => [
+                'type' => 'VARCHAR',
+                'constraint' => 10,
+                'null' => true
+            ],
             'akhir_kontrak' => [
                 'type' => 'DATE',
                 'null' => false
             ],
             'superior' => [
-                'type' => 'uuid',
+                'type' => 'UUID',
                 'null' => false
+            ],
+            'status' => [
+                'type' => 'VARCHAR',
+                'constraint' => 1,
+                'null' => false,
+                'default' => '1'
             ],
             'remark' => [
                 'type' => 'TEXT',
