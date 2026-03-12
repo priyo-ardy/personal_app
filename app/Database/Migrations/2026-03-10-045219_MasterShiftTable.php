@@ -58,9 +58,9 @@ class MasterShiftTable extends Migration
                 'default' => '00:00:00'
             ],
             'break' => [
-                'type' => 'TIME',
+                'type' => 'INT',
                 'null' => false,
-                'default' => '00:00:00'
+                'default' => '0'
             ],
             'overday' => [
                 'type' => 'BOOLEAN',
@@ -73,7 +73,8 @@ class MasterShiftTable extends Migration
                 'null' => false
             ],
             'working_hour' => [
-                'type' => 'INT',
+                'type' => 'NUMERIC',
+                'constraint' => '10,2',
                 'null' => false,
                 'default' => 0
             ],
@@ -91,6 +92,11 @@ class MasterShiftTable extends Migration
                 'type' => 'UUID',
                 'null' => false
             ],
+            'overtime_type' => [
+                'type' => 'VARCHAR',
+                'constraint' => 1,
+                'null' => true
+            ],
             'overtime_in' => [
                 'type' => 'TIME',
                 'null' => false,
@@ -102,9 +108,9 @@ class MasterShiftTable extends Migration
                 'default' => '00:00:00'
             ],
             'overtime_break' => [
-                'type' => 'TIME',
+                'type' => 'INT',
                 'null' => false,
-                'default' => '00:00:00'
+                'default' => '0'
             ],
             'overtime_rate' => [
                 'type' => 'DECIMAL',

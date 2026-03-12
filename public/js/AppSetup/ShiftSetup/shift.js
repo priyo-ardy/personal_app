@@ -1,5 +1,5 @@
 window.onload = () => {
-  //   loadTable("dataTable", "/shift_setup/table");
+  loadTable("dataTable", "/shift_setup/table");
 
   $("#select-all").on("click", function () {
     var isChecked = this.checked;

@@ -5,15 +5,18 @@ namespace App\Traits;
 use CodeIgniter\HTTP\ResponseInterface;
 use App\Services\OvertimeSetup\OvertimeSetupService;
 use App\Repositories\OvertimeSetup\OvertimeSetupRepository;
+use CodeIgniter\I18n\Time;
 use DateTime;
 
 trait KalkulasiTrait
 {
-    protected $overtime;
+    protected $lembur;
 
     public function __construct()
     {
-        $this->overtime = new OvertimeSetupService(new OvertimeSetupRepository());
+        $this->lembur = new OvertimeSetupService(new OvertimeSetupRepository());
+
+        dd("Constructor berhasil jalan dan isi overtime adalah: ", $this->overtime);
     }
 
     public function kalkulasi_durasi_kontrak(string $tgl_awal, int $durasi, string $tipe_durasi)
@@ -99,39 +102,38 @@ trait KalkulasiTrait
             }
 
             $diff = $start->diff($end);
-            $totalMinutesGross = ($diff->days * 24 * 60) + ($diff->h * 60) + $diff->i;
+            // $totalMinutesGross = ($diff->days * 24 * 60) + ($diff->h * 60) + $diff->i;
+            $totalMinutes = ($diff->h * 60) + $diff->i;
 
-            $breakDecimal = $break / 60;
+            $netMinutes = $totalMinutes - $break;
 
-            $durasiKotor = $totalMinutesGross / 60;
+            if ($netMinutes < 0) {
+                $netMinutes = 0;
+            }
 
-            $durasiBersih = $durasiKotor = $breakDecimal;
+            $decimalHour = round($netMinutes / 60, 2);
 
-            return (float) round(max(0, $durasiBersih), 2);
+            return $decimalHour;
         } catch (\Exception $e) {
             return 0.0;
         }
     }
 
-    public function kalkulasi_overtime(string $overtime_type, string $overtime_start, string $overtime_finish, string $jam_kerja, int $min_ot)
+    public function kalkulasi_overtime(string $overtime_type, string $overtime_start, string $overtime_finish, string $jam_kerja, int $min_ot, $rate = null)
     {
         try {
             if ($min_ot == '' || $min_ot == null) {
                 $min_ot = 1;
             }
-            $get_rate = $this->overtime->getData($overtime_type);
 
-            if (!$get_rate) {
-                throw new \Exception("Overtime setup data not found", ResponseInterface::HTTP_NOT_FOUND);
-            }
+            $rates = json_decode($rate);
 
-            $rates = json_decode($get_rate['rate']);
 
             if (!is_array($rates)) {
                 throw new \Exception("Overtime rate is not a valid array", ResponseInterface::HTTP_BAD_REQUEST);
             }
 
-            log_message('info', '[KalkulasiTrait::kalkulasi_overtime] Rate for overtime type {type} is {rate}', ['type' => $overtime_type, 'rate' => $get_rate['rate']]);
+            // log_message('info', '[KalkulasiTrait::kalkulasi_overtime] Rate for overtime type {type} is {rate}', ['type' => $overtime_type, 'rate' => $rates]);
 
             $result = [
                 'durasi_kotor'    => 0.0,
@@ -242,7 +244,25 @@ trait KalkulasiTrait
 
             return $result;
         } catch (\Exception $e) {
+            log_message('error', '[KalkulasiTrait::kalkulasi_lembur] Unexpected error occured : {err} from {ip} on line {line}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR'], 'line' => $e->getLine()]);
             throw new \Exception("Failed to calculate ovetime duration: " . $e->getMessage());
+        }
+    }
+
+    public function kalkulasi_early_late_in_out($time)
+    {
+        try {
+            $current_time = new Time($time);
+
+            $early = $current_time->subHours(5);
+            $late = $current_time->addHours(5);
+
+            return [
+                'early' => $early->toTimeString(),
+                'late' => $late->toTimeString()
+            ];
+        } catch (\Exception $e) {
+            throw new \Exception("Failed to calculate early/late in/out: " . $e->getMessage());
         }
     }
 }

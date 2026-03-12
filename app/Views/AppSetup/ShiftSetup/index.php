@@ -68,6 +68,7 @@
                                             <th class="align-middle text-center bg-secondary-subtle">Min. Overtime</th>
                                             <th class="align-middle text-center bg-secondary-subtle">Auto Overtime</th>
                                             <th class="align-middle text-center bg-secondary-subtle">Default Overtime</th>
+                                            <th class="align-middle text-center bg-secondary-subtle">Overtime Type</th>
                                             <th class="align-middle text-center bg-secondary-subtle">Overtime Start</th>
                                             <th class="align-middle text-center bg-secondary-subtle">Overtime Finish</th>
                                             <th class="align-middle text-center bg-secondary-subtle">Rate</th>

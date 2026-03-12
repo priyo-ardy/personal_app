@@ -2,45 +2,52 @@
 
 namespace App\Models\AppSetup\ShiftSetup;
 
+use App\Models\BaseModel;
 use CodeIgniter\Model;
 
-class ShiftModel extends Model
+class ShiftModel extends BaseModel
 {
-    protected $table            = 'shifts';
+    protected $table            = 'm_shift';
     protected $primaryKey       = 'id';
-    protected $useAutoIncrement = true;
-    protected $returnType       = 'array';
-    protected $useSoftDeletes   = false;
+    protected $useAutoIncrement = false;
+    protected $returnType       = 'object';
+    protected $useSoftDeletes   = true;
     protected $protectFields    = true;
-    protected $allowedFields    = [];
-
-    protected bool $allowEmptyInserts = false;
-    protected bool $updateOnlyChanged = true;
-
-    protected array $casts = [];
-    protected array $castHandlers = [];
-
-    // Dates
-    protected $useTimestamps = false;
-    protected $dateFormat    = 'datetime';
-    protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
-    protected $deletedField  = 'deleted_at';
-
-    // Validation
-    protected $validationRules      = [];
-    protected $validationMessages   = [];
-    protected $skipValidation       = false;
-    protected $cleanValidationRules = true;
-
-    // Callbacks
-    protected $allowCallbacks = true;
-    protected $beforeInsert   = [];
-    protected $afterInsert    = [];
-    protected $beforeUpdate   = [];
-    protected $afterUpdate    = [];
-    protected $beforeFind     = [];
-    protected $afterFind      = [];
-    protected $beforeDelete   = [];
-    protected $afterDelete    = [];
+    protected $allowedFields    = [
+        'id',
+        'code',
+        'name',
+        'working_day',
+        'early_in',
+        'std_in',
+        'late_in',
+        'early_out',
+        'std_out',
+        'late_out',
+        'break',
+        'overday',
+        'working_hour_type',
+        'working_hour',
+        'min_overtime',
+        'auto_overtime',
+        'default_overtime',
+        'overtime_type',
+        'overtime_in',
+        'overtime_out',
+        'overtime_break',
+        'overtime_rate',
+        'overtime_index',
+        'x15',
+        'x20',
+        'x30',
+        'x40',
+        'default_absence_status',
+        'remark',
+        'effective_date',
+        'created_at',
+        'created_by',
+        'updated_at',
+        'updated_by',
+        'deleted_at'
+    ];
 }

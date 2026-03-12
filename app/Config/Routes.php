@@ -608,6 +608,15 @@
             $routes->get('add', 'AppSetup\ShiftSetup\ShiftController::add');
             $routes->post('hitung_lembur', 'AppSetup\ShiftSetup\ShiftController::calculateOvertime', ['filter' => 'ratelimit:3,60']);
             $routes->post('save', 'AppSetup\ShiftSetup\ShiftController::save', ['filter' => 'ratelimit:3,60']);
+            $routes->post('table', 'AppSetup\ShiftSetup\ShiftController::loadTable');
+            $routes->get('get/(:any)', 'AppSetup\ShiftSetup\ShiftController::get/$1');
+            $routes->get('show/(:any)', 'AppSetup\ShiftSetup\ShiftController::show/$1');
+            $routes->post('update', 'AppSetup\ShiftSetup\ShiftController::update', ['filter' => 'ratelimit:3,60']);
+            $routes->post('delete', 'AppSetup\ShiftSetup\ShiftController::delete', ['filter' => 'ratelimit:3,60']);
+            $routes->post('mass-delete', 'AppSetup\ShiftSetup\ShiftController::deleteAll', ['filter' => 'ratelimit:3,60']);
+            $routes->post('prev', 'AppSetup\ShiftSetup\ShiftController::prev', ['filter' => 'ratelimit:3,60']);
+            $routes->post('next', 'AppSetup\ShiftSetup\ShiftController::next', ['filter' => 'ratelimit:3,60']);
+            $routes->get('export', 'AppSetup\ShiftSetup\ShiftController::export', ['filter' => 'ratelimit:3,60']);
         });
 
         // Site Setting

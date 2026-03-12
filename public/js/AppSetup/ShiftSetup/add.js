@@ -1,10 +1,10 @@
 const autoLembur = document.getElementById("form-auto-lembur");
-const formData = document.getElementById('formData');
+const formData = document.getElementById("formData");
 
 const buttons = {
-  back: document.getElementById('btnBack'),
-  save: document.getElementById('btnSave'),
-  cancel: document.getElementById('btnCancel')
+  back: document.getElementById("btnBack"),
+  save: document.getElementById("btnSave"),
+  cancel: document.getElementById("btnCancel"),
 };
 
 const inputForm = {
@@ -13,50 +13,72 @@ const inputForm = {
   jam_pulang: document.getElementById("std_out"),
   istirahat: document.getElementById("istirahat"),
   jam_kerja: document.getElementById("jam_kerja"),
-  overtime_type: document.getElementById('overtime_type'),
-  lembur_mulai: document.getElementById('lembur_mulai'),
-  lembur_selesai: document.getElementById('lembur_selesai'),
-  working_hour: document.getElementById('working_hour_type'),
-  min_ot: document.getElementById('min_overtime')
+  overtime_type: document.getElementById("overtime_type"),
+  lembur_mulai: document.getElementById("lembur_mulai"),
+  lembur_selesai: document.getElementById("lembur_selesai"),
+  working_hour: document.getElementById("working_hour_type"),
+  min_ot: document.getElementById("min_overtime"),
 };
 
 const overtime = {
-  lama_lembur: document.getElementById('lama_lembur'),
-  istirahat: document.getElementById('lama_istirahat'),
-  rate: document.getElementById('rate_lembur'),
-  x15: document.getElementById('lembur_x15'),
-  x20: document.getElementById('lembur_x20'),
-  x30: document.getElementById('lembur_x30'),
-  x40: document.getElementById('lembur_x40'),
+  lama_lembur: document.getElementById("lama_lembur"),
+  istirahat: document.getElementById("lama_istirahat"),
+  rate: document.getElementById("rate_lembur"),
+  x15: document.getElementById("lembur_x15"),
+  x20: document.getElementById("lembur_x20"),
+  x30: document.getElementById("lembur_x30"),
+  x40: document.getElementById("lembur_x40"),
 };
 
-function resetForm() { }
+function resetForm() {
+  formData.reset();
 
-buttons.back.addEventListener('click', () => {
+  const selectElement = document.querySelectorAll("select");
+  const switch_button = document.getElementById("flexSwitchCheckDefault");
+  const validElement = document.querySelectorAll(".is-valid");
+
+  if (selectElement.length > 0) {
+    selectElement.forEach((element) => {
+      element.value = "";
+      $(element).trigger("change");
+    });
+  }
+
+  if (validElement.length > 0) {
+    validElement.forEach((element) => {
+      element.classList.remove("is-valid");
+    });
+  }
+
+  switch_button.checked = false;
+  autoLembur.setAttribute("hidden", "hidden");
+}
+
+buttons.back.addEventListener("click", () => {
   loading();
-  window.location.replace(baseurl + '/shift_setup');
+  window.location.replace(baseurl + "/shift_setup");
 });
 
-buttons.save.addEventListener('click', () => {
+buttons.save.addEventListener("click", () => {
   if (validasi()) {
     try {
       loading();
-      fetchData(baseurl + '/shift_setup/save', 'POST', new FormData(formData))
-        .then(result => {
+      fetchData(baseurl + "/shift_setup/save", "POST", new FormData(formData))
+        .then((result) => {
           pesanSukses(result.message);
           resetForm();
           hideLoading();
         })
-        .catch(err => {
+        .catch((err) => {
           pesanError(err.message);
           hideLoading();
-        })
+        });
     } catch (e) {
       pesanError(e.message);
       hideLoading();
     }
   }
-})
+});
 
 inputForm.switch.addEventListener("change", () => {
   if (inputForm.switch.checked) {
@@ -69,10 +91,10 @@ inputForm.switch.addEventListener("change", () => {
 inputForm.jam_masuk.addEventListener("change", kalkulasiJamKerja);
 inputForm.jam_pulang.addEventListener("change", kalkulasiJamKerja);
 inputForm.istirahat.addEventListener("change", kalkulasiJamKerja);
-inputForm.overtime_type.addEventListener('change', kalkulasiOvertime);
-inputForm.working_hour.addEventListener('change', kalkulasiOvertime);
-inputForm.lembur_mulai.addEventListener('change', kalkulasiOvertime);
-inputForm.lembur_selesai.addEventListener('change', kalkulasiOvertime);
+inputForm.overtime_type.addEventListener("change", kalkulasiOvertime);
+inputForm.working_hour.addEventListener("change", kalkulasiOvertime);
+inputForm.lembur_mulai.addEventListener("change", kalkulasiOvertime);
+inputForm.lembur_selesai.addEventListener("change", kalkulasiOvertime);
 
 function kalkulasiJamKerja() {
   const masuk = inputForm.jam_masuk.value;
@@ -128,10 +150,24 @@ function resetValidation() {
 
 function kalkulasiOvertime() {
   try {
-    if (inputForm.overtime_type.value !== '' && inputForm.lembur_mulai.value !== '' && inputForm.lembur_selesai.value !== '') {
+    if (
+      inputForm.overtime_type.value !== "" &&
+      inputForm.lembur_mulai.value !== "" &&
+      inputForm.lembur_selesai.value !== ""
+    ) {
       loading();
-      fetchData(baseurl + '/shift_setup/hitung_lembur', 'POST', JSON.stringify({ overtime_type: inputForm.overtime_type.value, lembur_mulai: inputForm.lembur_mulai.value, lembur_selesai: inputForm.lembur_selesai.value, working_hour: inputForm.working_hour.value, min_ot: inputForm.min_ot.value }))
-        .then(result => {
+      fetchData(
+        baseurl + "/shift_setup/hitung_lembur",
+        "POST",
+        JSON.stringify({
+          overtime_type: inputForm.overtime_type.value,
+          lembur_mulai: inputForm.lembur_mulai.value,
+          lembur_selesai: inputForm.lembur_selesai.value,
+          working_hour: inputForm.working_hour.value,
+          min_ot: inputForm.min_ot.value,
+        }),
+      )
+        .then((result) => {
           overtime.lama_lembur.value = result.lama_lembur;
           overtime.istirahat.value = result.lama_istirahat;
           overtime.rate.value = result.rate_lembur;
@@ -141,10 +177,10 @@ function kalkulasiOvertime() {
           overtime.x40.value = result.x40;
           hideLoading();
         })
-        .catch(err => {
+        .catch((err) => {
           pesanError(err.message);
           hideLoading();
-        })
+        });
     }
   } catch (e) {
     pesanError(e.message);
