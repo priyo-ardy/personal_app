@@ -22,6 +22,9 @@ function loadTable(tableId, url) {
       }
     },
     deferRender: true,
+    preXhr: function (settings, data) {
+      console.log("Sending params:", data.start, data.length);
+    },
     columnDefs: [
       {
         targets: 0,

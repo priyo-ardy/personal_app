@@ -619,6 +619,26 @@
             $routes->get('export', 'AppSetup\ShiftSetup\ShiftController::export', ['filter' => 'ratelimit:3,60']);
         });
 
+        // Routes untuk special leave
+        $routes->group('special_leave_setup', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+            $routes->get('', 'AppSetup\SpecialLeave\SpecialLeaveController::index');
+            $routes->post('save', 'AppSetup\SpecialLeave\SpecialLeaveController::save', ['filter' => 'ratelimit:3,60']);
+            $routes->get('get/(:any)', 'AppSetup\SpecialLeave\SpecialLeaveController::get/$1');
+            $routes->post('update', 'AppSetup\SpecialLeave\SpecialLeaveController::update', ['filter' => 'ratelimit:3,60']);
+            $routes->post('table', 'AppSetup\SpecialLeave\SpecialLeaveController::loadTable');
+            $routes->post('delete', 'AppSetup\SpecialLeave\SpecialLeaveController::delete', ['filter' => 'ratelimit:3,60']);
+            $routes->get('export', 'AppSetup\SpecialLeave\SpecialLeaveController::export', ['filter' => 'ratelimit:3,60']);
+            $routes->get('seed', 'AppSetup\SpecialLeave\SpecialLeaveController::seedData');
+        });
+
+        // Routes untuk schedulle setup
+        $routes->group('schedulle_setup', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+            $routes->get('', 'AppSetup\SchedulleSetup\SchedulleController::index');
+            $routes->get('add', 'AppSetup\SchedulleSetup\SchedulleController::add');
+            $routes->post('save', 'AppSetup\SchedulleSetup\SchedulleController::save', ['filter' => 'ratelimit:3,60']);
+            $routes->post('table', 'AppSetup\SchedulleSetup\SchedulleController::loadTable');
+        });
+
         // Site Setting
         $routes->get('/site-setting', 'SiteSetting\SiteSettingController::index', ['filter' => ['role:superadmin,admin', 'ratelimit:100,60']]);
     });

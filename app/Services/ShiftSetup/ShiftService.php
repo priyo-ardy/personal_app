@@ -455,4 +455,16 @@ class ShiftService
             throw $e;
         }
     }
+
+    public function getAllData()
+    {
+        try {
+            $get = $this->repository->all('name', 'asc');
+
+            return $get;
+        } catch (\Exception $e) {
+            log_message('error', '[ShiftService::getAllData] Unexpected error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            throw $e;
+        }
+    }
 }

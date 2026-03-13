@@ -43,7 +43,8 @@ class DataTableRepository
         }
 
         // Hitung filtered record setelah pencarian
-        $filteredRecords = (clone $this->builder)->countAllResults(false);
+        // $filteredRecords = (clone $this->builder)->countAllResults(false);
+        $filteredRecords = (clone $this->builder)->countAllResults( );
 
         $this->applyOrder($requestData);
 
