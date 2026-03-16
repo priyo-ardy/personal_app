@@ -87,18 +87,13 @@
                                         <thead>
                                             <tr>
                                                 <th class="align-middle bg-secondary-subtle text-center col-2">Day</th>
-                                                <th class="align-middle bg-secondary-subtle text-center col-8">Shift</th>
-                                                <th class="align-middle bg-secondary-subtle text-center col-2">Action</th>
+                                                <th class="align-middle bg-secondary-subtle text-center col-7">Shift</th>
+                                                <th class="align-middle bg-secondary-subtle text-center col-3">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody id="shiftList"></tbody>
                                     </table>
                                 </div>
-                            </div>
-                            <div class="card-footer">
-                                <button type="button" class="btn rounded-0 btn-secondary" title="Back" onclick="window.location.replace('<?= base_url('schedulle_setup') ?>');"><i class="bi bi-arrow-left"></i>&ensp;Back</button>
-                                <button type="button" class="btn rounded-0 btn-primary" title="Save" onclick="saveData();"><i class="bi bi-floppy"></i>&ensp;Save</button>
-                                <button type="button" class="btn rounded-0 btn-default" title="Cancel" onclick="clearForm()"><i class="bi- bi-arrow-counterclockwise"></i>&ensp;Cancel</button>
                             </div>
                         </div>
                     </div>

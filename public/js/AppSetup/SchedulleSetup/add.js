@@ -59,14 +59,18 @@ buttons.generate.addEventListener("click", () => {
 
       const row = `
                 <tr>
-                    <td><label class="${classLabel} fw-bolder">Day ${i + 1} - ${hariIni}</label></td>
+                    <td class="align-middle label-hari"><label class="${classLabel} fw-bolder">Day ${i + 1} - ${hariIni}</label></td>
                     <td>
                         <select name="shift[]" class="form-control rounded-0 select2 select2bs5" required>
                             <option value="">-- Choose --</option>
                             ${daftarShift.innerHTML}
                         </select>
                     </td>
-                    <td></td>
+                    <td class="text-center">
+                        <button type="button" class="btn btn-primary rounded-0 btn-sm" onclick="addRow()">Add Row</button>
+                        <button type="button" class="btn btn-success rounded-0 btn-sm" onclick="insertRow(this)">Insert Row</button>
+                        <button type="button" class="btn btn-danger rounded-0 btn-sm" onclick="deleteRow(this)">Delete Row</button>
+                    </td>
                 </tr>
             `;
 
@@ -90,6 +94,111 @@ buttons.generate.addEventListener("click", () => {
     }
   }
 });
+
+function updateDaySequence() {
+  // Mengambil semua baris (tr) yang ada di dalam tabel
+  const rows = shiftList.querySelectorAll("tr");
+
+  const namaHari = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+  ];
+
+  // Melakukan perulangan untuk setiap baris
+  rows.forEach((row, index) => {
+    // Menghitung ulang hari berdasarkan indeks baris saat ini
+    const indexHari = index % 7;
+    const hariIni = namaHari[indexHari];
+
+    // Cek apakah hari libur (Sabtu/Minggu) untuk warna merah
+    const classLabel = indexHari === 5 || indexHari === 6 ? "text-danger" : "";
+
+    // Mencari kolom pertama (yang punya class label-hari) di baris ini
+    const tdHari = row.querySelector(".label-hari");
+
+    // Jika kolom ditemukan, ganti isi teksnya dengan urutan yang benar
+    if (tdHari) {
+      tdHari.innerHTML = `<label class="${classLabel} fw-bolder mb-0">Day ${index + 1} ( ${hariIni} ) </label>`;
+    }
+  });
+}
+
+function addRow() {
+  const row = `
+        <tr>
+            <td class="align-middle label-hari"></td>
+            <td>
+                <select name="shift[]" class="form-control rounded-0 select2 select2bs5" required>
+                    <option value="">-- Choose --</option>
+                    ${daftarShift.innerHTML}
+                </select>
+            </td>
+            <td class="text-center">
+                <button type="button" class="btn btn-primary rounded-0 btn-sm" onclick="addRow()">Add Row</button>
+                <button type="button" class="btn btn-success rounded-0 btn-sm" onclick="insertRow(this)">Insert Row</button>
+                <button type="button" class="btn btn-danger rounded-0 btn-sm" onclick="deleteRow(this)">Delete Row</button>
+            </td>
+        </tr>
+    `;
+
+  shiftList.insertAdjacentHTML("beforeend", row);
+
+  $(".select2").select2({
+    theme: "bootstrap-5",
+    dropdownCssClass: "rounded-0",
+    selectionCssClass: "rounded-0",
+  });
+
+  updateDaySequence();
+}
+
+function deleteRow(button) {
+  // Mencari elemen <tr> terdekat dari tombol yang diklik
+  const row = button.closest("tr");
+
+  // Hapus baris tersebut
+  row.remove();
+
+  // Urutkan ulang harinya agar nomornya tidak melompat
+  updateDaySequence();
+}
+
+function insertRow(button) {
+  const row = button.closest("tr");
+
+  const newRowHTML = `
+      <tr>
+        <td class="align-middle label-hari">
+            </td>
+        <td>
+            <select name="shift[]" class="form-control select2 select2bs5" required>
+                <option value="">-- Choose --</option>
+                ${daftarShift.innerHTML}
+            </select>
+        </td>
+        <td class="align-middle text-center">
+            <button type="button" class="btn btn-primary rounded-0 btn-sm" onclick="addRow()">Add Row</button>
+            <button type="button" class="btn btn-success rounded-0 btn-sm" onclick="insertRow(this)">Insert Row</button>
+            <button type="button" class="btn btn-danger rounded-0 btn-sm" onclick="deleteRow(this)">Delete Row</button>
+        </td>
+      </tr>
+    `;
+
+  row.insertAdjacentHTML("beforebegin", newRowHTML);
+
+  updateDaySequence();
+
+  $(".select2").select2({
+    theme: "bootstrap-5",
+    dropdownCssClass: "rounded-0",
+    selectionCssClass: "rounded-0",
+  });
+}
 
 buttons.clear.addEventListener("click", () => {
   shiftList.innerHTML = "";

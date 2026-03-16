@@ -75,4 +75,5 @@
     </div>
 </main>
 
+<?= $this->include('AppSetup/SchedulleSetup/modal.php') ?>
 <?= $this->endSection(); ?>

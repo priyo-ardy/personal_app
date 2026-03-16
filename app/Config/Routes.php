@@ -637,6 +637,15 @@
             $routes->get('add', 'AppSetup\SchedulleSetup\SchedulleController::add');
             $routes->post('save', 'AppSetup\SchedulleSetup\SchedulleController::save', ['filter' => 'ratelimit:3,60']);
             $routes->post('table', 'AppSetup\SchedulleSetup\SchedulleController::loadTable');
+            $routes->get('shift/(:any)', 'AppSetup\SchedulleSetup\SchedulleController::shift/$1');
+            $routes->get('get/(:any)', 'AppSetup\SchedulleSetup\SchedulleController::get/$1');
+            $routes->get('show/(:any)', 'AppSetup\SchedulleSetup\SchedulleController::show/$1');
+            $routes->post('update', 'AppSetup\SchedulleSetup\SchedulleController::update', ['filter' => 'ratelimit:3,60']);
+            $routes->post('delete', 'AppSetup\SchedulleSetup\SchedulleController::delete', ['filter' => 'ratelimit:3,60']);
+            $routes->post('prev', 'AppSetup\SchedulleSetup\SchedulleController::prev', ['filter' => 'ratelimit:3,60']);
+            $routes->post('next', 'AppSetup\SchedulleSetup\SchedulleController::next', ['filter' => 'ratelimit:3,60']);
+            $routes->post('mass-delete', 'AppSetup\SchedulleSetup\SchedulleController::deleteAll', ['filter' => 'ratelimit:3,60']);
+            $routes->get('export', 'AppSetup\SchedulleSetup\SchedulleController::export');
         });
 
         // Site Setting

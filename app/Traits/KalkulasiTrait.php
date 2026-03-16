@@ -265,4 +265,33 @@ trait KalkulasiTrait
             throw new \Exception("Failed to calculate early/late in/out: " . $e->getMessage());
         }
     }
+
+    public function getSchedulleDay($total_days)
+    {
+        try {
+            $namaHari = [
+                'Monday',
+                'Tuesday',
+                'Wednesday',
+                'Thursday',
+                'Friday',
+                'Saturday',
+                'Sunday',
+            ];
+
+            $data = [];
+
+            for ($i = 0; $i < $total_days; $i++) {
+                $indexHari = $i % 7;
+                $hariIni = $namaHari[$indexHari];
+                $classLabel = $indexHari === 5 || $indexHari === 6 ? 'text-danger' : '';
+
+                $data[] = $hariIni;
+            }
+
+            return $data;
+        } catch (\Exception $e) {
+            throw new \Exception("Failed to calculate early/late in/out: " . $e->getMessage());
+        }
+    }
 }
