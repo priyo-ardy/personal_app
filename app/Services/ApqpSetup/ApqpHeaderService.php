@@ -422,4 +422,29 @@ class ApqpHeaderService
             throw $e;
         }
     }
+
+    public function getAllDocumentList()
+    {
+        try {
+            $get_document = $this->document->getDocumentList();
+
+            $data = [];
+
+            if (!$get_document) {
+                return $get_document;
+            }
+
+            foreach ($get_document as $row) {
+                $data[] = [
+                    'id' => $row->id,
+                    'name' => $row->document_name
+                ];
+            }
+
+            return $data;
+        } catch (\Exception $e) {
+            log_message('error', '[ApqpHeaderService::getAllDocumentList] Unexpexted error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            throw $e;
+        }
+    }
 }
