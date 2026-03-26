@@ -13,13 +13,59 @@ class DocumentFlowTable extends Migration
                 'type' => 'UUID',
                 'null' => false
             ],
+            'stage_name' => [
+                'type' => 'VARCHAR',
+                'constraint' => 150,
+            ],
+            'stage_type' => [
+                'type' => 'VARCHAR',
+                'constraint' => 50,
+                'default' => 'document',
+            ],
+            'created_at' => [
+                'type' => 'TIMESTAMPTZ',
+                'null' => true,
+                'default' => null
+            ],
+            'created_by' => [
+                'type' => 'VARCHAR',
+                'constraint' => 50,
+                'null' => true,
+                'default' => null
+            ],
+            'updated_at' => [
+                'type' => 'TIMESTAMPTZ',
+                'null' => true,
+                'default' => null
+            ],
+            'updated_by' => [
+                'type' => 'VARCHAR',
+                'constraint' => 50,
+                'null' => true,
+                'default' => null
+            ],
+            'deleted_at' => [
+                'type' => 'TIMESTAMPTZ',
+                'null' => true,
+                'default' => null
+            ],
+        ]);
+
+        $this->forge->addKey('id', true, true);
+        $this->forge->createTable('m_stages', true);
+
+        $this->forge->addField([
+            'id' => [
+                'type' => 'UUID',
+                'null' => false
+            ],
             'parent_id' => [
                 'type' => 'UUID',
-                'null' => true
+                'null' => true,
             ],
             'child_id' => [
                 'type' => 'UUID',
-                'null' => true
+                'null' => false,
             ],
             'is_mandatory' => [
                 'type' => 'BOOLEAN',
@@ -32,9 +78,10 @@ class DocumentFlowTable extends Migration
                 'default' => null
             ],
             'created_by' => [
-                'type' => "VARCHAR",
+                'type' => 'VARCHAR',
                 'constraint' => 50,
-                'null' => true
+                'null' => true,
+                'default' => null
             ],
             'updated_at' => [
                 'type' => 'TIMESTAMPTZ',
@@ -42,9 +89,10 @@ class DocumentFlowTable extends Migration
                 'default' => null
             ],
             'updated_by' => [
-                'type' => "VARCHAR",
+                'type' => 'VARCHAR',
                 'constraint' => 50,
-                'null' => true
+                'null' => true,
+                'default' => null
             ],
             'deleted_at' => [
                 'type' => 'TIMESTAMPTZ',
@@ -54,17 +102,14 @@ class DocumentFlowTable extends Migration
         ]);
 
         $this->forge->addKey('id', true, true);
-        $this->forge->addKey('parent_id');
-        $this->forge->addKey('child_id');
-
-        $this->forge->addForeignKey('parent_id', 'm_apqp_document', 'id', 'CASCADE', 'CASCADE');
-        $this->forge->addForeignKey('child_id', 'm_apqp_document', 'id', 'CASCADE', 'CASCADE');
-
+        $this->forge->addForeignKey('parent_id', 'm_stages', 'id', 'CASCADE', 'CASCADE');
+        $this->forge->addForeignKey('child_id', 'm_stages', 'id', 'CASCADE', 'CASCADE');
         $this->forge->createTable('m_document_flow', true);
     }
 
     public function down()
     {
         $this->forge->dropTable('m_document_flow', true);
+        $this->forge->dropTable('m_stages', true);
     }
 }

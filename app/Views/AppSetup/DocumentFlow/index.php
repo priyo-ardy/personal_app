@@ -2,6 +2,19 @@
 
 <?= $this->section('content'); ?>
 
+<style>
+    /* CSS sedikit disesuaikan untuk Canvas G6 */
+    #flow-network {
+        width: 100%;
+        height: 700px;
+        border: 1px solid #ddd;
+        background-color: #fafafa;
+        border-radius: 8px;
+        overflow: hidden;
+        /* Canvas G6 akan menangani scroll/zoom sendiri */
+    }
+</style>
+
 <main class="app-main">
     <div class="app-content-header">
         <div class="container-fluid">
@@ -66,15 +79,17 @@
                     <div class="card rounded-0">
                         <div class="card-header rounded-0">
                             <h3 class="card-title"><i class="bi bi-list-ul me-2"></i>APQP Document Flow List</h3>
+                            <div class="card-tools">
+                                <button id="refreshFlow" class="btn btn-tool" title="Refresh"><i class="bi bi-arrow-repeat"></i></button>
+                            </div>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body" id="flow-network">
 
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
 </main>
 <?= $this->endSection(); ?>

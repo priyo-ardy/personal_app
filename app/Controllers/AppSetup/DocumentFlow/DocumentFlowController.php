@@ -26,6 +26,7 @@ class DocumentFlowController extends BaseController
             'title' => "Document Flow Management",
             'documents' => $this->document->getDocumentList(),
             'footer' => [
+                '<script src="https://gw.alipayobjects.com/os/lib/antv/g6/4.8.24/dist/g6.min.js"></script>',
                 '<script src="' . base_url() . 'js/App/datatable.js' . '"></script>',
                 '<script src="' . base_url() . 'js/App/validasi.js' . '"></script>',
                 '<script src="' . base_url() . 'js/AppSetup/DocumentFlow/document_flow.js' . '"></script>',
@@ -82,6 +83,19 @@ class DocumentFlowController extends BaseController
         } catch (\Exception $e) {
             $code = $e->getCode() ?? ResponseInterface::HTTP_INTERNAL_SERVER_ERROR;
             log_message('error', '[DocumentFlowController::save] Unexpected error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
+            return pesan($code, $e->getMessage());
+        }
+    }
+
+    public function getFlow()
+    {
+        try {
+            $get = $this->document->getDocumentFlow();
+
+            return pesan(ResponseInterface::HTTP_OK, 'Success', $get);
+        } catch (\Exception $e) {
+            $code = $e->getCode() ?? ResponseInterface::HTTP_INTERNAL_SERVER_ERROR;
+            log_message('error', '[DocumentFlowController::getFlow] Unexpected error occured : {err} from {ip}', ['err' => $e->getMessage(), 'ip' => $_SERVER['REMOTE_ADDR']]);
             return pesan($code, $e->getMessage());
         }
     }

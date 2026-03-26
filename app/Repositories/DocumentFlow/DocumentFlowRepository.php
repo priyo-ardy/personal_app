@@ -38,4 +38,28 @@ class DocumentFlowRepository extends CrudRepository
 
         return $db->query($query)->getResultObject();
     }
+
+    public function getFlowData()
+    {
+        $query = "
+            SELECT 
+                A.id, 
+                A.parent_id, 
+                B.document_name AS parent_name, 
+                A.child_id,
+                C.document_name AS child_name,
+                A.is_mandatory,
+                A.created_at,
+                A.created_by,
+                A.updated_at,
+                A.updated_by,
+                A.deleted_at
+            FROM m_document_flow AS A 
+                LEFT JOIN m_apqp_document AS B ON A.parent_id = B.id
+                LEFT JOIN m_apqp_document AS C ON A.child_id = C.id
+            ORDER BY A.id ASC
+        ";
+
+        return $this->model->query($query)->getResultObject();
+    }
 }

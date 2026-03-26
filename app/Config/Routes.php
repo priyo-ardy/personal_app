@@ -648,10 +648,15 @@
             $routes->get('export', 'AppSetup\SchedulleSetup\SchedulleController::export');
         });
 
+        $routes->group('/document_stages', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
+            $routes->get('', 'AppSetup\ApqpSetup\DocumentStagesController::index');
+        });
+
         // Routes untuk document flow
         $routes->group('/document_flow', ['filter' => ['role:superadmin,administrator,admin']], static function ($routes) {
             $routes->get('', 'AppSetup\DocumentFlow\DocumentFlowController::index');
             $routes->post('save', 'AppSetup\DocumentFlow\DocumentFlowController::save', ['filter' => 'ratelimit:3,60']);
+            $routes->get('get_flow', 'AppSetup\DocumentFlow\DocumentFlowController::getFlow');
         });
 
         // Site Setting

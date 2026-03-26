@@ -14,7 +14,7 @@ class DocumentFlowValidation
                 'is_unique' => 'Document child already exists'
             ]
         ],
-        'child_id' => 'permit_empty',
+        'parent_id' => 'permit_empty',
     ];
 
     public static $update = [

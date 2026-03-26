@@ -487,12 +487,31 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="<?= base_url() . 'document_flow' ?>" class="nav-link" onclick="loading()">
-                                <i class="nav-icon bi bi-arrow-right-circle"></i>
+                            <a href="#" class="nav-link">
+                                <i class=" nav-icon bi bi-arrow-right-circle"></i>
                                 <p>
-                                    Document Flow
+                                    Docs. Flow Setup
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
                                 </p>
                             </a>
+                            <ul class="nav-treeview">
+                                <li class="nav-item">
+                                    <a href="<?= base_url() . 'document_stages' ?>" class="nav-link" onclick="loading()">
+                                        <i class="nav-icon bi bi-arrow-bar-right"></i>
+                                        <p>
+                                            Docs. Flow Stages
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="<?= base_url() . 'document_flow' ?>" class="nav-link" onclick="loading()">
+                                        <i class="nav-icon bi bi-arrow-bar-right"></i>
+                                        <p>
+                                            Document Flow
+                                        </p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                 </li>
